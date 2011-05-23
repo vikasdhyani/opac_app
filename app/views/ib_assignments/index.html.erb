@@ -16,9 +16,9 @@
 	<%= link_to "Print All", ibt_print_path(:branchVal =>user_session['current_branch'].id,:criteria =>'all',:show =>'all', :prn => 'prn') %> <br/>
 	Show <%= link_to "Recent", ibt_change_criteria_path( :branchVal => user_session['current_branch'].id, :criteria =>params[:criteria], :show =>'recent')  %> / 
 	<%= link_to "All", ibt_change_criteria_path( :branchVal => user_session['current_branch'].id, :criteria =>params[:criteria], :show=>'all')  %> <br/>
-	<%= link_to "Picked", ibt_change_criteria_path( :branchVal => user_session['current_branch'].id, :criteria =>'picked', :show =>params[:show])  %> / 
-	<%= link_to "Not picked", ibt_change_criteria_path( :branchVal => user_session['current_branch'].id, :criteria =>'unpicked', :show =>params[:show])  %> / 
-	<%= link_to "All", ibt_change_criteria_path( :branchVal => user_session['current_branch'].id, :criteria =>'all', :show =>params[:show])  %> <br/>
+	<%= link_to "Picked(#{@picked_cnt})", ibt_change_criteria_path( :branchVal => user_session['current_branch'].id, :criteria =>'picked', :show =>params[:show])  %> / 
+	<%= link_to "Not picked(#{@unpicked_cnt})", ibt_change_criteria_path( :branchVal => user_session['current_branch'].id, :criteria =>'unpicked', :show =>params[:show])  %> / 
+	<%= link_to "All(#{@all_cnt})", ibt_change_criteria_path( :branchVal => user_session['current_branch'].id, :criteria =>'all', :show =>params[:show])  %> <br/>
 	
 	</div>
 	<%= will_paginate(@ibt_stock_racks) %>

@@ -1,6 +1,9 @@
 class IbAssignmentsController < ApplicationController
   def index
 	@ibt_stock_racks = IbAssignment.allRacks(params)
+  @all_cnt = IbAssignment.countAll(params)
+  @picked_cnt = IbAssignment.countPicked(params)
+  @unpicked_cnt = IbAssignment.countUnpicked(params)
   end
   
   def pick
