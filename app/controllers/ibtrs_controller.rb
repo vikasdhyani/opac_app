@@ -1,5 +1,5 @@
 class IbtrsController < ApplicationController
-  before_filter :authenticate_strata_user!, :only => [:create, :update, :destroy, :setAltTitle, :titleupd]
+  before_filter :authenticate_strata_user!, :only => [:create, :destroy, :titleupd]
   
   def index
     @ibtrs = Ibtr.search(params)
@@ -7,12 +7,20 @@ class IbtrsController < ApplicationController
   
   def update
     @ibtr = Ibtr.find(params[:id])
-    @ibtr.processEvent(params[:ibtr][:event])
-    @ibtr.update_attributes(:respondent_id => params[:ibtr][:respondent_id], 
+    @ibtr.d_user = current_user.id
+    if (@ibtr.processEvent(params[:ibtr][:event]) and 
+        @ibtr.update_attributes(:respondent_id => params[:ibtr][:respondent_id], 
                             :reason_id => params[:ibtr][:reason_id], 
                             :comments => params[:ibtr][:comments], 
-                            :state => @ibtr.current_state)
-    flash[:notice] = "Successfully #{@ibtr.state} " << (params[:ibtr][:event].eql?("assign") ? "to #{@ibtr.respondent_id}!" : "!")
+                            :state => @ibtr.current_state))
+      flash[:notice] = "Successfully #{@ibtr.state} " << (params[:ibtr][:event].eql?("assign") ? "to #{@ibtr.respondent_id}!" : "!")
+    else
+      if @ibtr.errors.any?
+	      @ibtr.errors.full_messages.each do |msg|
+	        flash[:error] = msg 
+	      end
+      end
+    end
   rescue Transitions::InvalidTransition
     flash[:error] = "Cannot #{params[:ibtr][:event]} a request that is #{@ibtr.state}."
   end  
@@ -70,6 +78,8 @@ class IbtrsController < ApplicationController
 
     respond_to do |format|
       unless @ibtr.nil?
+        @ibtr.d_user = current_user.id
+    
         if @ibtr.state = :Fulfilled
           @ibtr.dispatch!
         end
@@ -96,11 +106,12 @@ class IbtrsController < ApplicationController
 
   def setAltTitle
     @ibtr = Ibtr.find(params[:id])
+    @ibtr.d_user = current_user.id
     unless @ibtr.title_id.to_s.eql?(params[:title_id])
-      if @ibtr.update_attributes(:title_id => params[:title_id])
+      if @ibtr.is_a_valid_user? and @ibtr.update_attributes(:title_id => params[:title_id])
         flash[:notice] = "Successfully changed titleid to " + params[:title_id] +". Please refresh before assigning."
       else
-        flash[:error] = "An error occured while trying to update record - "+ @ibtr.errors.full_messages[0]
+        flash[:error] =  @ibtr.errors.full_messages[0]
       end
     else
       flash[:error] = "Same title ids " + params[:title_id]
@@ -135,7 +146,7 @@ class IbtrsController < ApplicationController
     ibtr = Ibtr.find(params[:ibtr_id])
     book = Book.find(params[:book_no])
     good = Good.find(params[:id])
-    
+    ibtr.d_user = current_user.id
     
     #passing ibtr_id from here will as it is be overwritten with whatever goods finds in set_good_details !!! 
     #hence the following order of updates matter as goods overwrites ibtr_id to null in case it does not find the correct ibtr_id in assigned state.

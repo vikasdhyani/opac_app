@@ -17,7 +17,11 @@
 <div class="span-13">
 <%= form_for ibtr, :remote => :true, :html => {:autocomplete => :off}  do |f| -%>
 	<%= f.hidden_field :event, :value => 'assign' %>
-	<%= f.label :respondent_id %> <%= f.collection_select(:respondent_id, Branch.all, :id, :name) %>
+  <% if current_user.strata_employee? %>
+    <%= f.label :respondent_id %> <%= f.collection_select(:respondent_id, Branch.all, :id, :name) %>
+  <% else %>
+    <%= f.label :respondent_id %> <%= f.collection_select(:respondent_id, Branch.find(:all, :conditions=>['is_a in (?)',['P','S']]), :id, :name) %>
+  <% end %>
 	<br/>
 	<%= f.label :comments %> <%= f.text_field :comments, :class => 'comment', :placeholder => 'Enter a comment' %>
 	<br/>

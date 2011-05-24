@@ -15,8 +15,12 @@ class Ibtr < ActiveRecord::Base
   attr_reader :event
   cattr_reader :per_page
   @@per_page = 10
+  attr_accessor :d_user
+  
   has_one :ibt_reassign, :include =>:batch,    :conditions => "BATCHES.state = 'Open' AND expires_on >= systimestamp"
   after_save :upd_assign_task
+  before_save :set_user
+  #validate :is_a_valid_user
   state_machine do
     state :New # first one is the initial state
     state :Assigned
@@ -30,7 +34,7 @@ class Ibtr < ActiveRecord::Base
     state :Timedout
     
     event :assign do
-      transitions :to => :Assigned, :from => [:New, :Declined, :Cancelled]
+      transitions :to => :Assigned, :from => [:New, :Declined, :Cancelled], :guard =>  :is_a_valid_user?
     end
     event :decline do
       transitions :to => :Declined, :from => :Assigned
@@ -51,7 +55,7 @@ class Ibtr < ActiveRecord::Base
       transitions :to => :Received, :from => :Dispatched
     end
     event :cancel do
-      transitions :to => :Cancelled, :from => [:New, :Assigned, :Declined]
+      transitions :to => :Cancelled, :from => [:New, :Assigned, :Declined], :guard => :is_a_valid_user?
     end
     event :deliver do
       transitions :to => :Delivered, :from => :Received
@@ -327,5 +331,22 @@ class Ibtr < ActiveRecord::Base
         task.done!
       end
     end
+  end
+  
+  def set_user
+    self.modified_by = d_user
+  end
+  
+  def is_a_valid_user?
+    # on assign can be done by strata employess for all branches. and JBClc employees for their own branch
+    user = User.find(d_user)
+    if !user.strata_employee?
+      user_brn = Branch.associate_branches(user.subdomain)
+      if !user_brn.collect{|x| x.id}.include?(self.branch_id)
+        errors.add(:member_id, " requests cannot be changed by other branches ")
+        return false
+      end
+    end
+    return true
   end
 end
