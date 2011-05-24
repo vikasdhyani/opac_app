@@ -93,7 +93,8 @@ def self.allTitles(branchVal, rack, category ,shelf , criteria)
 end
 
   def self.countAll(params)
-      IbAssignment.count(:all, :conditions => ['respondent_id = ? ', params[:branchVal]])
+      IbAssignment.count('distinct ibtr_id', :conditions => ['respondent_id = ? ', params[:branchVal]])
+      #Ibtr.count(:all,  :conditions => ['state= ? and respondent_id = ? ', 'Assigned',params[:branchVal]])
   end
   
   def self.countPicked(params)
@@ -102,7 +103,7 @@ end
     title_ids.each do |t|
       picked_title_ids << t.title_id
     end  
-    IbAssignment.count(:all, :conditions => ['respondent_id = ? AND title_id IN (? ) ', params[:branchVal], picked_title_ids])
+    IbAssignment.count('distinct ibtr_id', :conditions => ['respondent_id = ? AND title_id IN (? ) ', params[:branchVal], picked_title_ids])
   end
   
   def self.countUnpicked(params)
@@ -111,6 +112,6 @@ end
     title_ids.each do |t|
       picked_title_ids << t.title_id
     end
-    IbAssignment.count(:all, :conditions => ['respondent_id = ? AND title_id NOT IN (? ) ', params[:branchVal], picked_title_ids])
+    IbAssignment.count('distinct ibtr_id', :conditions => ['respondent_id = ? AND title_id NOT IN (? ) ', params[:branchVal], picked_title_ids])
   end
 end
