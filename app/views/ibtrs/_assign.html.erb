@@ -20,7 +20,7 @@
   <% if current_user.strata_employee? %>
     <%= f.label :respondent_id %> <%= f.collection_select(:respondent_id, Branch.all, :id, :name) %>
   <% else %>
-    <%= f.label :respondent_id %> <%= f.collection_select(:respondent_id, Branch.find(:all, :conditions=>['is_a in (?)',['P','S']]), :id, :name) %>
+    <%= f.label :respondent_id %> <%= f.collection_select(:respondent_id, Branch.find(:all, :conditions=>['category in (?)',['P','S']]), :id, :name) %>
   <% end %>
 	<br/>
 	<%= f.label :comments %> <%= f.text_field :comments, :class => 'comment', :placeholder => 'Enter a comment' %>
