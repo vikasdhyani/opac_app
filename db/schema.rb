@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110223100734) do
+ActiveRecord::Schema.define(:version => 20110524091233) do
 
   create_table "authentications", :force => true do |t|
     t.integer  "user_id",    :precision => 38, :scale => 0
@@ -40,21 +40,20 @@ ActiveRecord::Schema.define(:version => 20110223100734) do
   end
 
   create_table "consignments", :force => true do |t|
-    t.string   "consignor"
-    t.string   "consignee"
-    t.integer  "origin_id",             :precision => 38, :scale => 0
-    t.integer  "destination_id",        :precision => 38, :scale => 0
-    t.string   "waybill_no"
-    t.string   "origin_address"
-    t.string   "destination_address"
-    t.integer  "goods_count",           :precision => 38, :scale => 0
-    t.integer  "goods_delivered_count", :precision => 38, :scale => 0
-    t.string   "state"
-    t.datetime "pickup_date"
-    t.datetime "delivery_date"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.string   "kind"
+    t.string    "consignor"
+    t.string    "consignee"
+    t.integer   "origin_id",                          :precision => 38, :scale => 0
+    t.integer   "destination_id",                     :precision => 38, :scale => 0
+    t.string    "waybill_no"
+    t.string    "origin_address"
+    t.string    "destination_address"
+    t.integer   "goods_count",                        :precision => 38, :scale => 0
+    t.integer   "goods_delivered_count",              :precision => 38, :scale => 0
+    t.string    "state"
+    t.timestamp "pickup_date",           :limit => 6
+    t.timestamp "delivery_date",         :limit => 6
+    t.timestamp "created_at",            :limit => 6
+    t.timestamp "updated_at",            :limit => 6
   end
 
   create_table "coupons", :force => true do |t|
@@ -73,20 +72,88 @@ ActiveRecord::Schema.define(:version => 20110223100734) do
     t.datetime "updated_at"
   end
 
+  create_table "events", :force => true do |t|
+    t.string    "event_type"
+    t.string    "val1"
+    t.string    "val2"
+    t.string    "val3"
+    t.string    "val4"
+    t.string    "val5"
+    t.string    "val6"
+    t.string    "val7"
+    t.string    "val8"
+    t.string    "val9"
+    t.string    "val10"
+    t.string    "val11"
+    t.string    "val12"
+    t.string    "val13"
+    t.string    "val14"
+    t.string    "val15"
+    t.string    "val16"
+    t.string    "val17"
+    t.string    "val18"
+    t.string    "val19"
+    t.string    "val20"
+    t.string    "val21"
+    t.string    "val22"
+    t.string    "val23"
+    t.string    "val24"
+    t.string    "val25"
+    t.string    "val26"
+    t.string    "val27"
+    t.string    "val28"
+    t.string    "val29"
+    t.string    "val30"
+    t.string    "val31"
+    t.string    "val32"
+    t.string    "val33"
+    t.string    "val34"
+    t.string    "val35"
+    t.string    "val36"
+    t.string    "val37"
+    t.string    "val38"
+    t.string    "val39"
+    t.string    "val40"
+    t.string    "val41"
+    t.string    "val42"
+    t.string    "val43"
+    t.string    "val44"
+    t.string    "val45"
+    t.string    "val46"
+    t.string    "val47"
+    t.string    "val48"
+    t.string    "val49"
+    t.string    "val50"
+    t.string    "val51"
+    t.string    "val52"
+    t.string    "val53"
+    t.string    "val54"
+    t.string    "val55"
+    t.timestamp "created_at", :limit => 6
+    t.timestamp "updated_at", :limit => 6
+    t.integer   "version",                 :precision => 38, :scale => 0
+    t.string    "status"
+  end
+
   create_table "fixed_titles", :id => false, :force => true do |t|
     t.integer   "title_id",                :precision => 38, :scale => 0
     t.timestamp "date_fixed", :limit => 6
   end
 
   create_table "goods", :force => true do |t|
-    t.string   "book_no"
-    t.integer  "title_id",       :precision => 38, :scale => 0
-    t.integer  "ibtr_id",        :precision => 38, :scale => 0
-    t.integer  "consignment_id", :precision => 38, :scale => 0
-    t.string   "state"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.string    "book_no"
+    t.integer   "title_id",                    :precision => 38, :scale => 0
+    t.integer   "ibtr_id",                     :precision => 38, :scale => 0
+    t.integer   "consignment_id",              :precision => 38, :scale => 0
+    t.string    "state"
+    t.timestamp "created_at",     :limit => 6
+    t.timestamp "updated_at",     :limit => 6
   end
+
+  add_index "goods", ["book_no", "consignment_id"], :name => "goods_idx_1", :unique => true
+
+# Could not dump table "htmldb_plan_table" because of following StandardError
+#   Unknown type 'LONG' for column 'other'
 
   create_table "ibt_hidden_reqs", :force => true do |t|
     t.string    "category"
@@ -101,11 +168,13 @@ ActiveRecord::Schema.define(:version => 20110223100734) do
   create_table "ibt_reassigns", :force => true do |t|
     t.integer  "batch_id",      :precision => 38, :scale => 0
     t.integer  "title_id",      :precision => 38, :scale => 0
+    t.integer  "ibtr_id",       :precision => 38, :scale => 0
     t.integer  "respondent_id", :precision => 38, :scale => 0
     t.integer  "assigned_cnt",  :precision => 38, :scale => 0
     t.string   "state"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "good_id",       :precision => 38, :scale => 0
   end
 
   create_table "ibt_search_criterias", :force => true do |t|
@@ -143,7 +212,8 @@ ActiveRecord::Schema.define(:version => 20110223100734) do
     t.string    "comments"
     t.integer   "book_no",                    :precision => 38, :scale => 0
     t.string    "po_no"
-    t.string    "kind"
+    t.integer   "created_by",                 :precision => 38, :scale => 0
+    t.integer   "modified_by",                :precision => 38, :scale => 0
   end
 
   create_table "ibtr_versions_dt", :id => false, :force => true do |t|
@@ -178,7 +248,8 @@ ActiveRecord::Schema.define(:version => 20110223100734) do
     t.string    "comments"
     t.integer   "book_no",                    :precision => 38, :scale => 0
     t.string    "po_no"
-    t.string    "kind"
+    t.integer   "created_by",                 :precision => 38, :scale => 0
+    t.integer   "modified_by",                :precision => 38, :scale => 0
   end
 
   add_index "ibtrs", ["card_id"], :name => "in_ibtrs_3"
@@ -200,6 +271,13 @@ ActiveRecord::Schema.define(:version => 20110223100734) do
     t.string    "respondent_id"
     t.integer   "reason_id",                  :precision => 38, :scale => 0
     t.string    "comments"
+  end
+
+  create_table "member_reversals", :force => true do |t|
+    t.string    "membership_no"
+    t.string    "nm_reversal"
+    t.timestamp "created_at",    :limit => 6
+    t.timestamp "updated_at",    :limit => 6
   end
 
   create_table "plans", :force => true do |t|
@@ -243,121 +321,3 @@ ActiveRecord::Schema.define(:version => 20110223100734) do
     t.string    "ponumber",         :limit => 200
   end
 
-  create_table "roles", :force => true do |t|
-    t.string   "name"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "roles_users", :id => false, :force => true do |t|
-    t.integer "role_id", :precision => 38, :scale => 0
-    t.integer "user_id", :precision => 38, :scale => 0
-  end
-
-  create_table "signups", :force => true do |t|
-    t.string    "name",                                                                             :null => false
-    t.string    "address",                                                                          :null => false
-    t.integer   "mphone",                           :precision => 38, :scale => 0
-    t.integer   "lphone",                           :precision => 38, :scale => 0
-    t.string    "email",                                                                            :null => false
-    t.string    "referrer_member_id"
-    t.integer   "referrer_cust_id",                 :precision => 38, :scale => 0
-    t.integer   "plan_id",                          :precision => 38, :scale => 0,                  :null => false
-    t.integer   "branch_id",                        :precision => 38, :scale => 0
-    t.integer   "signup_months",                    :precision => 38, :scale => 0,                  :null => false
-    t.decimal   "security_deposit",                                                                 :null => false
-    t.decimal   "registration_fee",                                                                 :null => false
-    t.decimal   "reading_fee",                                                                      :null => false
-    t.decimal   "discount",                                                                         :null => false
-    t.decimal   "advance_amt",                                                                      :null => false
-    t.decimal   "paid_amt",                                                                         :null => false
-    t.decimal   "overdue_amt",                                                                      :null => false
-    t.integer   "payment_mode",                     :precision => 38, :scale => 0,                  :null => false
-    t.string    "payment_ref",                                                                      :null => false
-    t.string    "membership_no"
-    t.string    "application_no"
-    t.string    "employee_no"
-    t.integer   "created_by",                       :precision => 38, :scale => 0,                  :null => false
-    t.integer   "modified_by",                      :precision => 38, :scale => 0,                  :null => false
-    t.string    "flag_migrated",                                                   :default => "U"
-    t.datetime  "start_date",                                                                       :null => false
-    t.datetime  "expiry_date",                                                                      :null => false
-    t.string    "remarks"
-    t.timestamp "created_at",         :limit => 6
-    t.timestamp "updated_at",         :limit => 6
-    t.decimal   "coupon_amt"
-    t.string    "coupon_no",          :limit => 20
-    t.integer   "coupon_id",                        :precision => 38, :scale => 0
-  end
-
-  create_table "signups_dt", :id => false, :force => true do |t|
-    t.integer  "id",                               :precision => 38, :scale => 0, :null => false
-    t.string   "name",                                                            :null => false
-    t.string   "address",                                                         :null => false
-    t.integer  "mphone",                           :precision => 38, :scale => 0
-    t.integer  "lphone",                           :precision => 38, :scale => 0
-    t.string   "email",                                                           :null => false
-    t.string   "referrer_member_id"
-    t.integer  "referrer_cust_id",                 :precision => 38, :scale => 0
-    t.integer  "plan_id",                          :precision => 38, :scale => 0, :null => false
-    t.integer  "branch_id",                        :precision => 38, :scale => 0
-    t.integer  "signup_months",                    :precision => 38, :scale => 0, :null => false
-    t.decimal  "security_deposit",                                                :null => false
-    t.decimal  "registration_fee",                                                :null => false
-    t.decimal  "reading_fee",                                                     :null => false
-    t.decimal  "discount",                                                        :null => false
-    t.decimal  "advance_amt",                                                     :null => false
-    t.decimal  "paid_amt",                                                        :null => false
-    t.decimal  "overdue_amt",                                                     :null => false
-    t.integer  "payment_mode",                     :precision => 38, :scale => 0, :null => false
-    t.string   "payment_ref",                                                     :null => false
-    t.string   "membership_no"
-    t.string   "application_no"
-    t.string   "employee_no"
-    t.integer  "created_by",                       :precision => 38, :scale => 0, :null => false
-    t.integer  "modified_by",                      :precision => 38, :scale => 0, :null => false
-    t.string   "flag_migrated"
-    t.datetime "start_date",                                                      :null => false
-    t.datetime "expiry_date",                                                     :null => false
-    t.string   "remarks"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.decimal  "coupon_amt"
-    t.string   "coupon_no",          :limit => 20
-    t.integer  "coupon_id",                        :precision => 38, :scale => 0
-  end
-
-  create_table "stock_racks_shelves", :id => false, :force => true do |t|
-    t.integer "title_id",        :limit => 10,  :precision => 10, :scale => 0, :null => false
-    t.integer "book_branch_id",  :limit => nil,                                :null => false
-    t.string  "category",        :limit => 400
-    t.string  "rack",            :limit => 400
-    t.string  "shelf",           :limit => 100
-    t.decimal "count_per_shelf"
-  end
-
-  add_index "stock_racks_shelves", ["title_id", "book_branch_id"], :name => "idx_stock_racks_shelves_1"
-
-  create_table "test", :id => false, :force => true do |t|
-    t.timestamp "a", :limit => 6
-    t.timestamp "b", :limit => 6
-  end
-
-  create_table "users", :force => true do |t|
-    t.string   "username"
-    t.string   "email",                                                              :default => "", :null => false
-    t.string   "encrypted_password",   :limit => 128,                                :default => ""
-    t.string   "password_salt",                                                      :default => ""
-    t.string   "reset_password_token"
-    t.string   "remember_token"
-    t.datetime "remember_created_at"
-    t.integer  "sign_in_count",                       :precision => 38, :scale => 0, :default => 0
-    t.datetime "current_sign_in_at"
-    t.datetime "last_sign_in_at"
-    t.string   "current_sign_in_ip"
-    t.string   "last_sign_in_ip"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-end

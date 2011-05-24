@@ -1,0 +1,75 @@
+# On branch windows
+# Changed but not updated:
+#   (use "git add/rm <file>..." to update what will be committed)
+#   (use "git checkout -- <file>..." to discard changes in working directory)
+#
+#	modified:   Gemfile
+#	modified:   Gemfile.lock
+#	modified:   app/controllers/ibtrs_controller.rb
+#	modified:   app/models/ibtr.rb
+#	modified:   app/views/ibtrs/_assign.html.erb
+#	deleted:    db/migrate/20101129050038_devise_create_users.rb
+#	deleted:    db/migrate/20101202100607_create_titles.rb
+#	deleted:    db/migrate/20101202104027_create_authors.rb
+#	deleted:    db/migrate/20101202104037_create_publishers.rb
+#	deleted:    db/migrate/20101202104055_create_categories.rb
+#	deleted:    db/migrate/20101202141628_alter_index_on_categories.rb
+#	deleted:    db/migrate/20101203052024_alter_index_on_titles.rb
+#	deleted:    db/migrate/20101203082906_add_division_to_categories.rb
+#	deleted:    db/migrate/20101203083930_drop_group_from_categories.rb
+#	deleted:    db/migrate/20101203091302_drop_type_from_categories.rb
+#	deleted:    db/migrate/20101213053757_create_transfer_requests.rb
+#	deleted:    db/migrate/20101213055210_create_ibts.rb
+#	deleted:    db/migrate/20101213101435_branchshelfstats.rb
+#	deleted:    db/migrate/20101213104359_create_branchshelfstats.rb
+#	deleted:    db/migrate/20101215112601_create_stock.rb
+#	deleted:    db/migrate/20101215181832_add_versioned_ibt.rb
+#	deleted:    db/migrate/20101216051840_create_branches.rb
+#	deleted:    db/migrate/20101217091257_create_memberships.rb
+#	deleted:    db/migrate/20101217171821_add_state_to_transfer_requests.rb
+#	deleted:    db/migrate/20101218103019_create_ibtrs.rb
+#	deleted:    db/migrate/20101218112431_drop_ibt.rb
+#	deleted:    db/migrate/20101218112459_drop_transfer_requests.rb
+#	deleted:    db/migrate/20101218112614_addversionstoibtrs.rb
+#	deleted:    db/migrate/20101218112630_drop_ibt_versions.rb
+#	deleted:    db/migrate/20101218115332_add_respondent_to_ibtrs.rb
+#	deleted:    db/migrate/20101220082919_add_cnt_to_stock.rb
+#	deleted:    db/migrate/20101220083336_drop_incols_from_stock.rb
+#	deleted:    db/migrate/20101220094059_add_reason_to_ibtrs.rb
+#	deleted:    db/migrate/20101220170410_add_reason_to_ibtr_versions.rb
+#	deleted:    db/migrate/20101224054907_create_stockitems.rb
+#	deleted:    db/migrate/20101231053733_create_authentications.rb
+#	deleted:    db/migrate/20110101060851_create_plans.rb
+#	deleted:    db/migrate/20110101062223_add_reading_limit_to_plans.rb
+#	deleted:    db/migrate/20110101090547_add_subscription_to_plans.rb
+#	deleted:    db/migrate/20110101175546_create_signups.rb
+#	deleted:    db/migrate/20110106120310_add_coupon_to_signups.rb
+#	deleted:    db/migrate/20110107091122_create_coupons.rb
+#	deleted:    db/migrate/20110107091208_coupons_plans.rb
+#	deleted:    db/migrate/20110107102411_add_discount_to_coupons.rb
+#	deleted:    db/migrate/20110110101651_create_consignments.rb
+#	deleted:    db/migrate/20110110115739_create_goods.rb
+#	deleted:    db/migrate/20110111045013_create_books.rb
+#	deleted:    db/migrate/20110117125140_ibt_hidden_reqs.rb
+#	deleted:    db/migrate/20110117125146_ibt_search_criterias.rb
+#	deleted:    db/migrate/20110118113746_add_book_number_to_ibtrs.rb
+#	deleted:    db/migrate/20110118130459_add_book_number_to_ibtrs_versions.rb
+#	deleted:    db/migrate/20110120141952_create_events.rb
+#	deleted:    db/migrate/20110124042242_add_version_to_event.rb
+#	deleted:    db/migrate/20110124042323_add_status_to_event.rb
+#	deleted:    db/migrate/20110209095636_add_ponumber_to_ibtrs.rb
+#	deleted:    db/migrate/20110209100309_add_ponumber_to_ibtr_versions.rb
+#	deleted:    db/migrate/20110222095539_create_ibt_sorts.rb
+#	deleted:    db/migrate/20110223095935_create_batches.rb
+#	deleted:    db/migrate/20110223100734_create_ibt_reassigns.rb
+#	deleted:    db/migrate/20110224063048_create_member_reversals.rb
+#	deleted:    db/migrate/20110309165437_alter_reassign.rb
+#	modified:   db/schema.rb
+#
+# Untracked files:
+#   (use "git add <file>..." to include in what will be committed)
+#
+#	aa.txt
+#	db/migrate/20110524064632_add_userstamp_to_ibtr.rb
+#	db/migrate/20110524091233_add_userstamp_to_ibtr_versions.rb
+no changes added to commit (use "git add" and/or "git commit -a")
