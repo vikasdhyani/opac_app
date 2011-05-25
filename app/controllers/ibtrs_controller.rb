@@ -2,7 +2,7 @@ class IbtrsController < ApplicationController
   before_filter :authenticate_strata_user!, :only => [:create, :destroy, :titleupd]
   
   def index
-    @ibtrs = Ibtr.search(params)
+    @ibtrs = Ibtr.search(params, current_user)
   end
   
   def update
@@ -33,6 +33,7 @@ class IbtrsController < ApplicationController
     @ibtrs = Ibtr.find(:all, :conditions=> ['id =?' ,params[:id]]).paginate(:page=>params[:page], :per_page=>10)
     render 'index'
   end
+  
   def drillrpt
   
     start_d_s = params[:start]

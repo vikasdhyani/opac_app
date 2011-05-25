@@ -82,18 +82,29 @@ class Ibtr < ActiveRecord::Base
   end
 
 
-  def self.search(params)
+  def self.search(params, current_user)
     unless (params[:card_id].nil?) then
       paginate :page => params[:page], :conditions => ['card_id = ?', params[:card_id]], :order => 'created_at, id DESC'
     else
       unless (params[:member_id].nil?) then
         paginate :page => params[:page], :conditions => ['member_id = ?', params[:member_id]], :order => 'created_at, id DESC'
       else
-        unless (params[:state].nil?) then
-          paginate :page => params[:page], :conditions => ['state = ?', params[:state]], :order => 'created_at, id DESC'
+        if current_user.strata_employee?
+          unless (params[:state].nil?) then
+            paginate :page => params[:page], :conditions => ['state = ?', params[:state]], :order => 'created_at, id DESC'
+          else
+            paginate :page => params[:page], :order => 'created_at, id DESC'
+          end
         else
-          paginate :page => params[:page], :order => 'created_at, id DESC'
+          user_brn = Branch.associate_branches(current_user.subdomain).collect{|x| x.id}
+          unless (params[:state].nil?) then
+            paginate :page => params[:page], :conditions => ['state = ? and branch_id in (?)', params[:state], user_brn], :order => 'created_at, id DESC'
+          else
+            paginate :page => params[:page], :conditions => ['branch_id in (?)', user_brn], :order => 'created_at, id DESC'
+          end
         end
+        
+        
       end
     end
   end
