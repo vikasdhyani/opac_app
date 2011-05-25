@@ -223,3 +223,8 @@ table.form tbody td {font-size:120%;font-weight:normal;}
 	background: url(../images/library_bg.jpg);
 	font-size:12px;
 }
+#center-container {
+    width:600px;
+    left:200px;
+    color:#ccc;
+}
