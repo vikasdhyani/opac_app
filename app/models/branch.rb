@@ -1,37 +1,11 @@
 class Branch < ActiveRecord::Base
   has_many :satellites, :foreign_key => "parent_id", :class_name => "Branch"
   belongs_to :parent, :foreign_key => "parent_id", :class_name => "Branch"
-  
   def self.branch_id_from_subdomain(subdomain)
     # replace this by searching for a parent branch with subdomain set in the short name
     # TODO
-    id = case subdomain
-          when 'wf'   then 1
-          when 'jpn'  then 2
-          when 'bll'  then 3
-          when 'in'   then 4
-          when 'kn'   then 7
-          when 'hsr'  then 8
-          when 'ft'   then 10
-          when 'kor'  then 11
-          when 'jn'   then 14
-          when 'ne'   then 15
-          when 'rmv'  then 16
-          when 'dmb'  then 19
-          when 'aun'  then 20
-          when 'ecil' then 21
-          when 'mlm'  then 25
-          when 'vij'  then 26
-          when 'vjn'  then 31
-          when 'rrn'  then 33
-          when 'vmn'  then 34
-          when 'skn'  then 35
-          when 'wan'  then 36  
-          when 'kdr'  then 37  
-          when 'mgp'  then 39
-          when 'bsk'  then 45 
-          else 801
-          end
+    subdomainbranch = Branch.find_by_subdomain_and_category(subdomain.downcase,['P','W'])
+    id = subdomainbranch.id
     id
   end
   
