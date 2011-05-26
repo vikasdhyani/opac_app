@@ -3,40 +3,35 @@
 		Sessionapp.showPanel();
 	});
 <% end -%>
+<%= content_for :javascript do -%>
+  IBTapp.ChartData["<%= "infovis" %>"] = <%= raw jitTreeChart().to_json %>;
+<% end -%>
 
 <div class="span-16	">
 	<div class="span-15 last">
-<%= content_for :javascript do -%>
-
-//load JSON data.  
-IBTapp.ChartData["<%= "infovis" %>"] = <%= raw jitTreeChart().to_json %>;
-
-
-
-<% end -%>
-<div id="inner-details">
-</div>
-
-<div id="center-container"> 
-    <div id="infovis"><br/></div>    
-</div> 
+    <div id="inner-details"></div>
+    <div id="center-container"> 
+        <div id="infovis"><br/></div>    
+    </div> 
+  </div>
 </div>
 <div class="box span-7 last">
 	<h3> Sign In Instructions </h3>
 	<h4> Franchisee's </h4>
 	<ol>
+    <li>Click on your city to be directed to your city's  branches</li>
 		<li>Click on your branch location in the map, and you will be redirected to google for login.</li>
 		<li>Use your business gmail account to login </li>
-		<li>For example, if you are from the indiranagar branch , click on indiranagar on the map and use your email id,
+		<li>For example, if you are from the Indiranagar branch , click on Bangalore --> Indiranagar on the map and use your email id,
 			  like frontoffice@in.justbooksclc.com when the google sign up page comes up.</li>
 	</ol>
 	<h4> Strata Employees </h4>
 	<ol>
-		<li>Click on the earth (center) and use your strata.co.in </li>
+		<li>Click on "Strata staff" and use your strata.co.in id</li>
 	</ol>
 	<hr/>
-	<!--div style="display:none"-->
-  <div>
+	<div style="display:none">
+  <!--div-->
   	<h4>Administrator Sign In.</h4>
 		<%= form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f| %>
 			  <p><%= f.label :username %>
