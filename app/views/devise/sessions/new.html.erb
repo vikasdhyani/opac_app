@@ -4,7 +4,7 @@
 	});
 <% end -%>
 <%= content_for :javascript do -%>
-  IBTapp.ChartData["<%= "infovis" %>"] = <%= raw jitTreeChart().to_json %>;
+  Sessionapp.ChartData["<%= "infovis" %>"] = <%= raw jitTreeChart().to_json %>;
 <% end -%>
 
 <div class="span-16	">

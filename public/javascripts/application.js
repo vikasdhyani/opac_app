@@ -305,12 +305,12 @@ Sessionapp.ChartData = {};
 current_node_id="801_jb";
 function split_data(){
   children=[];
-  jbClc={"id": IBTapp.ChartData["infovis"].id,
-        "name" : IBTapp.ChartData["infovis"].name,
+  jbClc={"id": Sessionapp.ChartData["infovis"].id,
+        "name" : Sessionapp.ChartData["infovis"].name,
         "children":[],
-        "data":IBTapp.ChartData["infovis"].data}
+        "data":Sessionapp.ChartData["infovis"].data}
   
-  $.each(IBTapp.ChartData["infovis"].children, function(index, value) {
+  $.each(Sessionapp.ChartData["infovis"].children, function(index, value) {
       child={"id":value.id,
              "name":value.name,
              "data":value.data,
@@ -330,24 +330,24 @@ function split_data(){
                     "data":v.data}
               children_1_1[i] = child_1_1;
             });
-            IBTapp.ChartData[val.id]={
+            Sessionapp.ChartData[val.id]={
               "id":val.id,
               "name" : val.name,
             "children":children_1_1,
             "data":val.data};
           children_1[idx+1]=child_1;
       });
-      IBTapp.ChartData[value.id]={
+      Sessionapp.ChartData[value.id]={
         "id":value.id,
         "name" : value.name,
       "children":children_1,
       "data":value.data};
       children[index] = child;
     });
-    IBTapp.ChartData["801_jb"]={"id": IBTapp.ChartData["infovis"].id,
-      "name" : IBTapp.ChartData["infovis"].name,
+    Sessionapp.ChartData["801_jb"]={"id": Sessionapp.ChartData["infovis"].id,
+      "name" : Sessionapp.ChartData["infovis"].name,
       "children":children,
-      "data":IBTapp.ChartData["infovis"].data}
+      "data":Sessionapp.ChartData["infovis"].data}
       
 }
 
@@ -467,7 +467,7 @@ split_data();
         }
         else
         {
-          ht.loadJSON(IBTapp.ChartData[current_node_id], 1);  
+          ht.loadJSON(Sessionapp.ChartData[current_node_id], 1);  
           ht.refresh(); 
         }
           
@@ -476,7 +476,7 @@ split_data();
   );  
   //load JSON data.  
   
-  ht.loadJSON(IBTapp.ChartData[current_node_id], 1);  
+  ht.loadJSON(Sessionapp.ChartData[current_node_id], 1);  
   //compute positions and plot.  
   ht.refresh(); 
  }
