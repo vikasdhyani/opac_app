@@ -243,6 +243,31 @@ class Ibtr < ActiveRecord::Base
     end
     ibtr_stats
   end
+
+  def self.assigned_view_qry( created, start_date, end_date)
+    ibtr_stats = nil
+    if created == 'All'
+      ibtr_stats = Ibtr.find(:all, :select => " respondent_id,"+
+      "sum(case when nvl(respondent_id,-1) != 951 and state in ('Assigned') then 1 else 0 end) as assigned_cnt," +
+      "sum(decode(state,'POPlaced',1,0)) as poplaced_cnt,  "+
+      "sum(case when respondent_id = 951 and state in ('Assigned') then 1 else 0 end) as poassigned_cnt, "+
+      "count(state) as total_cnt " ,
+      :conditions => ["state in ('Assigned','POPlaced')"], 
+      :group => " respondent_id ",
+      :order => "respondent_id")
+    else 
+      ibtr_stats = Ibtr.find(:all, :select => " respondent_id , "+
+      "sum(case when nvl(respondent_id,-1) != 951 and state in ('Assigned') then 1 else 0 end) as assigned_cnt," +
+      "sum(decode(state,'POPlaced',1,0)) as poplaced_cnt,  "+
+      "sum(case when respondent_id = 951 and state in ('Assigned') then 1 else 0 end) as poassigned_cnt, "+
+      "count(state) as total_cnt " ,
+      :conditions => ["state in ('Assigned','POPlaced') and updated_at >= ? and updated_at <= ? ", start_date, end_date], 
+      :group => "  respondent_id ",
+      :order => "respondent_id")
+    end
+    
+    return ibtr_stats
+  end
   
   def self.get_ibtr_stats(params, start_d_s, end_d_s)
     created = params[:Created]
@@ -265,6 +290,8 @@ class Ibtr < ActiveRecord::Base
         
       when params[:report].eql?('curr_state') then 
         ibtr_stats = Ibtr.curr_view_qry( created, start_date, end_date)
+      when params[:report].eql?('assigned_view') then 
+        ibtr_stats = Ibtr.assigned_view_qry( created, start_date, end_date)
     end
     
     return ibtr_stats
@@ -280,12 +307,14 @@ class Ibtr < ActiveRecord::Base
         clause << ' respondent_id is not null and respondent_id = ? ' 
       when params[:report].eql?('curr_state') then 
         if params[:po].eql?('951') then
-			clause << ' branch_id = ? and respondent_id = 951'  
-		elsif params[:state].eql?('Assigned')
-			clause << ' branch_id = ? and respondent_id != 951'  
-		else
-			clause << ' branch_id = ? '  
-		end
+          clause << ' branch_id = ? and respondent_id = 951'  
+        elsif params[:state].eql?('Assigned')
+          clause << ' branch_id = ? and respondent_id != 951'  
+        else
+          clause << ' branch_id = ? '  
+        end
+      when params[:report].eql?('assigned_view') then 
+        clause << ' respondent_id is not null and respondent_id = ? ' 
     end
      
     case
@@ -303,7 +332,7 @@ class Ibtr < ActiveRecord::Base
     
     unless params[:state].eql?('All') then
       unless created.eql?('All') then
-        paginate :page => params[:page], :conditions => [clause << ' and state = ? '<< ' and created_at >= ? and created_at <= ? ', 
+        paginate :page => params[:page], :conditions => [clause << ' and state = ? '<<  (params[:report].eql?('assigned_view') ? ' and updated_at >= ? and updated_at <= ? ': ' and created_at >= ? and created_at <= ? '), 
         params[:branch_id], params[:state], start_date, end_date], :order => 'created_at, id DESC'
       else
         paginate :page => params[:page], :conditions => [clause << ' and state = ? ', 
@@ -311,7 +340,7 @@ class Ibtr < ActiveRecord::Base
       end
     else
       unless created.eql?('All') then
-        paginate :page => params[:page], :conditions => [clause << ' and created_at >= ? and created_at <= ? ', 
+        paginate :page => params[:page], :conditions => [clause <<  (params[:report].eql?('assigned_view') ? ' and updated_at >= ? and updated_at <= ? ' : ' and created_at >= ? and created_at <= ? '), 
         params[:branch_id], start_date, end_date], :order => 'created_at, id DESC'
       else
         paginate :page => params[:page], :conditions => [clause , 
