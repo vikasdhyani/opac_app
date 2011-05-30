@@ -138,6 +138,8 @@ class IbtrsController < ApplicationController
         render 'resp_stats'
       when params[:report].eql?('curr_state') then 
         render 'stats'
+      when params[:report].eql?('assigned_view') then 
+        render 'assigned_stats'
     end
 
     
