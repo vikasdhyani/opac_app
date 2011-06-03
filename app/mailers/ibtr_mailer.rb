@@ -10,7 +10,7 @@ class IbtrMailer < ActionMailer::Base
   def consignment_pickup_advice(id)
     @consignment = Consignment.find(id)
     mail(:to => @consignment.origin.email,
-         :cc => 'operations@justbooksclc.com',
+         :cc => 'events@justbooksclc.com',
          :subject => "Consignment pickup advice")
   end
 end
