@@ -108,6 +108,7 @@ end
   
   def self.countUnpicked(params)
     picked_title_ids = []
+    picked_title_ids << 14
     title_ids = IbtHiddenReq.find(:all, :select => 'distinct title_id', :conditions => ['respondent_id = ? ',  params[:branchVal]])
     title_ids.each do |t|
       picked_title_ids << t.title_id
