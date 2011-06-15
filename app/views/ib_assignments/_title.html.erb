@@ -6,15 +6,24 @@
 
       </div>
       <div class="right" style="height:27px; width:29px;background-image: url(../images/star.png);">
-        <span class="small" style="height:27px; width:29px; align:bottom" ><%=Ibtr.find(:all, :conditions=> ['state = ? AND respondent_id = ? AND title_id = ?', "Assigned" , user_session['current_branch'].id, title.title_id] ).size %></span>
+        <% if params[:criteria].eql?('all') and get_unpicked_count(title.title_id , user_session['current_branch'].id) < get_all_count(title.title_id , user_session['current_branch'].id)  %>
+        <span class="small" style="height:27px; width:29px; align:bottom" ><%=get_picked_count( title.title_id , user_session['current_branch'].id)%>/</span>
+        <% end %>
+        <span class="small" style="height:27px; width:29px; align:bottom" ><%=get_count(params[:criteria], title.title_id , user_session['current_branch'].id)%></span>
+        
       </div>
-		
+      
       <div class="small">
       <% if title.picked=='p' %>
-      <p><%= link_to "unpick", ibt_unpick_req_path(:branchVal => user_session['current_branch'].id, :title_id => title.title_id , :criteria => params[:criteria],:show => params[:show]) %>	</p>
+      <p><%= link_to "unpick", ibt_unpick_req_path(:branchVal => user_session['current_branch'].id, :title_id => title.title_id , :criteria => params[:criteria],:show => params[:show]) %>	
+      <% if params[:criteria].eql?('all') and get_unpicked_count(title.title_id , user_session['current_branch'].id) > 0 %>
+       <%= link_to "pickup", ibt_pick_req_path(:branchVal => user_session['current_branch'].id, :title_id => title.title_id , :criteria => params[:criteria],:show => params[:show]) %>	
+      <% end %>
+      </p>
       <%else %>
       <p><%= link_to "pickup", ibt_pick_req_path(:branchVal => user_session['current_branch'].id, :title_id => title.title_id , :criteria => params[:criteria],:show => params[:show]) %>	</p>
       <%end%>
+
       </div>
       <div class="small">
         <p>

@@ -15,10 +15,8 @@ class IbAssignmentsController < ApplicationController
   end
 
   def unpick
-	ibt_hide_req = IbtHiddenReq.find(:all, :conditions => ['respondent_id = ? AND title_id = ? ', params[:branchVal], params[:title_id]])
-	ibt_hide_req.each do |r|
-		r.destroy
-	end
+	ibt_hide_req = IbtHiddenReq.find( :conditions => ['respondent_id = ? AND title_id = ? ', params[:branchVal], params[:title_id]])
+	ibt_hide_req.destroy 
 	redirect_to :action=>"index", :controller=>"ib_assignments", :branchVal=>params[:branchVal] , :criteria=>params[:criteria], :show=>params[:show]
   end
   
