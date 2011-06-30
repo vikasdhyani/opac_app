@@ -7,39 +7,38 @@
 
     <table width="550px;">
       <tr width="100%" >
-      <td width="50%"><b>Waybill No:</b> <%=@consignment.waybill_no%></td>
-      <td width=50%><b>Pickup at:</b><%=@consignment.updated_at.strftime '%d-%b-%Y %I:%M %p'%></td>
-	  
+        <td width="50%"><b>Waybill No:</b> <%=@consignment.waybill_no%></td>
+        <td width="50%"><b>Pickup at:</b><%=@consignment.updated_at.strftime '%d-%b-%Y %I:%M %p'%></td>
       </tr>
       
       <tr width="100%" >
-      <td width="50%">&nbsp;</td>
-      <td width=50%><b>Origin:</b> <%=@consignment.origin.name%></td>
+        <td width="50%">&nbsp;</td>
+        <td width="50%"><b>Origin:</b> <%=@consignment.origin.name%></td>
       </tr>
       <tr width="100%" >
-      <td width="50%"><b>Signed for by:</b> <%=@consignment.consignor%></td>
-      <td width=50%><b>Destination:</b> <%=@consignment.destination.name%></td>
+        <td width="50%"><b>Signed for by:</b> <%=@consignment.consignor%></td>
+        <td width="50%"><b>Destination:</b> <%=@consignment.destination.name%></td>
       </tr>
       <tr width="100%" >
-      <td width="50%"><b>Carrier:</b> <%=@consignment.consignee%></td>
-      <td width=50%><b>Books</b> Pickedup: <%=@consignment.goods_count.to_i%> </td>
+        <td width="50%"><b>Carrier:</b> <%=@consignment.consignee%></td>
+        <td width="50%"><b>Books</b> Pickedup: <%=@consignment.goods_count.to_i%> </td>
       </tr>
-      </table>	
+    </table>	
       
-      <hr/>
-      <table width="550px;">
+    <hr/>
+    <table width="550px;">
       
       <tr width="100%" >
-      <td width="5%">&nbsp;</td>
-      <td width="20%"><b>Book No.</b></td>
-      <td width="63%"><b>Title</b></td>
+        <td width="5%">&nbsp;</td>
+        <td width="20%"><b>Book No.</b></td>
+        <td width="63%"><b>Title</b></td>
       </tr>
-      </table>
+    </table>
 
-      <table width="550px" >
+    <table width="550px" >
     
       <%= render :partial => "goods/mail",  :collection => @consignment.goods, :as =>:good %>
       
-      </table>
+    </table>
   </body>
 </html>
