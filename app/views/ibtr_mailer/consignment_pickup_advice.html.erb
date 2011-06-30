@@ -8,7 +8,8 @@
     <table width="550px;">
       <tr width="100%" >
       <td width="50%"><b>Waybill No:</b> <%=@consignment.waybill_no%></td>
-      <td width=50%><b>Pickup Date:</b><%=@consignment.updated_at.strftime '%d-%b-%Y'%></td>
+      <td width=50%><b>Pickup at:</b><%=@consignment.updated_at.strftime '%d-%b-%Y %I:%M %p'%></td>
+	  
       </tr>
       
       <tr width="100%" >
