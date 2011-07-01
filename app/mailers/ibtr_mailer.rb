@@ -9,7 +9,7 @@ class IbtrMailer < ActionMailer::Base
   
   def consignment_pickup_advice(id)
     @consignment = Consignment.find(id)
-    to_ids = @consignment.origin.owner.email.split(';')
+    to_ids = @consignment.origin.owner.nil? ? [] : @consignment.origin.owner.email.split(';')
     to_ids << @consignment.origin.email
     mail(:to => to_ids,
          #:cc => 'events@justbooksclc.com',
