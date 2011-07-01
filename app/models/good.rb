@@ -51,6 +51,9 @@ end
       self.title_id = book.title_id
       if self.ibtr_id.nil?
         self.ibtr = Ibtr.find_by_title_id_and_respondent_id_and_state(book.title_id, consignment.origin_id, ['Assigned','POPlaced'])
+        if (self.ibtr.nil?)
+          self.ibtr = Ibtr.find_by_title_id_and_respondent_id_and_state(book.title_id, consignment.origin.parent.satellites.collect {|x| x.id}, ['Assigned','POPlaced'])
+        end
         unless ibtr.nil?
           self.ibtr_id = ibtr.id
         end
