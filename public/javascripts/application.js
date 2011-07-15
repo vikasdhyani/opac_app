@@ -45,7 +45,7 @@ IBTapp.showPanel = function (paneId, panelId) {
 	});
 
 	$('#'+panelId).show(600, function() {
-			debugger;
+			
 		if (panelId.indexOf('ass') > 0) {
 
 			if (!IBTapp.Charts["stock"+paneId]) {
@@ -78,13 +78,20 @@ IBTapp.showPanel = function (paneId, panelId) {
 
 IBTapp.showAltTitle = function (paneId, panelId, titleId, ibtrId) {
   IBTapp.showPanel(paneId, panelId);
-  debugger;
-  $.get('/titles/qryAltTitle?' + 'queryTitleId=' + titleId+ '&ibtrId=' + ibtrId,
+  $.get('/titles/qryAltTitle?show=all&queryTitleId=' + titleId+ '&ibtrId=' + ibtrId,
   function(data) {
     $('#'+panelId+' #div_srch').html(data);
   });
 }
 
+
+IBTapp.showExactTitle = function (paneId, panelId, titleId, ibtrId) {
+  IBTapp.showPanel(paneId, panelId);
+  $.get('/titles/qryAltTitle?show=exact&queryTitleId=' + titleId+ '&ibtrId=' + ibtrId,
+  function(data) {
+    $('#'+panelId+' #div_srch').html(data);
+  });
+}
 var IBTStatApp = {};
 IBTStatApp.Charts = {};
 IBTStatApp.ChartData = {};
@@ -92,7 +99,6 @@ IBTStatApp.ChartData = {};
 IBTStatApp.showChart = function(panelId, bartype, show_aggregate){
 
   $('#'+panelId).show(600, function() {
-			debugger;
 
   if (!IBTStatApp.Charts["ibtr"+panelId]) {
     IBTStatApp.Charts["ibtr"+panelId] = new $jit.BarChart({
@@ -480,3 +486,14 @@ split_data();
   //compute positions and plot.  
   ht.refresh(); 
  }
+ 
+ $('.pagination.ajax a').live('click', function() {
+
+	var panelId = $(this).parents("div")[4].id;
+  
+  $.get(this.href,
+    function(data) {
+      $('#'+panelId+' #div_srch').html(data);
+    });
+  return false;
+})

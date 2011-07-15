@@ -7,6 +7,11 @@ class Ibtr < ActiveRecord::Base
         :conditions => ['updated_at >= ?',"01-03-2011".to_time.beginning_of_day]
       }
     }
+  scope :sort_1_jun, lambda {
+      {
+        :conditions => ['updated_at >= ?',"01-06-2011".to_time.beginning_of_day]
+      }
+    }
   belongs_to :title
   belongs_to :membership
   belongs_to :book,  :foreign_key => 'book_no'

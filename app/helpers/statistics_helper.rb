@@ -1,6 +1,6 @@
 module StatisticsHelper
   def jitBarChart(title_id)
-    stock = Stock.find_all_by_title_id(title_id, :order => "branch_id")
+    stock = Stock.find_all_by_title_id(title_id, :conditions=>['branch_id != 951'], :order => "branch_id")
   
     stockArray = []
   

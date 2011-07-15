@@ -1,7 +1,15 @@
 class TitlesController < ApplicationController
   def index
+    per_page = 10
+    show = 'all'
+    unless params[:per_page].nil? 
+      per_page = params[:per_page]
+    end
+    unless params[:show].nil? 
+      show = params[:show]
+    end
     newSearch = Sunspot.new_search(Title) do
-      paginate(:page => params[:page], :per_page => 15)
+      paginate(:page => params[:page], :per_page => per_page)
       facet(:category_id, :publisher_id, :author_id)
     end
     
@@ -25,10 +33,17 @@ class TitlesController < ApplicationController
 #      paginate(:page => params[:page], :per_page => 15)
 #      facet(:category_id, :publisher_id, :author_id)
 #    end
- 
-    newSearch.build do
-      keywords params[:query] do
-        highlight :title, :publisher, :author
+    if show.eql?('all')
+      newSearch.build do
+        keywords params[:query] {minimum_match 1} do
+          highlight :title, :publisher, :author
+        end
+      end
+    else
+      newSearch.build do
+        keywords params[:query] do
+          highlight :title, :publisher, :author
+        end
       end
     end
     
@@ -43,14 +58,20 @@ class TitlesController < ApplicationController
     newSearch.build do 
       with(:author_id, params[:facetAuthor]) 
     end if params[:facetAuthor].to_i > 0
-  
+    
     @searchResults = newSearch.execute
   end
   
   def qryAltTitle
+    params[:per_page] = 4
     @searchResults = index
     @ibtrId = params[:ibtrId]
-    render 'ibtrs/qryAltTitle' , :layout => 'blank'
+    
+    #render 'ibtrs/qryAltTitle' , :layout => 'blank'
+    
+    respond_to do |format|
+      format.html {render 'ibtrs/qryAltTitle' , :layout => 'blank'}
+    end
   end
 
 # not using more like this- not sure how this is working as of now
@@ -58,7 +79,7 @@ class TitlesController < ApplicationController
     @title = Title.find(params[:id])
 
     newSearch = Sunspot.new_more_like_this(@title, Title) do
-      paginate(:page => params[:page], :per_page => 15)
+      paginate(:page => params[:page], :per_page => 5)
       facet(:category_id, :publisher_id, :author_id)
     end
   

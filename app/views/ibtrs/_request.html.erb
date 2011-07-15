@@ -4,6 +4,7 @@ has requested for
 	#<%= link_to_function ibtr.title_id, "$('#alt_#{ibtr.id} input#title_id').val(#{ibtr.title_id});$('#alt_#{ibtr.id}').submit();" %>:
 <% unless ibtr.title.nil? -%>
 	<%= link_to ibtr.title.title, '#' %> 
+  (<%= ibtr.title.language %> - <%= ibtr.title.format.nil? ? 'BOOK' : ibtr.title.format  %> ) by <% unless ibtr.title.author.nil? -%> <%= ibtr.title.author.name %><% end -%>
 <% end -%>
 <br/>
 via
@@ -19,6 +20,7 @@ via
 		If there are no stocks, then you may decide to either
 		<%= link_to_function "cancel", "IBTapp.showPanel(#{ibtr.id}, 'div_can_#{ibtr.id}')" %> the request, proceed for 
 		<%= link_to_function "procurement.", "IBTapp.showPanel(#{ibtr.id}, 'div_pro_#{ibtr.id}')" %> or
-		choose an <%= link_to_function "alternate title.", "IBTapp.showAltTitle(#{ibtr.id}, 'div_alt_#{ibtr.id}',#{ibtr.title_id},'#{ibtr.id}')" %>
+		choose an alternate title(<%= link_to_function "search all", "IBTapp.showAltTitle(#{ibtr.id}, 'div_alt_#{ibtr.id}',#{ibtr.title_id},'#{ibtr.id}')" %>
+    or <%= link_to_function "exact match", "IBTapp.showExactTitle(#{ibtr.id}, 'div_alt_#{ibtr.id}',#{ibtr.title_id},'#{ibtr.id}')" %>)
 </div>
 
