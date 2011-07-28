@@ -1,0 +1,131 @@
+<div class="span-24">
+  <div class="span-3 border">
+    <div class="span-3">
+      <p></p>
+      <p><%= link_to "Ibtrs", ibtrs_path %> </p>
+      <p><%= link_to "Back", :back %> </p>
+    </div>
+  </div>
+  <div class="span-19">
+    <div class="span-19">  
+      <section class="round">
+        <% flash.each do |key, value| %>
+          <div class="flash <%= key %>"><%= value %></div>
+        <% end %>
+      </section>
+    </div>
+    <div class="small">
+    
+    <p><b>Purpose:</b> To manually resolve Books that failed sorting in the warehouse, i.e. a destination slip was not printed for them. <br/>
+    <b>Reason:</b> Mismatch in title id of IBT request and book that has been sent by the fulfilling branch<br/>
+    <b>Usage:</b><br/>
+        1. Enter the Book number (numerics only) printed on the book and click on "Submit"<br/>
+        2. All assigned requests of the fulfilling branch (the branch that sent the book) are displayed<br/>
+        3. Click on the appropriate record's "fulfill" link to change the title id and fulfill the request using this book.<br/>
+        4. If no results are displayed or none of the results match the book's title please contact tech support.<br/>
+        5. If a request is successfully fulfilled then the book needs to be sent to the warehouse for (re)sorting.</p>
+    </div>
+    <h5>Update title and fulfill</h5>
+    <div class="span-19">  
+    
+      <%= form_for :search,  do |f| -%>
+        <%= field_set_tag 'Search' do %>
+          <div class="span-9"><%= label_tag 'Book No:'%> <%= f.text_field :book_no,:size=>"15" %></div>
+          <div class="span-9"><%= label_tag 'ISBN:'%> <%= f.text_field :isbn %></div>
+          <div class="span-18"><%= f.submit "Search", :disable_with => 'searching...' %></div>
+        <% end -%>
+      <% end -%>
+
+    </div>
+  
+
+    <div class="span-9">
+      <% unless @book.nil? %>
+        <div class="span-9">
+          <h6>Book Details</h6>
+          <br/>
+          <div class="span-9">
+            <div class="span-3"><%= image_tag image_url(@book.title_id), :size => "100x140", :alt => "#{@book.title.title} ", :title => "#{@book.title.title}", :onerror => "this.src='#{default_image_url}';"  %><br/></div>
+            <div class="span-5">
+            <div class="span-5">Book No: <%=@book.id%></div>
+            <div class="span-5">Title id :<%=@book.title_id%></div>
+            <div class="span-5">ISBN: <%=@book.isbn%></div>
+            <div class="span-5">Title: <%=@book.title.title%></div>
+            <div class="span-5">Author: <%=@book.title.author.name%></div>
+            <div class="span-4">Category: <%=@book.title.category.name unless @book.title.category.nil?%></div>
+            <div class="span-4">Language: <%=@book.title.language%></div>
+           
+            </div>
+          </div>
+          <hr/>
+          <br/>
+        </div>
+      <% end %>
+      <% if @book.nil?  %>
+        <div class="span-9">
+          <br/>
+          no data found
+        </div>  
+      <% end %>
+    </div>
+    <div class="span-9">
+      <% unless @enrichedtitle.nil? %>
+        <div class="span-9">
+          <h6>ISBN Details</h6>
+          <br/>
+          <div class="span-9">
+            <div class="span-3"><%= image_tag image_url(@enrichedtitle.title_id), :size => "100x140", :alt => "#{@enrichedtitle.title} ", :title => "#{@enrichedtitle.title}", :onerror => "this.src='#{default_image_url}';"  %><br/></div>
+            <div class="span-5">
+            <div class="span-5">ISBN: <%=@enrichedtitle.isbn%></div>
+            <div class="span-5">Title id :<%=@enrichedtitle.title_id%></div>
+            <div class="span-5">Title: <%=@enrichedtitle.title%></div>
+            <div class="span-5">Author: <%=@enrichedtitle.author%></div>
+            <div class="span-5">Category: <%=@enrichedtitle.category%></div>
+            <div class="span-5">Language: <%=@enrichedtitle.language%></div>
+            </div>
+          </div>
+          <hr/>
+          <br/>
+        </div>
+      <% end %>
+      <% if @enrichedtitle.nil?  %>
+        <div class="span-9">
+          <br/>
+          no data found
+        </div>  
+      <% end %>
+    </div>
+
+    <div class="span-9">
+      <% unless @enrichedtitle.nil? %>
+        <div class="span-9">
+          <h6>ISBN From flipkart</h6>
+          <br/>
+          <div class="span-9">
+            <div class="span-3"><%= image_tag @flipkart_info[:image], :size => "100x140", :alt => "#{@flipkart_info[:title]} ", :title => "#{@flipkart_info[:title]}", :onerror => "this.src='#{default_image_url}';"  %><br/></div>
+            <div class="span-5">
+            <div class="span-5">ISBN: <%=@flipkart_info[:isbn]%></div>
+            <div class="span-5">Info Source :<%=@flipkart_info[:info_source]%></div>
+            <div class="span-5">Title: <%=@flipkart_info[:title]%></div>
+            <div class="span-5">Author: <%=@flipkart_info[:authors_as_string]%></div>
+            <div class="span-5">publisher: <%=@flipkart_info[:publisher]%></div>
+            <div class="span-5">More details: <a href="<%=@flipkart_info[:detail_page]%>" target="_blank">flipkart</a></div>
+            <div class="span-5">review by: <%=@flipkart_info[:source]%></div>
+            <div class="span-5">content: <%=@flipkart_info[:content]%></div>
+            </div>
+          </div>
+          <hr/>
+          <br/>
+        </div>
+      <% end %>
+      <% if @enrichedtitle.nil?  %>
+        <div class="span-9">
+          <br/>
+          no data found
+        </div>  
+      <% end %>
+    </div>
+
+
+    </div>
+</div>
