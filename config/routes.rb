@@ -30,6 +30,13 @@ Opac::Application.routes.draw do
   match 'consignments/booksearch' => 'consignments#booksearch'
   match 'consignments/:id/transition/:event' => 'consignments#transition'
   match '/titles/qryAltTitle' => 'titles#qryAltTitle'
+  
+  get "csv/import" , :as => 'import_csv'
+  post "csv/import" => 'csv#upload'
+
+  get "books/search" , :as => 'books/search'
+  post "books/search" => 'books#result'
+
   resources :titles, :authors, :ibtrs, :branches, :stock, :stockitems, :authentications, :plans, :coupons, :consignments, :goods, :ibt_reassigns, :batches
   
   match 'statistics/:title_id' => 'statistics#view'
