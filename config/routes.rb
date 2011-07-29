@@ -30,11 +30,12 @@ Opac::Application.routes.draw do
   match 'consignments/booksearch' => 'consignments#booksearch'
   match 'consignments/:id/transition/:event' => 'consignments#transition'
   match '/titles/qryAltTitle' => 'titles#qryAltTitle'
-  
+  match 'book_mail' => 'books#mail'
   get "csv/import" , :as => 'import_csv'
   post "csv/import" => 'csv#upload'
 
-  get "books/search" , :as => 'books/search'
+  get "/books/search" , :as => '/books/search'
+  get "/books/search" , :as => '/books/search'
   post "books/isbn"   => 'books#isbn', :as => 'fetch_isbn'
   post "books/search" => 'books#result'
 
