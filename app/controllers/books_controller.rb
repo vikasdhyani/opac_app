@@ -24,6 +24,7 @@ class BooksController < ApplicationController
     @book = Book.find(book_no) unless book_no.nil?
     @enrichedtitle = Enrichedtitle.find_by_isbn(isbn) unless isbn.nil?
     @flipkart_info = nil
+    @isbn = isbn
     if (@enrichedtitle.nil?)
       @flipkart_info = FlipkartInfo.book_info(isbn)
       @flipkart_info[:isbn] = isbn unless  @flipkart_info.nil?
@@ -50,9 +51,10 @@ class BooksController < ApplicationController
   
   def mail
     book_no = params[:id]
+    isbn = params[:isbn]
     @book = Book.find(book_no)
     user = current_user
-    BookMailer.isbn_not_found(@book, user).deliver
+    BookMailer.isbn_not_found(@book, user, isbn).deliver
     redirect_to(@book, :notice => 'Mail sent to tech support.') 
   end
 end
