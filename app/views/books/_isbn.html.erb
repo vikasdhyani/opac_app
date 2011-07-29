@@ -18,7 +18,7 @@
               <%= f.hidden_field :isbn, :value => enrichedtitle.isbn %> 
               <br/>
               <br/>
-              <%= f.submit 'Confirm'%>	
+              <%= f.submit 'Confirm', :confirm => "Change the ISBN for this book?"  %>	
             <% end -%>
 
             </div>
@@ -48,15 +48,13 @@
               <div class="span-5">Author: <%=flipkart_info[:authors_as_string]%></div>
               <div class="span-5">publisher: <%=flipkart_info[:publisher]%></div>
               <div class="span-5">More details: <a href="<%=flipkart_info[:detail_page]%>" target="_blank">flipkart</a></div>
-              <div class="span-5">review by: <%=flipkart_info[:source]%></div>
-              <div class="span-5">content: <%=flipkart_info[:content]%></div>
               <%= form_for @book,  do |f| -%>
                 <%= f.hidden_field :flg_jb_or_other, :value => Book::JB_OTHER[:other] %>
                 <%= f.hidden_field :title_id, :value => nil %> 
                 <%= f.hidden_field :isbn, :value => flipkart_info[:isbn] %> 
                 <br/>
                 <br/>
-                <%= f.submit 'Confirm'%>	
+                <%= f.submit 'Confirm', :confirm => "Change the ISBN for this book?"  %>	
               <% end -%>
 
             </div>
@@ -67,7 +65,8 @@
       <% if enrichedtitle.nil?  and flipkart_info.nil? %>
         <div class="span-9">
           <br/>
-          no data found
+          No records with matching ISBN found. Check the ISBN or send mail to tech suport
+          <%= link_to 'Send mail', book_mail_path(:id=>@book.id), :confirm => 'Send mail now?' %> 
         </div>  
       <% end %>
     </div>

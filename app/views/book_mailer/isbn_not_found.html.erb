@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+  </head>
+  <body>
+    <p> Hi, <br/>
+      During Book correction the user was unable to find the ISBN. Please check.
+      
+    </p>
+    <table width="550px;">
+      <tr width="100%" >
+        <td width="50%"><b>user:</b> <%=@user.username%></td>
+        <td width="50%"><b>Email:</b><%=@user.email%></td>
+      </tr>
+      
+      <tr width="100%" >
+        <td width="50%"><b>Book No:</b> <%=@book.id%></td>
+        <td width="50%"><b>Title:</b> <%=@book.title_id%></td>
+      </tr>
+      
+    </table>	
+    Regards, <br/>  
+    Team Justbooks 
+  </body>
+</html>

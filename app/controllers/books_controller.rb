@@ -47,4 +47,12 @@ class BooksController < ApplicationController
     end
     
   end
+  
+  def mail
+    book_no = params[:id]
+    @book = Book.find(book_no)
+    user = current_user
+    BookMailer.isbn_not_found(@book, user).deliver
+    redirect_to(@book, :notice => 'Mail sent to tech support.') 
+  end
 end

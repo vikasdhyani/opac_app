@@ -50,6 +50,18 @@
 					</div>
 				</div>
 			<% end -%>
+			<% if current_user.strata_employee? %>
+				<div class='span-2 menu-button menu-color'>
+					<div class='menu-icon'>
+						<%= link_to :controller => 'books', :action=>'search' do -%>
+							<%= image_tag 'books.jpg' ,:size => "66x67",%>
+						<% end -%>
+					</div>
+					<div class='span-1 menu-text'>
+						Books Correction
+					</div>
+				</div>
+			<% end -%>
     </div>
       
 		<div class='span-24' style='height:10px'>
