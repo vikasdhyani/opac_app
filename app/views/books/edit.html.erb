@@ -1,0 +1,72 @@
+<div class="span-24">
+  <div class="span-3 colborder">
+    <div class="span-3">
+      <p></p>
+      <p><%= link_to "Ibtrs", ibtrs_path %> </p>
+      <p><%= link_to "Back", :back %> </p>
+    </div>
+  </div>
+  <div class="span-19">
+
+    <div class="span-9">
+      <% unless @book.nil? %>
+        <div class="span-9">
+          <% if @book.errors.any? %>
+            <div id="error_explanation">
+              <h2><%= pluralize(@book.errors.count, "error") %> prohibited this book from being saved:</h2>
+              <ul>
+              <% @book.errors.full_messages.each do |msg| %>
+                <li><%= msg %></li>
+              <% end %>
+              </ul>
+            </div>
+          <% end %>
+          <h6>Book Details</h6>
+          <br/>
+          <div class="span-9">
+            <div class="span-3"><%= image_tag image_url(@book.title_id), :size => "100x140", :alt => "#{@book.title.title} ", :title => "#{@book.title.title}", :onerror => "this.src='#{default_image_url}';"  %><br/></div>
+            <div class="span-5">
+            <div class="span-5">Book No: <%=@book.id%></div>
+            <div class="span-5">Title id :<%=@book.title_id%></div>
+            <div class="span-5">ISBN: <%=@book.isbn%></div>
+            <div class="span-5">Title: <%=@book.title.title%></div>
+            <div class="span-5">Author: <%=@book.title.author.name%></div>
+            <div class="span-4">Category: <%=@book.title.category.name unless @book.title.category.nil?%></div>
+            <div class="span-4">Language: <%=@book.title.language%></div>
+           
+            </div>
+          </div>
+          <br/>
+          <br/>
+        </div>
+      <% end %>
+      <% if @book.nil?  %>
+        <div class="span-9">
+          <br/>
+          no data found
+        </div>  
+      <% end %>
+    </div>
+
+    <div class="span-9">  
+      <br/>
+      <br/>
+      <%= form_for :search, :as => :get, :url => fetch_isbn_path, :remote=> :true do |f| %>
+      
+        <%= field_set_tag 'Search' do %>
+          <div class="span-8"><%= label_tag 'ISBN:'%> <%= f.text_field :isbn,:size=>"15" %></div>
+          <%= f.hidden_field :book_no, :value => @book.id %> 
+          <div class="span-8"><%= f.submit 'Fetch', :disable_with => 'searching...' %></div>
+        <% end -%>
+      <% end -%>
+
+    </div>
+    <div class="span-19">  
+      <br/>
+      <br/>
+      <br/>
+    </div>
+    <div id = "isbn_div" class="span-19">
+    </div>
+  </div>
+</div>

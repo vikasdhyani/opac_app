@@ -35,9 +35,10 @@ Opac::Application.routes.draw do
   post "csv/import" => 'csv#upload'
 
   get "books/search" , :as => 'books/search'
+  post "books/isbn"   => 'books#isbn', :as => 'fetch_isbn'
   post "books/search" => 'books#result'
 
-  resources :titles, :authors, :ibtrs, :branches, :stock, :stockitems, :authentications, :plans, :coupons, :consignments, :goods, :ibt_reassigns, :batches
+  resources :titles, :authors, :ibtrs, :branches, :stock, :stockitems, :authentications, :plans, :coupons, :consignments, :goods, :ibt_reassigns, :batches, :books
   
   match 'statistics/:title_id' => 'statistics#view'
   

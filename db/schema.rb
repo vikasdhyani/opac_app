@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110524091233) do
+ActiveRecord::Schema.define(:version => 20110729050618) do
 
   create_table "authentications", :force => true do |t|
     t.integer  "user_id",    :precision => 38, :scale => 0
@@ -37,6 +37,18 @@ ActiveRecord::Schema.define(:version => 20110524091233) do
     t.timestamp "updated_at", :limit => 6
     t.datetime  "start"
     t.datetime  "start2"
+  end
+
+  create_table "book_corrections", :force => true do |t|
+    t.string   "old_isbn"
+    t.string   "new_isbn"
+    t.string   "source"
+    t.integer  "old_title_id", :precision => 38, :scale => 0
+    t.integer  "new_title_id", :precision => 38, :scale => 0
+    t.integer  "created_by",   :precision => 38, :scale => 0
+    t.string   "state"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "consignments", :force => true do |t|
@@ -156,6 +168,17 @@ ActiveRecord::Schema.define(:version => 20110524091233) do
 #   Unknown type 'LONG' for column 'other'
 
   create_table "ibt_hidden_reqs", :force => true do |t|
+    t.string    "category"
+    t.string    "rack"
+    t.string    "shelf"
+    t.timestamp "created_at",    :limit => 6
+    t.timestamp "updated_at",    :limit => 6
+    t.integer   "respondent_id",              :precision => 38, :scale => 0
+    t.integer   "title_id",                   :precision => 38, :scale => 0
+  end
+
+  create_table "ibt_hidden_reqs_bkp", :id => false, :force => true do |t|
+    t.integer   "id",                         :precision => 38, :scale => 0, :null => false
     t.string    "category"
     t.string    "rack"
     t.string    "shelf"
@@ -321,3 +344,110 @@ ActiveRecord::Schema.define(:version => 20110524091233) do
     t.string    "ponumber",         :limit => 200
   end
 
+  create_table "signups", :force => true do |t|
+    t.string    "name",                                                                             :null => false
+    t.string    "address",                                                                          :null => false
+    t.integer   "mphone",                           :precision => 38, :scale => 0
+    t.integer   "lphone",                           :precision => 38, :scale => 0
+    t.string    "email",                                                                            :null => false
+    t.string    "referrer_member_id"
+    t.integer   "referrer_cust_id",                 :precision => 38, :scale => 0
+    t.integer   "plan_id",                          :precision => 38, :scale => 0,                  :null => false
+    t.integer   "branch_id",                        :precision => 38, :scale => 0
+    t.integer   "signup_months",                    :precision => 38, :scale => 0,                  :null => false
+    t.decimal   "security_deposit",                                                                 :null => false
+    t.decimal   "registration_fee",                                                                 :null => false
+    t.decimal   "reading_fee",                                                                      :null => false
+    t.decimal   "discount",                                                                         :null => false
+    t.decimal   "advance_amt",                                                                      :null => false
+    t.decimal   "paid_amt",                                                                         :null => false
+    t.decimal   "overdue_amt",                                                                      :null => false
+    t.integer   "payment_mode",                     :precision => 38, :scale => 0,                  :null => false
+    t.string    "payment_ref",                                                                      :null => false
+    t.string    "membership_no"
+    t.string    "application_no"
+    t.string    "employee_no"
+    t.integer   "created_by",                       :precision => 38, :scale => 0,                  :null => false
+    t.integer   "modified_by",                      :precision => 38, :scale => 0,                  :null => false
+    t.string    "flag_migrated",                                                   :default => "U"
+    t.datetime  "start_date",                                                                       :null => false
+    t.datetime  "expiry_date",                                                                      :null => false
+    t.string    "remarks"
+    t.timestamp "created_at",         :limit => 6
+    t.timestamp "updated_at",         :limit => 6
+    t.decimal   "coupon_amt"
+    t.string    "coupon_no",          :limit => 20
+    t.integer   "coupon_id",                        :precision => 38, :scale => 0
+  end
+
+  create_table "signups_dt", :id => false, :force => true do |t|
+    t.integer  "id",                               :precision => 38, :scale => 0, :null => false
+    t.string   "name",                                                            :null => false
+    t.string   "address",                                                         :null => false
+    t.integer  "mphone",                           :precision => 38, :scale => 0
+    t.integer  "lphone",                           :precision => 38, :scale => 0
+    t.string   "email",                                                           :null => false
+    t.string   "referrer_member_id"
+    t.integer  "referrer_cust_id",                 :precision => 38, :scale => 0
+    t.integer  "plan_id",                          :precision => 38, :scale => 0, :null => false
+    t.integer  "branch_id",                        :precision => 38, :scale => 0
+    t.integer  "signup_months",                    :precision => 38, :scale => 0, :null => false
+    t.decimal  "security_deposit",                                                :null => false
+    t.decimal  "registration_fee",                                                :null => false
+    t.decimal  "reading_fee",                                                     :null => false
+    t.decimal  "discount",                                                        :null => false
+    t.decimal  "advance_amt",                                                     :null => false
+    t.decimal  "paid_amt",                                                        :null => false
+    t.decimal  "overdue_amt",                                                     :null => false
+    t.integer  "payment_mode",                     :precision => 38, :scale => 0, :null => false
+    t.string   "payment_ref",                                                     :null => false
+    t.string   "membership_no"
+    t.string   "application_no"
+    t.string   "employee_no"
+    t.integer  "created_by",                       :precision => 38, :scale => 0, :null => false
+    t.integer  "modified_by",                      :precision => 38, :scale => 0, :null => false
+    t.string   "flag_migrated"
+    t.datetime "start_date",                                                      :null => false
+    t.datetime "expiry_date",                                                     :null => false
+    t.string   "remarks"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.decimal  "coupon_amt"
+    t.string   "coupon_no",          :limit => 20
+    t.integer  "coupon_id",                        :precision => 38, :scale => 0
+  end
+
+  create_table "stock_racks_shelves", :id => false, :force => true do |t|
+    t.integer "title_id",        :limit => 10,  :precision => 10, :scale => 0, :null => false
+    t.integer "book_branch_id",  :limit => nil,                                :null => false
+    t.string  "category",        :limit => 400
+    t.string  "rack",            :limit => 400
+    t.string  "shelf",           :limit => 100
+    t.decimal "count_per_shelf"
+  end
+
+  add_index "stock_racks_shelves", ["title_id", "book_branch_id"], :name => "idx_stock_racks_shelves_1"
+
+  create_table "test", :id => false, :force => true do |t|
+    t.timestamp "a", :limit => 6
+    t.timestamp "b", :limit => 6
+  end
+
+  create_table "users", :force => true do |t|
+    t.string   "username"
+    t.string   "email",                                                              :default => "", :null => false
+    t.string   "encrypted_password",   :limit => 128,                                :default => ""
+    t.string   "password_salt",                                                      :default => ""
+    t.string   "reset_password_token"
+    t.string   "remember_token"
+    t.datetime "remember_created_at"
+    t.integer  "sign_in_count",                       :precision => 38, :scale => 0, :default => 0
+    t.datetime "current_sign_in_at"
+    t.datetime "last_sign_in_at"
+    t.string   "current_sign_in_ip"
+    t.string   "last_sign_in_ip"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+end
