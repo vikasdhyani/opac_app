@@ -66,7 +66,7 @@
         <div class="span-9">
           <br/>
           No records with matching ISBN found. Check the ISBN or send mail to tech suport
-          <%= link_to 'Send mail', book_mail_path(:id=>@book.id), :confirm => 'Send mail now?' %> 
+          <%= link_to 'Send mail', book_mail_path(:id=>@book.id, :isbn=>@isbn), :confirm => 'Send mail now?' %> 
         </div>  
       <% end %>
     </div>
