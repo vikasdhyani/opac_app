@@ -26,7 +26,7 @@
         <div class="span-5">ISBN: <%=@book.isbn%> 
         <%= link_to 'change?', edit_book_path(@book)%> </div>
         <div class="span-5">Title: <%=@book.title.title%></div>
-        <div class="span-5">Author: <%=@book.title.author.name  unless @book.title.author?%></div>
+        <div class="span-5">Author: <%=@book.title.author.name  unless @book.title.author.nil?%></div>
         <div class="span-4">Category: <%=@book.title.category.name unless @book.title.category.nil?%></div>
         <div class="span-4">Language: <%=@book.title.language%></div>
        
