@@ -31,7 +31,7 @@
       <%= form_for :search,  do |f| -%>
         <%= field_set_tag 'Search' do %>
           <div class="span-9"><%= label_tag 'Book No:'%> <%= f.text_field :book_no,:size=>"15" %></div>
-          <div class="span-18"><%= f.submit "Search", :disable_with => 'searching...' %></div>
+          <div class="span-18"><%= f.submit "Search" %></div>
         <% end -%>
       <% end -%>
 

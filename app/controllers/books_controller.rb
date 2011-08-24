@@ -6,7 +6,7 @@ class BooksController < ApplicationController
   def search
   end
   def result
-    id = params[:search][:book_no]
+    id = params[:search][:book_no].gsub(/[a-zA-Z]/,'')
     redirect_to book_path(id)
   end
   
