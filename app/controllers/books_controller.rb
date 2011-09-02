@@ -33,20 +33,15 @@ class BooksController < ApplicationController
   
   def update
     @book = Book.find(params[:id])
-    book_correction = BookCorrection.new(:old_isbn => @book.isbn, :old_title_id => @book.title_id)
-    if @book.update_attributes( params[:book])
-      book_correction.new_isbn = @book.isbn
-      book_correction.new_title_id = @book.title_id
-      book_correction.source = @book.flg_jb_or_other
-      book_correction.state = :New
-      book_correction.created_by = current_user.id
-      book_correction.save!
+    @book.updated_by = current_user.id
+    if (params[:book][:flg_jb_or_other] == Book::JB_OTHER[:jb] && @book.update_attributes(params[:book])) || (BookCorrection.record(@book, params[:book][:isbn], 0, params[:book][:flg_jb_or_other]))
       redirect_to(@book, :notice => 'Book was successfully updated.') 
     else
-       render :action => "edit"
-
-    end
-    
+      #Revert to old values/discard changes, so that new image is not shown
+      @book.isbn = @book.isbn_was
+      @book.title_id = @book.title_id_was
+      render :action => "edit"
+    end    
   end
   
   def mail

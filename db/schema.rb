@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110729050618) do
+ActiveRecord::Schema.define(:version => 20110902135257) do
 
   create_table "authentications", :force => true do |t|
     t.integer  "user_id",    :precision => 38, :scale => 0
@@ -40,15 +40,16 @@ ActiveRecord::Schema.define(:version => 20110729050618) do
   end
 
   create_table "book_corrections", :force => true do |t|
-    t.string   "old_isbn"
-    t.string   "new_isbn"
-    t.string   "source"
-    t.integer  "old_title_id", :precision => 38, :scale => 0
-    t.integer  "new_title_id", :precision => 38, :scale => 0
-    t.integer  "created_by",   :precision => 38, :scale => 0
-    t.string   "state"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.string    "old_isbn"
+    t.string    "new_isbn"
+    t.string    "source"
+    t.integer   "old_title_id",              :precision => 38, :scale => 0
+    t.integer   "new_title_id",              :precision => 38, :scale => 0
+    t.integer   "created_by",                :precision => 38, :scale => 0
+    t.string    "state"
+    t.timestamp "created_at",   :limit => 6
+    t.timestamp "updated_at",   :limit => 6
+    t.integer   "book_no",                   :precision => 38, :scale => 0
   end
 
   create_table "consignments", :force => true do |t|
@@ -449,5 +450,7 @@ ActiveRecord::Schema.define(:version => 20110729050618) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_synonym "enrichedtitles", "ams.enrichedtitles", :force => true
 
 end

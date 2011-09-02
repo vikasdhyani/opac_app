@@ -42,4 +42,5 @@ gem 'mechanize'
 group :development do
   gem 'rspec-rails', '2.1.0'
   gem 'annotate-models', '1.0.4'
+  gem 'ruby-oci8'
 end

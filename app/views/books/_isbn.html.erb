@@ -18,7 +18,7 @@
               <%= f.hidden_field :isbn, :value => enrichedtitle.isbn %> 
               <br/>
               <br/>
-              <%= f.submit 'Confirm', :confirm => "Change the ISBN for this book?"  %>	
+              <%= f.submit 'Confirm', :confirm => "Change the ISBN for this book from #{@book.isbn} to #{enrichedtitle.isbn}?"  %>	
             <% end -%>
 
             </div>
@@ -50,7 +50,7 @@
               <div class="span-5">More details: <a href="<%=flipkart_info[:detail_page]%>" target="_blank">flipkart</a></div>
               <%= form_for @book,  do |f| -%>
                 <%= f.hidden_field :flg_jb_or_other, :value => Book::JB_OTHER[:other] %>
-                <%= f.hidden_field :title_id, :value => nil %> 
+                <%= f.hidden_field :title_id, :value => 0 %> 
                 <%= f.hidden_field :isbn, :value => flipkart_info[:isbn] %> 
                 <br/>
                 <br/>
