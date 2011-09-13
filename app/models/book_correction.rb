@@ -1,5 +1,5 @@
 class BookCorrection < ActiveRecord::Base
-  def self.record book, isbn, title_id, flg_jb_or_other
+  def self.record book, isbn, title_id, flg_jb_or_other, params
       book_correction = BookCorrection.new
       book_correction.old_isbn = book.isbn_was
       book_correction.old_title_id = book.title_id_was
@@ -9,6 +9,19 @@ class BookCorrection < ActiveRecord::Base
       book_correction.source = flg_jb_or_other
       book_correction.state = :New
       book_correction.created_by = book.updated_by
+      
+      #From Flipkart
+    unless params.nil?
+      book_correction.title = params[:title]
+      book_correction.authors = params[:authors]
+      book_correction.publisher = params[:publisher]
+      book_correction.image = params[:image]
+      book_correction.pubdate = params[:pubdate]
+      book_correction.format = params[:format]
+      book_correction.page_cnt = params[:page_cnt]
+      book_correction.lang = params[:language]
+    end
+    
       book_correction.save
   end
 end

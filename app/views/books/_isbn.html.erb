@@ -45,13 +45,21 @@
               <div class="span-5">ISBN: <%=flipkart_info[:isbn]%></div>
               <div class="span-5">Info Source :<%=flipkart_info[:info_source]%></div>
               <div class="span-5">Title: <%=flipkart_info[:title]%></div>
-              <div class="span-5">Author: <%=flipkart_info[:authors_as_string]%></div>
+              <div class="span-5">Author: <%=flipkart_info[:authors]%></div>
               <div class="span-5">publisher: <%=flipkart_info[:publisher]%></div>
               <div class="span-5">More details: <a href="<%=flipkart_info[:detail_page]%>" target="_blank">flipkart</a></div>
               <%= form_for @book,  do |f| -%>
                 <%= f.hidden_field :flg_jb_or_other, :value => Book::JB_OTHER[:other] %>
-                <%= f.hidden_field :title_id, :value => 0 %> 
                 <%= f.hidden_field :isbn, :value => flipkart_info[:isbn] %> 
+                <%= f.hidden_field :title_id, :value => 0 %> 
+                <%= f.hidden_field :title, :value => flipkart_info[:title] %>
+                <%= f.hidden_field :authors, :value => flipkart_info[:authors] %>
+                <%= f.hidden_field :publisher, :value => flipkart_info[:publisher] %>
+                <%= f.hidden_field :image, :value => flipkart_info[:image] %>
+                <%= f.hidden_field :pubdate, :value => flipkart_info[:pubdate] %>
+                <%= f.hidden_field :format, :value => flipkart_info[:format] %>
+                <%= f.hidden_field :page_cnt, :value => flipkart_info[:page_cnt] %>
+                <%= f.hidden_field :language, :value => flipkart_info[:language] %>
                 <br/>
                 <br/>
                 <%= f.submit 'Confirm', :confirm => "Change the ISBN for this book?"  %>	

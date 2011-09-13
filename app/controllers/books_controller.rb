@@ -34,7 +34,7 @@ class BooksController < ApplicationController
   def update
     @book = Book.find(params[:id])
     @book.updated_by = current_user.id
-    if (params[:book][:flg_jb_or_other] == Book::JB_OTHER[:jb] && @book.update_attributes(params[:book])) || (BookCorrection.record(@book, params[:book][:isbn], 0, params[:book][:flg_jb_or_other]))
+    if (params[:book][:flg_jb_or_other] == Book::JB_OTHER[:jb] && @book.update_attributes(params[:book])) || (BookCorrection.record(@book, params[:book][:isbn], 0, params[:book][:flg_jb_or_other], params[:book]))
       redirect_to(@book, :notice => 'Book was successfully updated.') 
     else
       #Revert to old values/discard changes, so that new image is not shown

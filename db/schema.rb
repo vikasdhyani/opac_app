@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110902135257) do
+ActiveRecord::Schema.define(:version => 20110913154405) do
 
   create_table "authentications", :force => true do |t|
     t.integer  "user_id",    :precision => 38, :scale => 0
@@ -50,6 +50,14 @@ ActiveRecord::Schema.define(:version => 20110902135257) do
     t.timestamp "created_at",   :limit => 6
     t.timestamp "updated_at",   :limit => 6
     t.integer   "book_no",                   :precision => 38, :scale => 0
+    t.string    "title"
+    t.string    "authors"
+    t.string    "publisher"
+    t.string    "image"
+    t.string    "pubdate"
+    t.string    "format"
+    t.string    "page_cnt"
+    t.string    "lang"
   end
 
   create_table "consignments", :force => true do |t|
@@ -451,6 +459,6 @@ ActiveRecord::Schema.define(:version => 20110902135257) do
     t.datetime "updated_at"
   end
 
-  add_synonym "enrichedtitles", "ams.enrichedtitles", :force => true
+  add_synonym "enrichedtitles", "enrichedtitles@link_ams", :force => true
 
 end

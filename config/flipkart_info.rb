@@ -8,6 +8,12 @@ class FlipkartInfo
       title = nil
       authors = nil
       publisher = nil
+      pubdate = nil
+      binding = nil
+      page_cnt = nil
+      language = nil
+      awards = nil
+      summary = nil
 
       product_details = page.search("div#details table.fk-specs-type1 tr")
       if product_details.length != 0
@@ -22,6 +28,16 @@ class FlipkartInfo
             authors = value
           when "Publisher"
             publisher = value
+          when "Publishing Date"
+            pubdate = value
+          when "Binding"
+            binding = value
+          when "Number of Pages"
+            page_cnt = value
+          when "Language"
+            language = value
+          when "Awards"
+            awards = value
           end
         end
       else
@@ -34,18 +50,21 @@ class FlipkartInfo
         image = image_tag.attr('src').text.encode('UTF-8')
       end
 
-      source = (page.search("h3.item_desc_title").try(:children).try(:first).try(:text) || '').strip.encode('UTF-8')
-      content = (page.search("div.item_desc_text.description").try(:text) || '').strip.encode('UTF-8')
+      summary_detail = page.search("div.item_desc_text.description")
+      if summary_detail.length != 0 
+        summary = summary_detail.inner_text.strip.encode('UTF-8')
+      end
 
       {
         :info_source => "flipkart",
         :title => title,
-        :authors_as_string => authors,
+        :authors => authors,
         :publisher => publisher,
         :image => image,
-        :detail_page => url,
-        :review_source => source,
-        :review_content => content,
+        :pubdate => pubdate,
+        :format => binding,
+        :page_cnt => page_cnt,
+        :language => language
       }
     end
 

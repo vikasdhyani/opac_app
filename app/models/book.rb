@@ -41,7 +41,7 @@ class Book < ActiveRecord::Base
   
   def record_book_correction
     if self.isbn_changed? or self.title_id_changed?
-      BookCorrection.record(self,self.isbn,self.title_id,self.flg_jb_or_other)
+      BookCorrection.record(self,self.isbn,self.title_id,self.flg_jb_or_other, nil)
     end
   end
 end
