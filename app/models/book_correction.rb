@@ -1,4 +1,6 @@
 class BookCorrection < ActiveRecord::Base
+  scope :pending_correction, where(:source => 'OTHER').joins("JOIN books on books.title_id = book_corrections.old_title_id")
+  
   def self.record book, isbn, title_id, flg_jb_or_other, params
       book_correction = BookCorrection.new
       book_correction.old_isbn = book.isbn_was

@@ -16,7 +16,6 @@
       </section>
     </div>
     <div class="small">
-    
     <p><b>Purpose:</b> To search for book and correct its ISBN. <br/>
     <b>Usage:</b><br/>
         1. Enter the Book number (numerics only) printed on the book and click on "Submit"<br/>
@@ -26,19 +25,39 @@
         5. If the result provided is correct then click on confirm to change the ISBN.</p>
     </div>
     <h5>Book Corrections</h5>
-    <div class="span-19">  
-    
+    <div class="span-19">
       <%= form_for :search,  do |f| -%>
         <%= field_set_tag 'Search' do %>
           <div class="span-9"><%= label_tag 'Book No:'%> <%= f.text_field :book_no,:size=>"15" %></div>
           <div class="span-18"><%= f.submit "Search" %></div>
         <% end -%>
       <% end -%>
-
     </div>
-  
-
-    
-
+    <br/>
+    <h5>Pending Book Corrections</h5>
+    <br/>
+    <div class="span-19">
+      <table>
+        <thead>
+        <tr class="span-19">
+          <th class="span-3">Book No.</th>
+          <th class="span-6">Title</th>
+          <th class="span-6">Authors</th>
+          <th class="span-4">Publisher</th>
+          <th class="span-3">Langauge</th>
+        </tr>
+        </thead>
+        <% BookCorrection.pending_correction.each do |corr| %>
+          <tfoot>
+          <tr class="span-19">
+            <td class="span-3"><%= corr.book_no %></td>
+            <td class="span-6"><%=corr.title %></td>
+            <td class="span-6"><%=corr.authors %></td>
+            <td class="span-4"><%=corr.publisher %></td>
+            <td class="span-3"><%=corr.lang %></td>
+          </tr>
+          </tfoot>
+        <% end %>
     </div>
+  </div>
 </div>
