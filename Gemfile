@@ -39,8 +39,11 @@ gem 'mechanize'
 #   gem 'webrat'
 # end
 
-group :development do
-  gem 'rspec-rails', '2.1.0'
-  gem 'annotate-models', '1.0.4'
-  gem 'ruby-oci8'
+group :development, :test do
+  gem 'simplecov', :require => false
+  gem 'simplecov-rcov', :require => false
+  gem "rspec-rails", "~> 2.6"
+  gem "spork"
+  gem "factory_girl_rails"
+  gem "ruby-oci8"
 end
