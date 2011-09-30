@@ -1,6 +1,6 @@
 Opac::Application.routes.draw do
 
-  
+
   match '/dashboard' => 'dashboard#show'
 
   match '/auth/:provider/callback' => 'authentications#create'
@@ -12,7 +12,7 @@ Opac::Application.routes.draw do
   match 'upd_reassign' =>'batches#refresh_reassign_task', :method => :post
   match 'upd_unclaimed' => 'batches#refresh_unclaimed_task' , :method => :post
   match 'unclaimed' => 'reassign#unclaimed'
-  
+
   match 'batch_show' => 'batches#show', :method => :get
   get "stock/show"
   get "titles/index"
@@ -40,9 +40,9 @@ Opac::Application.routes.draw do
   post "books/search" => 'books#result'
 
   resources :titles, :authors, :ibtrs, :branches, :stock, :stockitems, :authentications, :plans, :coupons, :consignments, :goods, :ibt_reassigns, :batches, :books
-  
+
   match 'statistics/:title_id' => 'statistics#view'
-  
+
   resources :stock_racks_shelves, :ib_assignments
   match 'ibt_pick_req' => 'ib_assignments#pick'
   match 'ibt_unpick_req' => 'ib_assignments#unpick'
@@ -51,6 +51,8 @@ Opac::Application.routes.draw do
   match 'ibt_assigned' => 'ib_assignments#change'
   match 'ibtrs_alttitle' => 'ibtrs#setAltTitle'
   match 'ibtrs_drillrpt' =>   'ibtrs#drillrpt'
+
+  get "/pending_deliveries" => "order_lists#index"
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
