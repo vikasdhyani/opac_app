@@ -18,4 +18,5 @@ class DeliveryOrder < ActiveRecord::Base
 
   belongs_to :branch
   belongs_to :title
+  belongs_to :ibtr
 end

@@ -1,0 +1,73 @@
+drop table if exists ibtrs;
+drop table if exists ibtr_versions;
+drop table if exists ibt_reassigns;
+drop table if exists batches;
+create table ibtrs
+(
+  id            INTEGER(38) not null primary key auto_increment,
+  title_id      INTEGER(38),
+  member_id     INTEGER(38),
+  card_id       VARCHAR(255),
+  branch_id     INTEGER(38),
+  rns_id        INTEGER(38),
+  state         VARCHAR(255),
+  created_at    DATE,
+  updated_at    DATE,
+  version       INTEGER(38),
+  respondent_id VARCHAR(255),
+  reason_id     INTEGER(38),
+  comments      VARCHAR(255),
+  book_no       INTEGER,
+  po_no         VARCHAR(255),
+  created_by    INTEGER(38),
+  modified_by   INTEGER(38)
+);
+
+create table ibtr_versions
+(
+  id            INTEGER(38) not null primary key auto_increment,
+  ibtr_id       INTEGER(38),
+  version       INTEGER(38),
+  title_id      INTEGER(38),
+  member_id     INTEGER(38),
+  card_id       VARCHAR(255),
+  branch_id     INTEGER(38),
+  rns_id        INTEGER(38),
+  state         VARCHAR(255),
+  created_at    DATE,
+  updated_at    DATE,
+  respondent_id VARCHAR(255),
+  reason_id     INTEGER(38),
+  comments      VARCHAR(255),
+  book_no       INTEGER,
+  po_no         VARCHAR(255),
+  created_by    INTEGER(38),
+  modified_by   INTEGER(38)
+);
+
+create table ibt_reassigns
+(
+  id            INTEGER(38) not null primary key auto_increment,
+  batch_id      INTEGER(38),
+  title_id      INTEGER(38),
+  ibtr_id       INTEGER(38),
+  respondent_id INTEGER(38),
+  assigned_cnt  INTEGER(38),
+  state         VARCHAR(255),
+  created_at    DATE,
+  updated_at    DATE,
+  good_id       INTEGER(38)
+);
+
+create table batches
+(
+  id           INTEGER(38) not null,
+  batch_type   VARCHAR(255),
+  assigned_to  VARCHAR(255),
+  state        VARCHAR(255),
+  item_count   INTEGER(38),
+  closed_count INTEGER(38),
+  expires_on   DATE,
+  created_at   DATE,
+  updated_at   DATE
+);
