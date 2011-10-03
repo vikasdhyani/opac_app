@@ -1,5 +1,5 @@
 Opac::Application.routes.draw do
-
+  ActiveAdmin.routes(self)
 
   match '/dashboard' => 'dashboard#show'
 

@@ -16,6 +16,7 @@ gem 'activerecord-oracle_enhanced-adapter'
 gem 'acts_as_versioned'
 gem 'omniauth'
 gem 'mechanize'
+gem 'activeadmin'
 
 # Use unicorn as the web server
 # gem 'unicorn'
