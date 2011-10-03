@@ -1,10 +1,13 @@
 <div class="span-14">
   <div class="span-14">
     <div class="span-5">
-      <h4><%= order_list.membership_no %></h4>
+      <h4><%= order_list.membership_no %> - Some Name</h4>
 	</div>
+    <table>
+      <tr><td>Order Type</td><td>Title Name</td></tr>
+      <%= render :partial => "delivery_order", :collection => order_list.orders %>
+    </table>
 	<div class="last right"></div>
   </div>
 </div>
-
 <br/>
