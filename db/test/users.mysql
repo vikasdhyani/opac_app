@@ -1,19 +1,30 @@
+drop table if exists authentications;
 drop table if exists users;
 create table users
 (
-  ID                   INTEGER not null,
-  USERNAME             VARCHAR(255),
-  EMAIL                VARCHAR(255) default '' not null,
-  ENCRYPTED_PASSWORD   VARCHAR(128) default '',
-  PASSWORD_SALT        VARCHAR(255) default '',
-  RESET_PASSWORD_TOKEN VARCHAR(255),
-  REMEMBER_TOKEN       VARCHAR(255),
-  REMEMBER_CREATED_AT  DATE,
-  SIGN_IN_COUNT        INTEGER default 0,
-  CURRENT_SIGN_IN_AT   DATE,
-  LAST_SIGN_IN_AT      DATE,
-  CURRENT_SIGN_IN_IP   VARCHAR(255),
-  LAST_SIGN_IN_IP      VARCHAR(255),
-  CREATED_AT           DATE,
-  UPDATED_AT           DATE
+  id                   INTEGER not null primary key,
+  username             VARCHAR(255),
+  email                VARCHAR(255) default '' not null,
+  encrypted_password   VARCHAR(128) default '',
+  password_salt        VARCHAR(255) default '',
+  reset_password_token VARCHAR(255),
+  remember_token       VARCHAR(255),
+  remember_created_at  DATE,
+  sign_in_count        INTEGER default 0,
+  current_sign_in_at   DATE,
+  last_sign_in_at      DATE,
+  current_sign_in_ip   VARCHAR(255),
+  last_sign_in_ip      VARCHAR(255),
+  created_at           DATE,
+  updated_at           DATE
 );
+
+create table authentications
+(
+ id         INTEGER not null,
+ user_id    INTEGER,
+ provider   VARCHAR(255),
+ uid        VARCHAR(255),
+ created_at DATE,
+ updated_at DATE
+)
