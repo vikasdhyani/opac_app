@@ -42,7 +42,7 @@ group :development, :test do
   gem 'simplecov', :require => false
   gem 'simplecov-rcov', :require => false
   gem "rspec-rails", "~> 2.6"
-  gem "spork"
+  gem "spork", "> 0.9.0.rc"
   gem "factory_girl_rails"
   gem "ruby-oci8"
   gem 'sqlite3-ruby', :require => 'sqlite3'
