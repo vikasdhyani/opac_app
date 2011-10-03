@@ -1,0 +1,16 @@
+drop table if exists dev_memberships;
+
+create table dev_memberships (
+  id INTEGER PRIMARY KEY auto_increment,
+  card_id VARCHAR(20),
+  member_id INTEGER,
+  member VARCHAR(20),
+  city VARCHAR(20),
+  plan_id INTEGER,
+  plan VARCHAR(20),
+  INACTIVE INTEGER
+);
+
+create or replace view memberships as
+select * from dev_memberships
+with check option;

@@ -11,6 +11,10 @@ class OrderList
     pickup_orders = orders.select(&:pickup?).size
   end
 
+  def member
+    @member ||= Membership.find_by_card_id(membership_no)
+  end
+
   def self.sorted_by_number_of_orders
     all_orders = DeliveryOrder.live_orders.all
     orderlists = all_orders.group_by(&:membership_no).collect { |membership_no, orders| OrderList.new(membership_no, orders) }

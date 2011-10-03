@@ -32,4 +32,11 @@ describe OrderList do
                                       Factory(:delivery_order, :order_type => DeliveryOrder::DELIVERY)])
     order.number_of_pickups.should == 1
   end
+
+  it "gets the member name" do
+    Factory(:delivery_order, :membership_no => "M1")
+    Factory(:dev_membership, :card_id => "M1", :member => "Blah")
+    lists = OrderList.sorted_by_number_of_orders
+    lists[0].member.name.should == "Blah"
+  end
 end

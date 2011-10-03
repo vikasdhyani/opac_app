@@ -2,7 +2,7 @@ drop table if exists authentications;
 drop table if exists users;
 create table users
 (
-  id                   INTEGER not null primary key,
+  id                   INTEGER not null primary key auto_increment,
   username             VARCHAR(255),
   email                VARCHAR(255) default '' not null,
   encrypted_password   VARCHAR(128) default '',
@@ -21,7 +21,7 @@ create table users
 
 create table authentications
 (
- id         INTEGER not null,
+ id         INTEGER not null primary key auto_increment,
  user_id    INTEGER,
  provider   VARCHAR(255),
  uid        VARCHAR(255),
