@@ -1,0 +1,19 @@
+drop table if exists users;
+create table users
+(
+  ID                   INTEGER not null,
+  USERNAME             VARCHAR(255),
+  EMAIL                VARCHAR(255) default '' not null,
+  ENCRYPTED_PASSWORD   VARCHAR(128) default '',
+  PASSWORD_SALT        VARCHAR(255) default '',
+  RESET_PASSWORD_TOKEN VARCHAR(255),
+  REMEMBER_TOKEN       VARCHAR(255),
+  REMEMBER_CREATED_AT  DATE,
+  SIGN_IN_COUNT        INTEGER default 0,
+  CURRENT_SIGN_IN_AT   DATE,
+  LAST_SIGN_IN_AT      DATE,
+  CURRENT_SIGN_IN_IP   VARCHAR(255),
+  LAST_SIGN_IN_IP      VARCHAR(255),
+  CREATED_AT           DATE,
+  UPDATED_AT           DATE
+);
