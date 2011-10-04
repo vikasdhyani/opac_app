@@ -5,7 +5,6 @@ gem 'rails', '3.0.1'
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
-gem 'mysql'
 gem 'devise'
 gem 'nokogiri'
 gem 'sunspot_rails', '1.2.rc4'

@@ -94,7 +94,6 @@ GEM
     mime-types (1.16)
     multi_json (0.0.5)
     multipart-post (1.0.1)
-    mysql (2.8.1)
     net-http-digest_auth (1.1.1)
     net-http-persistent (1.8)
     net-ldap (0.1.1)
@@ -218,7 +217,6 @@ DEPENDENCIES
   factory_girl_rails
   jquery-rails
   mechanize
-  mysql
   nokogiri
   omniauth
   rails (= 3.0.1)
