@@ -169,7 +169,7 @@ ActiveRecord::Schema.define(:version => 20111003135157) do
 
   # adding test only db tables strts
 
-  create_table "dev_memberships" do |t|
+  create_table "dev_memberships", :force => true do |t|
     t.integer  "id"
     t.string   "card_id"
     t.integer  "member_id"
@@ -177,7 +177,10 @@ ActiveRecord::Schema.define(:version => 20111003135157) do
     t.string   "city"
     t.integer  "plan_id"
     t.string   "plan"
-    t.integer  "INACTIVE"
+    t.integer  "inactive"
+    t.string   "address"
+    t.string   "lphone"
+    t.string   "mphone"
   end
   # adding test only db table ends
 end
