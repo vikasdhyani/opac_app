@@ -4,7 +4,7 @@
       <h4><%= order_list.membership_no %> - <%= order_list.member.name %></h4>
 	</div>
     <table>
-      <tr><td>Order Type</td><td>Title Name</td></tr>
+      <tr><td>Order Type</td><td>Title Name</td><td>In Warehouse</td></tr>
       <%= render :partial => "delivery_order", :collection => order_list.orders %>
     </table>
 	<div class="last right"></div>
