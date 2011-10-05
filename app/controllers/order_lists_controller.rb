@@ -1,5 +1,5 @@
 class OrderListsController < ApplicationController
   def index
-    @order_lists = OrderList.sorted_by_number_of_orders
+    @order_lists = OrderList.all_by_date
   end
 end

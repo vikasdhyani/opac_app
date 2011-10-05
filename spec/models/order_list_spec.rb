@@ -8,20 +8,19 @@ describe OrderList do
       Factory(:delivery_order, :membership_no => "M2")
     end
 
-
-    it "returns one orderlist per member" do
-      lists = OrderList.sorted_by_number_of_orders
+    it "returns one order list per member" do
+      lists = OrderList.all_by_date
       lists.size.should == 2
     end
 
-    it "sorts order list by number of live orders" do
-      lists = OrderList.sorted_by_number_of_orders
+    it "sorts order list most recent date" do
+      lists = OrderList.all_by_date
       lists[0].membership_no.should == "M2"
       lists[1].membership_no.should == "M1"
     end
 
     it "should give orders per member" do
-      lists = OrderList.sorted_by_number_of_orders
+      lists = OrderList.all_by_date
       lists[0].orders.size.should == 2
       lists[1].orders.size.should == 1
     end
@@ -36,7 +35,25 @@ describe OrderList do
   it "gets the member name" do
     Factory(:delivery_order, :membership_no => "M1")
     Factory(:dev_membership, :card_id => "M1", :member => "Blah")
-    lists = OrderList.sorted_by_number_of_orders
+    lists = OrderList.all_by_date
     lists[0].name.should == "Blah"
+  end
+
+  context "sorting the order list" do
+    it "returns the newest element first" do
+      earlier_order_list = OrderList.new("foo", [Factory(:ready_delivery_order, :created_at => 2.days.ago)])
+      later_order_list = OrderList.new("foo", [Factory(:ready_delivery_order, :created_at => 1.days.ago)])
+
+      [earlier_order_list, later_order_list].sort.should == [later_order_list, earlier_order_list]
+      [later_order_list, earlier_order_list].sort.should == [later_order_list, earlier_order_list]
+    end
+
+    it "returns a ready delivery before pending delivery" do
+      earlier_order_list = OrderList.new("foo", [Factory(:ready_delivery_order, :created_at => 2.days.ago)])
+      later_order_list = OrderList.new("foo", [Factory(:pending_delivery_order, :created_at => 1.days.ago)])
+
+      [earlier_order_list, later_order_list].sort.should == [earlier_order_list, later_order_list]
+      [later_order_list, earlier_order_list].sort.should == [earlier_order_list, later_order_list]
+    end
   end
 end
