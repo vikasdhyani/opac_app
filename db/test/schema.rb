@@ -7,6 +7,17 @@ ActiveRecord::Schema.define(:version => 20111003135157) do
     t.datetime "updated_at"
   end
 
+  create_table "batches", :force => true do |t|
+    t.string   "batch_type"
+    t.string   "assigned_to"
+    t.string   "state"
+    t.integer  "item_count",   :precision => 38, :scale => 0
+    t.integer  "closed_count", :precision => 38, :scale => 0
+    t.datetime "expires_on"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "users", :force => true do |t|
     t.string   "username"
     t.string   "email",                                                              :default => "", :null => false
