@@ -30,13 +30,18 @@ describe DeliveryOrder do
 
   context "availability of the book" do
     it "should be available if the ibtr state is Fulfilled" do
-      order = Factory(:delivery_order, :ibtr => Factory(:ibtr, :state =>"Fulfilled"))
-      order.should be_in_warehouse
+      order = Factory(:delivery_order, :order_type => DeliveryOrder::DELIVERY, :ibtr => Factory(:ibtr, :state =>"Fulfilled"))
+      order.should be_ready_for_processing
     end
 
     it "should be unavailable if the ibtr state is assigned" do
-      order = Factory(:delivery_order, :ibtr => Factory(:ibtr, :state =>"Assigned"))
-      order.should_not be_in_warehouse
+      order = Factory(:delivery_order, :order_type => DeliveryOrder::DELIVERY, :ibtr => Factory(:ibtr, :state =>"Assigned"))
+      order.should_not be_ready_for_processing
+    end
+
+    it "should be available always if it is a pickup" do
+      order = Factory(:delivery_order, :order_type => DeliveryOrder::PICKUP, :ibtr => nil)
+      order.should be_ready_for_processing
     end
   end
 end

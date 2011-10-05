@@ -1,5 +1,5 @@
 <tr>
   <td><%= delivery_type(delivery_order) %></td>
   <td><%= delivery_order.title.title %></td>
-  <td><%= delivery_order.in_warehouse? %></td>
+  <td><%= delivery_order.ready_for_processing? %></td>
 </tr>

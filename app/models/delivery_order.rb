@@ -8,7 +8,6 @@ class DeliveryOrder < ActiveRecord::Base
   PICKUP = "P"
 
   scope :live_orders, lambda { where(:status => PENDING) }
-  delegate :in_warehouse?, :to => :ibtr
 
   def pickup?
    order_type == PICKUP
@@ -20,4 +19,8 @@ class DeliveryOrder < ActiveRecord::Base
   belongs_to :branch
   belongs_to :title
   belongs_to :ibtr
+
+  def ready_for_processing?
+    pickup? or ibtr.in_warehouse?
+  end
 end
