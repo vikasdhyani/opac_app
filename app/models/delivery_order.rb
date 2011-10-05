@@ -16,7 +16,6 @@ class DeliveryOrder < ActiveRecord::Base
   # Disallow all updates
   before_update { false }
 
-  belongs_to :branch
   belongs_to :title
   belongs_to :ibtr
 
