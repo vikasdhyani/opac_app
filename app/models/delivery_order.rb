@@ -8,6 +8,7 @@ class DeliveryOrder < ActiveRecord::Base
   PICKUP = "P"
 
   scope :live_orders, lambda { where(:status => PENDING) }
+  delegate :in_warehouse?, :to => :ibtr
 
   def pickup?
    order_type == PICKUP

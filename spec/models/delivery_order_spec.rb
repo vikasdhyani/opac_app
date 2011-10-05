@@ -27,4 +27,16 @@ describe DeliveryOrder do
       order.save.should be_false
     end
   end
+
+  context "availability of the book" do
+    it "should be available if the ibtr state is Fulfilled" do
+      order = Factory(:delivery_order, :ibtr => Factory(:ibtr, :state =>"Fulfilled"))
+      order.should be_in_warehouse
+    end
+
+    it "should be unavailable if the ibtr state is assigned" do
+      order = Factory(:delivery_order, :ibtr => Factory(:ibtr, :state =>"Assigned"))
+      order.should_not be_in_warehouse
+    end
+  end
 end
