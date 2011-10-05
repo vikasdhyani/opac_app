@@ -37,6 +37,6 @@ describe OrderList do
     Factory(:delivery_order, :membership_no => "M1")
     Factory(:dev_membership, :card_id => "M1", :member => "Blah")
     lists = OrderList.sorted_by_number_of_orders
-    lists[0].member.name.should == "Blah"
+    lists[0].name.should == "Blah"
   end
 end

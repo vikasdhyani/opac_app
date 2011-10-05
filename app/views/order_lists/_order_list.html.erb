@@ -1,12 +1,18 @@
 <div class="span-14">
   <div class="span-14">
-    <div class="span-10">
-      <h4><%= order_list.membership_no %> - <%= order_list.member.name %></h4>
+    <div class="span-12">
+      <h4><%= order_list.membership_no %> - <%= order_list.name %></h4>
+      <div>Landline: <%= order_list.lphone %></div>
+      <div>Mobile: <%= order_list.mphone  %></div>
+      <div>Address:<%= order_list.address %></div>
 	</div>
-    <table>
-      <tr><td>Order Type</td><td>Title Name</td><td>Ready</td></tr>
-      <%= render :partial => "delivery_order", :collection => order_list.orders %>
-    </table>
+    <p></p>
+    <div>
+      <table>
+        <tr><td class="table_heading">Order Type</td><td class="table_heading">Title Name</td><td class="table_heading">Ready</td></tr>
+        <%= render :partial => "delivery_order", :collection => order_list.orders %>
+      </table>
+    </div>
 	<div class="last right"></div>
   </div>
 </div>
