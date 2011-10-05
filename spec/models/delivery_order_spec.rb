@@ -29,8 +29,8 @@ describe DeliveryOrder do
   end
 
   context "availability of the book" do
-    it "should be available if the ibtr state is Fulfilled" do
-      order = Factory(:delivery_order, :order_type => DeliveryOrder::DELIVERY, :ibtr => Factory(:ibtr, :state =>"Fulfilled"))
+    it "should be available if the ibtr state is Dispatched" do
+      order = Factory(:delivery_order, :order_type => DeliveryOrder::DELIVERY, :ibtr => Factory(:ibtr, :state =>"Dispatched"))
       order.should be_ready_for_processing
     end
 

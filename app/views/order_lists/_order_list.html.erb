@@ -9,7 +9,12 @@
     <p></p>
     <div>
       <table>
-        <tr><td class="table_heading">Order Type</td><td class="table_heading">Title Name</td><td class="table_heading">Ready</td></tr>
+        <tr>
+          <td class="table_heading">Order Type</td>
+          <td class="table_heading">Placed</td>
+          <td class="table_heading">Title Name</td>
+          <td class="table_heading">Ready</td>
+        </tr>
         <%= render :partial => "delivery_order", :collection => order_list.orders %>
       </table>
     </div>

@@ -1,7 +1,7 @@
 class Ibtr < ActiveRecord::Base
   include ActiveRecord::Transitions
 
-  FULFILLED = "Fulfilled"
+  DISPATCHED = "Dispatched"
 
   acts_as_versioned
   scope :sort_1_mar, lambda {
@@ -398,6 +398,6 @@ class Ibtr < ActiveRecord::Base
   end
 
   def in_warehouse?
-    state == FULFILLED
+    state == DISPATCHED
   end
 end
