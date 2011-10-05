@@ -30,12 +30,12 @@ describe DeliveryOrder do
 
   context "availability of the book" do
     it "should be available if the ibtr state is Dispatched" do
-      order = Factory(:delivery_order, :order_type => DeliveryOrder::DELIVERY, :ibtr => Factory(:ibtr, :state =>"Dispatched"))
+      order = Factory(:ready_delivery_order)
       order.should be_ready_for_processing
     end
 
     it "should be unavailable if the ibtr state is assigned" do
-      order = Factory(:delivery_order, :order_type => DeliveryOrder::DELIVERY, :ibtr => Factory(:ibtr, :state =>"Assigned"))
+      order = Factory(:pending_delivery_order)
       order.should_not be_ready_for_processing
     end
 

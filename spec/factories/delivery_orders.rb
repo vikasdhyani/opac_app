@@ -1,9 +1,19 @@
-Factory.define :delivery_order do |delivery_order|
-  delivery_order.membership_no "M1234"
-  delivery_order.title_id 1234
-  delivery_order.ibtr { Factory(:ibtr) }
-  delivery_order.status DeliveryOrder::PENDING
-  delivery_order.branch_id 1
-  delivery_order.created_by "Person"
-  delivery_order.order_type DeliveryOrder::DELIVERY
+FactoryGirl.define do
+  factory :delivery_order do
+    membership_no "M1234"
+    title_id 1234
+    ibtr { Factory(:ibtr) }
+    status DeliveryOrder::PENDING
+    branch_id 1
+    created_by "Person"
+    order_type DeliveryOrder::DELIVERY
+
+    factory :ready_delivery_order do
+      ibtr { Factory(:ibtr, :state => "Dispatched") }
+    end
+
+    factory :pending_delivery_order do
+      ibtr { Factory(:ibtr, :state => "Assigned") }
+    end
+  end
 end
