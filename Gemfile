@@ -48,4 +48,5 @@ group :development, :test do
   gem "shoulda-matchers"
   gem 'sqlite3-ruby', :require => 'sqlite3'
   gem "rspec-http"
+  gem "jasmine"
 end
