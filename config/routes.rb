@@ -54,6 +54,7 @@ Opac::Application.routes.draw do
 
   get "/pending_deliveries" => "order_lists#index"
   post "/delivery_orders/:delivery_order_id/delivery_notes", :controller => :delivery_notes, :action => :create, :as => :delivery_order_delivery_notes
+  get "/delivery_orders/:delivery_order_id/delivery_notes", :controller => :delivery_notes, :action => :index
 
 
   # The priority is based upon order of creation:

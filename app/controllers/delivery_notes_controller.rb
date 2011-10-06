@@ -7,4 +7,9 @@ class DeliveryNotesController < ApplicationController
       head :status => :unprocessable_entity
     end
   end
+
+  def index
+    @notes = DeliveryNote.where(:delivery_order_id => params[:delivery_order_id])
+    render :partial => "index"
+  end
 end

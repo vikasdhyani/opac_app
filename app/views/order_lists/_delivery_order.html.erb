@@ -3,4 +3,5 @@
   <td><%= distance_of_time_in_words(delivery_order.created_at, Time.zone.now) %> ago</td>
   <td><%= delivery_order.title.title %></td>
   <td><%= delivery_order.ready_for_processing? %></td>
+  <td>Notes</td>
 </tr>

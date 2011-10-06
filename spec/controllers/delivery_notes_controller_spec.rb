@@ -12,10 +12,21 @@ describe DeliveryNotesController do
       response.should be_success
       DeliveryOrder.find(order.id).delivery_notes[0].content == "foobar"
     end
+
     it "should not create a note without contents" do
       order = Factory(:delivery_order)
       post :create, :delivery_order_id => order.id, :delivery_note => { }
       response.should be_unprocessable_entity
+    end
+  end
+
+  context "GET index" do
+    it "returns a list of all notes for a delivery order" do
+      order = Factory(:delivery_order)
+      Factory(:delivery_note, :delivery_order_id => order.id, :content => "foo")
+      get :index, :delivery_order_id => order.id
+      response.should be_success
+      assigns[:notes][0].content.should == "foo"
     end
   end
 end
