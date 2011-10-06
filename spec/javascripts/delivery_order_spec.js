@@ -12,4 +12,12 @@ describe("DeliveryOrder", function() {
     $(".show_notes_button").click();
     expect($.ajax).wasCalled();
   });
+
+  it("writes the content returned into notes div", function(){
+    spyOn($, "ajax").andCallFake(function(params) {
+      params.success("foo");
+    });
+    $(".show_notes_button").click();
+    expect($(".notes")).toHaveText("foo");
+  });
 });
