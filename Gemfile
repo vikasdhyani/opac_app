@@ -45,5 +45,6 @@ group :development, :test do
   gem "spork", "> 0.9.0.rc"
   gem "factory_girl_rails"
   gem "ruby-oci8"
+  gem "shoulda-matchers"
   gem 'sqlite3-ruby', :require => 'sqlite3'
 end

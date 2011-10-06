@@ -13,11 +13,9 @@ class DeliveryOrder < ActiveRecord::Base
    order_type == PICKUP
   end
 
-  # Disallow all updates
-  before_update { false }
-
   belongs_to :title
   belongs_to :ibtr
+  has_many   :delivery_notes
 
   def ready_for_processing?
     pickup? or ibtr.in_warehouse?

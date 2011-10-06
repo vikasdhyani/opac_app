@@ -16,18 +16,6 @@ describe DeliveryOrder do
     Factory(:delivery_order, :order_type => DeliveryOrder::DELIVERY).should_not be_pickup
   end
 
-  context "backed by a view" do
-    it "is able to create a new DeliveryOrder for tests" do
-      order = Factory.build(:delivery_order)
-      order.save.should be_true
-    end
-
-    it "cannot update an existing DeliveryOrder" do
-      order = Factory.create(:delivery_order)
-      order.save.should be_false
-    end
-  end
-
   context "availability of the book" do
     it "should be available if the ibtr state is Dispatched" do
       order = Factory(:ready_delivery_order)
@@ -44,4 +32,18 @@ describe DeliveryOrder do
       order.should be_ready_for_processing
     end
   end
+
+  context "containing notes" do
+    it "stores the note in the delivery order" do
+      order = Factory(:delivery_order)
+      Factory(:delivery_note, :delivery_order_id => order.id)
+
+      reloaded = DeliveryOrder.find(order.id)
+      reloaded.should have(1).delivery_notes
+    end
+  end
+
+  it { should belong_to(:title) }
+  it { should belong_to(:ibtr)}
+  it { should have_many(:delivery_notes)}
 end
