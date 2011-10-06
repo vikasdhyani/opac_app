@@ -9,7 +9,7 @@ class DeliveryNotesController < ApplicationController
   end
 
   def index
-    @notes = DeliveryNote.where(:delivery_order_id => params[:delivery_order_id])
+    @notes = DeliveryNote.where(:delivery_order_id => params[:delivery_order_id]).order("created_at DESC")
     render :partial => "index"
   end
 end

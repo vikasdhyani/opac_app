@@ -28,5 +28,14 @@ describe DeliveryNotesController do
       response.should be_success
       assigns[:notes][0].content.should == "foo"
     end
+
+    it "returns a list of all notes for a delivery order in descending order of time" do
+      order = Factory(:delivery_order)
+      Factory(:delivery_note, :delivery_order_id => order.id, :content => "foo", :created_at => 2.day.ago)
+      Factory(:delivery_note, :delivery_order_id => order.id, :content => "bar", :created_at => 1.day.ago)
+      get :index, :delivery_order_id => order.id
+      response.should be_success
+      assigns[:notes].collect(&:content).should == ["bar", "foo"]
+    end
   end
 end

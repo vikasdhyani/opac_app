@@ -1,3 +1,12 @@
-<% @notes.each do |note| %>
-    <%= note.content %><br/>
-<% end %>
+<table>
+  <tr>
+    <td>Time</td>
+    <td>Comment</td>
+  </tr>
+  <% @notes.each do |note| %>
+    <tr>
+      <td><%= note.created_at.strftime("%b %d %Y") %></td>
+      <td><%= note.content %></td>
+    </tr>
+  <% end %>
+</table>
