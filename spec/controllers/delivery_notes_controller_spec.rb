@@ -9,8 +9,13 @@ describe DeliveryNotesController do
     it "should create a delivery note" do
       order = Factory(:delivery_order)
       post :create, :delivery_order_id => order.id, :delivery_note => { :content => "foobar" }
-      response.should be_success
       DeliveryOrder.find(order.id).delivery_notes[0].content == "foobar"
+    end
+
+    it "should redirect to the index page after creating the delivery note" do
+      order = Factory(:delivery_order)
+      post :create, :delivery_order_id => order.id, :delivery_note => { :content => "foobar" }
+      response.should redirect_to(delivery_order_delivery_notes_path(order.id))
     end
 
     it "should not create a note without contents" do

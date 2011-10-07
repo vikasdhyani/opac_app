@@ -2,7 +2,7 @@ class DeliveryNotesController < ApplicationController
   def create
     delivery_note = DeliveryNote.new(params[:delivery_note].merge(:delivery_order_id => params[:delivery_order_id]))
     if delivery_note.save
-      head :status => :created
+      redirect_to(delivery_order_delivery_notes_path(params[:delivery_order_id]))
     else
       head :status => :unprocessable_entity
     end
