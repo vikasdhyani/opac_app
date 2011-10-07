@@ -27,6 +27,7 @@ describe DeliveryNotesController do
       get :index, :delivery_order_id => order.id
       response.should be_success
       assigns[:notes][0].content.should == "foo"
+      assigns[:delivery_order_id].should == order.id
     end
 
     it "returns a list of all notes for a delivery order in descending order of time" do
