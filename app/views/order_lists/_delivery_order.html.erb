@@ -5,6 +5,6 @@
   <td><%= delivery_order.ready_for_processing? %></td>
   <td>
     <%= delivery_order.delivery_notes.size %>
-    <a class="show_notes_button" data-delivery-order="<%= delivery_order.id %>" data-membership-no="<%= membership_no %>" href="#">View</a>
+    <a class="show_notes_button" data-delivery-order="<%= delivery_order.id %>" data-membership-no="<%= membership_no %>" target="#">View</a>
   </td>
 </tr>
