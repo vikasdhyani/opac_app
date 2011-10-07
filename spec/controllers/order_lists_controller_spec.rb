@@ -14,4 +14,15 @@ describe OrderListsController do
       list.membership_no.should == "M2"
     end
   end
+
+  context "GET search" do
+    it "should list all pending orders for give membership no" do
+      Factory(:delivery_order, :membership_no => "M2")
+      get :search, :criteria => { :membership_no => "M2" }
+      response.should be_success
+      list = assigns[:order_lists]
+      list.size.should == 1
+      list[0].membership_no.should == "M2"
+    end
+  end
 end

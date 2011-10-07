@@ -52,10 +52,10 @@ Opac::Application.routes.draw do
   match 'ibtrs_alttitle' => 'ibtrs#setAltTitle'
   match 'ibtrs_drillrpt' =>   'ibtrs#drillrpt'
 
-  get "/pending_deliveries" => "order_lists#index"
-  post "/delivery_orders/:delivery_order_id/delivery_notes", :controller => :delivery_notes, :action => :create, :as => :delivery_order_delivery_notes
-  get "/delivery_orders/:delivery_order_id/delivery_notes", :controller => :delivery_notes, :action => :index
-
+  resources :delivery_orders, :only => [:index], :controller => :order_lists do
+    get :search, :on => :collection
+    resources :delivery_notes, :only => [:create, :index]
+  end
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

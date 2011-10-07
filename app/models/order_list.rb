@@ -19,12 +19,6 @@ class OrderList
 
   delegate :name, :lphone, :mphone, :address, :to => :member
 
-  def self.all_by_date
-    all_orders = DeliveryOrder.live_orders.all
-    orderlists = all_orders.group_by(&:membership_no).collect { |membership_no, orders| OrderList.new(membership_no, orders) }
-    orderlists.sort!
-  end
-
   def max_date
     orders.max_by(&:created_at).created_at
   end
@@ -37,5 +31,22 @@ class OrderList
     return 1 unless self.at_least_one_item_ready?
     return -1 unless other.at_least_one_item_ready?
     other.max_date <=> self.max_date
+  end
+
+  class << self
+    def create_from_delivery_orders(all_orders)
+      orderlists = all_orders.group_by(&:membership_no).collect { |membership_no, orders| OrderList.new(membership_no, orders) }
+      orderlists.sort!
+    end
+
+    def all_by_date
+      all_orders = DeliveryOrder.live_orders.all
+      create_from_delivery_orders all_orders
+    end
+
+    def all_matching(criteria)
+      all_orders = DeliveryOrder.live_orders.where(criteria)
+      create_from_delivery_orders all_orders
+    end
   end
 end

@@ -24,6 +24,12 @@ describe OrderList do
       lists[0].orders.size.should == 2
       lists[1].orders.size.should == 1
     end
+
+    it "loads orders by criteria" do
+      lists = OrderList.all_matching(:membership_no => "M2")
+      lists.size.should == 1
+      lists[0].membership_no.should == "M2"
+    end
   end
 
   it "gets the number of pending pickups" do
