@@ -15,9 +15,10 @@
           <td class="table_heading">Title Name</td>
           <td class="table_heading">Ready</td>
         </tr>
-        <%= render :partial => "delivery_order", :collection => order_list.orders %>
+        <%= render :partial => "delivery_order", :collection => order_list.orders, :locals => {:membership_no => order_list.membership_no} %>
       </table>
     </div>
+    <div class="notes" data-membership-no="<%= order_list.membership_no %>"></div>
 	<div class="last right"></div>
   </div>
 </div>

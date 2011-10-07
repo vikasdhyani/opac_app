@@ -13,11 +13,12 @@ describe("DeliveryOrder", function() {
     expect($.ajax).wasCalled();
   });
 
-  it("writes the content returned into notes div", function(){
+  it("writes the content returned into notes div with matching delivery-order", function(){
     spyOn($, "ajax").andCallFake(function(params) {
       params.success("foo");
     });
     $(".show_notes_button").click();
-    expect($(".notes")).toHaveText("foo");
+    expect($("#first_div")).toHaveText("foo");
+    expect($("#second_div")).not.toHaveText("foo");
   });
 });

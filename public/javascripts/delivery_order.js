@@ -13,10 +13,11 @@ Strata.DeliveryOrder = Class.extend({
 
   showNotesClicked: function(event) {
     var delivery_order_id = $(event.target).attr("data-delivery-order");
+    var membership_no = $(event.target).attr("data-membership-no");
     var self = this;
     // FIXME: This is a hardcoded string
     $.get("/delivery_orders/" + delivery_order_id + "/delivery_notes", function(data){
-      self.container.find(".notes").html(data);
+      self.container.find(".notes[data-membership-no=\""+ membership_no + "\"]").html(data);
     });
   }
 });
