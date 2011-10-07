@@ -1,5 +1,5 @@
 <div style="float: right"><a class="hide_notes_button" href="#">X</a></div>
-<div class="addNotes" data-delivery-order="<%= @delivery_order_id %>">
+<div class="addNotes" data-delivery-order="<%= @delivery_order.id %>" data-membership-no="<%= @delivery_order.membership_no %>">
   <textarea class="notesTextArea"></textarea>
   <button class="add_notes_button">Add Comment</button>
 </div>

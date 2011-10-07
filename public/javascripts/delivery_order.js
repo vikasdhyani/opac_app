@@ -48,8 +48,17 @@ Strata.DeliveryOrder = Class.extend({
   addNotesClicked: function(event) {
     var addNotesDiv = $(event.target).parents(".addNotes");
     var delivery_order_id = addNotesDiv.attr("data-delivery-order");
+    var membership_no = addNotesDiv.attr("data-membership-no");
+
     var content = addNotesDiv.find(".notesTextArea").val();
     var data = { delivery_note: { content: content } };
-    $.post(this.deliveryNotesPath(delivery_order_id), data);
+
+    var self = this;
+
+    $.post(this.deliveryNotesPath(delivery_order_id), data, function(data){
+      var destination = self.container.find(".notes[data-membership-no=\""+ membership_no + "\"]");
+      destination.html(data);
+      destination.show(400);
+    });
   }
 });

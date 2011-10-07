@@ -27,12 +27,12 @@ describe DeliveryNotesController do
 
   context "GET index" do
     it "returns a list of all notes for a delivery order" do
-      order = Factory(:delivery_order)
+      order = Factory(:delivery_order, :membership_no => "M1234")
       Factory(:delivery_note, :delivery_order_id => order.id, :content => "foo")
       get :index, :delivery_order_id => order.id
       response.should be_success
       assigns[:notes][0].content.should == "foo"
-      assigns[:delivery_order_id].should == order.id
+      assigns[:delivery_order].id.should == order.id
     end
 
     it "returns a list of all notes for a delivery order in descending order of time" do

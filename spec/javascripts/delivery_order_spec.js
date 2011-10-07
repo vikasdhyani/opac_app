@@ -44,13 +44,22 @@ describe("DeliveryOrder", function() {
   it("adds a new note to existing delivery order when add notes button is clicked", function(){
     spyOn($, "ajax").andCallFake(function(params) {
       expect(params.type).toEqual("POST");
-      expect(params.url).toEqual("/delivery_orders/1234/delivery_notes");
+      expect(params.url).toEqual("/delivery_orders/4567/delivery_notes");
       expect(params.data.delivery_note.content).toEqual("foo")
     });
 
     $(".notesTextArea").text("foo");
     $(".add_notes_button").click();
     expect($.ajax).wasCalled();
+  });
+
+  it("reloads the index page after adding a new comment", function(){
+    spyOn($, "ajax").andCallFake(function(params) {
+      params.success("foobar");
+    });
+    $(".notesTextArea").text("foo");
+    $(".add_notes_button").click();
+    expect($("#second_notes_for_test")).toHaveText("foobar");
   });
 
 });
