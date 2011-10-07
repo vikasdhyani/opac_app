@@ -36,6 +36,12 @@
   </section>
   <br/>
   <hr/>
+  <form method="GET" action="<%= search_delivery_orders_path %>">
+    Search By Member Number: <input name="criteria[membership_no]"/>
+    <input type="submit"/>
+  </form>
+  <br/>
+  <hr/>
   <div class="order_lists">
     <%= render :partial => "order_list", :collection => @order_lists %>
   </div>

@@ -5,6 +5,6 @@ class OrderListsController < ApplicationController
 
   def search
     @order_lists = OrderList.all_matching(params[:criteria])
-    head :status => :ok
+    render :index
   end
 end
