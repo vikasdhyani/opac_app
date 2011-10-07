@@ -1,15 +1,16 @@
 <div class="order_lists">
   <table>
     <tr>
-      <td>DELIVERY</td>
-      <td>2 Days Ago</td>
-      <td>Sample Title</td>
-      <td>Ready</td>
       <td>
-        <div class="show_notes_button" data-delivery-order="1234" data-membership-no="M1234">Notes</div>
+        <a class="show_notes_button" data-delivery-order="1234" data-membership-no="M1234">Notes</a>
       </td>
     </tr>
   </table>
-  <div class="notes" id="first_div" data-membership-no="M1234"></div>
-  <div class="notes" id="second_div"></div>
+  <div class="notes" id="first_notes_for_test" data-membership-no="M1234" style="display: none"></div>
+
+  <!-- This is for the hide notes flow -->
+  <div class="notes" id="second_notes_for_test">
+    <a class="hide_notes_button">X</a>
+    <table></table>
+  </div>
 </div>
