@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe AssignmentsController do
+describe AppointmentsController do
   before(:each) do
     sign_in Factory(:user)
   end
@@ -10,7 +10,7 @@ describe AssignmentsController do
     let(:delivery_slot) { Factory(:delivery_slot) }
     let(:tomorrow) { Date.tomorrow }
     let(:post_params) { {
-        :year => tomorrow.year, :month => tomorrow.month, :date => tomorrow.day,
+        :delivery_date => tomorrow.strftime("%d/%b/%Y"),
         :delivery_slot_id => delivery_slot.id, :delivery_orders => [delivery_order.id]
       }
     }

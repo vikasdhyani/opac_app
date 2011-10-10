@@ -57,8 +57,7 @@ Opac::Application.routes.draw do
     resources :delivery_notes, :only => [:create, :index]
   end
 
-  #post "/delivery_schedules/:year/:month/:date/:delivery_slot_id/appointments" => "delivery_schedules#create_appointment", :as => :delivery_schedules_appointments
-  resources "appointments", :only => [:create, :new]
+  resources :appointments, :only => [:create, :new]
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
