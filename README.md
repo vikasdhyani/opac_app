@@ -6,3 +6,5 @@ Domain Terminology
 * OrderList => This is a bucket of live orders that a member hopes to fullfil.
 * IBTR => This is an inter branch transfer request. Each Delivery has an IBTR
 * Ready for Processing => This means the order is ready for delivery/pickup
+* DeliverySlot => A slot on which delivery can happen, ie, Morning, Evening, Etc...
+* DeliverySchedule => The schedule for a particular slot on a particular day
