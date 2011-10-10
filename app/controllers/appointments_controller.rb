@@ -9,4 +9,9 @@ class AppointmentsController < ApplicationController
       head :status => :unprocessable_entity
     end
   end
+
+  def new
+    @delivery_slots = DeliverySlot.all
+    render :layout => false
+  end
 end

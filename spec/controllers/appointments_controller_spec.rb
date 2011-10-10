@@ -29,4 +29,15 @@ describe AppointmentsController do
       response.should be_unprocessable_entity
     end
   end
+
+  context "GET new" do
+    it "renders new form with all delivery slots" do
+      Factory(:delivery_slot, :name => "Morning")
+      Factory(:delivery_slot, :name => "Afternoon")
+      get :new
+      response.should be_success
+      list = assigns[:delivery_slots]
+      list.should have(2).things
+    end
+  end
 end

@@ -20,7 +20,9 @@
         <%= render :partial => "delivery_order", :collection => order_list.orders, :locals => {:membership_no => order_list.membership_no} %>
       </table>
     </div>
-    <button class="right">Schedule</button>
+    <div class="scheduleDelivery right">
+      <button class="scheduleDeliveryButton">Schedule</button>
+    </div>
     <div class="clear"></div>
     <div class="notes" data-membership-no="<%= order_list.membership_no %>" style="display: none;"></div>
 	<div class="last right"></div>

@@ -1,0 +1,4 @@
+<input class="datePicker"/>
+<!-- FIXME: The name is random because we are posting via AJAX, and we do not want collisions of id -->
+<%= collection_select :deliverySlot, "#{rand(0xFFFF)}", @delivery_slots, :id, :name, :prompt => true %>
+<button>Schedule</button>
