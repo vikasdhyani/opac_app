@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe DeliverySchedulesController do
+describe AssignmentsController do
   before(:each) do
     sign_in Factory(:user)
   end
@@ -16,8 +16,8 @@ describe DeliverySchedulesController do
     }
 
     it "creates the appointment on a particular date for a particular slot"do
-      post :create_appointment, post_params
-      response.should be_success
+      post :create, post_params
+      response.should be_created
       schedule = DeliverySchedule.find_by_delivery_slot_id(delivery_slot.id)
       schedule.delivery_date.should == tomorrow
       schedule.should have(1).delivery_orders
@@ -25,7 +25,7 @@ describe DeliverySchedulesController do
 
     it "returns a un processable entity if save fails" do
       DeliverySchedule.any_instance.stub(:save).and_return(false)
-      post :create_appointment, post_params
+      post :create, post_params
       response.should be_unprocessable_entity
     end
   end

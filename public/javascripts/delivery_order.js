@@ -3,14 +3,12 @@ var Strata = Strata || {};
 Strata.DeliveryOrder = Class.extend({
   init: function(container) {
     this.container = container;
-    this.container.find(".show_notes_button").bind("click", this.showNotesClickedHandler() );
-    this.container.find(".hide_notes_button").live("click", this.hideNotesClickedHandler() );
-    this.container.find(".add_notes_button").live("click", this.addNotesClickedHandler() );
-  },
 
-  showNotesClickedHandler: function() {
     var self = this;
-    return function(e) { self.showNotesClicked(e); }
+    this.container.find(".show_notes_button").bind("click", function(event) { self.showNotesClicked(event); } );
+    this.container.find(".hide_notes_button").live("click", function(event) { self.hideNotesClicked(event); } );
+    this.container.find(".add_notes_button").live("click", function(event) { self.addNotesClicked(event); } );
+    this.container.find(".scheduleDeliveryButton").live("click", function(event) { self.scheduleDeliveryButtonClicked(event); } );
   },
 
   // FIXME: This is a hardcoded string
@@ -35,18 +33,8 @@ Strata.DeliveryOrder = Class.extend({
     $.get(this.deliveryNotesPath(delivery_order_id), this.displayCommentsHandler(membership_no));
   },
 
-  hideNotesClickedHandler: function() {
-    var self = this;
-    return function(e) { self.hideNotesClicked(e); }
-  },
-
   hideNotesClicked: function(event) {
     $(event.target).parents(".notes").hide(400);
-  },
-
-  addNotesClickedHandler: function() {
-    var self = this;
-    return function(e) { self.addNotesClicked(e); }
   },
 
   addNotesClicked: function(event) {
@@ -66,5 +54,9 @@ Strata.DeliveryOrder = Class.extend({
       success: this.displayCommentsHandler(membership_no),
       error: function(error) { addNotesDiv.find(".add_notes_button").attr("disabled", false); }
     });
+  },
+
+  scheduleDeliveryButtonClicked: function(event) {
+    $.get("/schedules/assignments/new");
   }
 });
