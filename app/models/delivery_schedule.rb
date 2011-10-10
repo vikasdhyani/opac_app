@@ -9,4 +9,8 @@ class DeliverySchedule < ActiveRecord::Base
     orders = DeliveryOrder.find(delivery_orders)
     self.delivery_orders += orders
   end
+
+  def members_count
+    delivery_orders.count(:membership_no, :distinct => true)
+  end
 end

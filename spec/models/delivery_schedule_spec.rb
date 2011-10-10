@@ -24,4 +24,11 @@ describe DeliverySchedule do
     schedule.save!
     DeliverySchedule.find(schedule.id).should have(1).delivery_orders
   end
+
+  it "knows the count of members who have deliveries in that schedule" do
+    order1 = Factory(:delivery_order, :membership_no=>"M1")
+    order2 = Factory(:delivery_order, :membership_no=>"M1")
+    schedule = Factory(:delivery_schedule, :delivery_orders => [order1, order2])
+    schedule.members_count.should == 1
+  end
 end
