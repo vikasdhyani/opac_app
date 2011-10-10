@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe OrderListHelper do
+describe DeliveryOrderHelper do
 
   it "should decode delivery type" do
     delivery_order = Factory(:delivery_order, :order_type => DeliveryOrder::DELIVERY)

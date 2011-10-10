@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe OrderListsController do
+describe DeliveryOrderController do
   before(:each) do
     sign_in Factory(:user)
   end
