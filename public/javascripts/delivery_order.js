@@ -8,7 +8,6 @@ Strata.DeliveryOrder = Class.extend({
     this.container.find(".show_notes_button").bind("click", function(event) { self.showNotesClicked(event); } );
     this.container.find(".hide_notes_button").live("click", function(event) { self.hideNotesClicked(event); } );
     this.container.find(".add_notes_button").live("click", function(event) { self.addNotesClicked(event); } );
-    this.container.find(".scheduleDeliveryButton").live("click", function(event) { self.scheduleDeliveryButtonClicked(event); } );
   },
 
   // FIXME: This is a hardcoded string
@@ -54,9 +53,5 @@ Strata.DeliveryOrder = Class.extend({
       success: this.displayCommentsHandler(membership_no),
       error: function(error) { addNotesDiv.find(".add_notes_button").attr("disabled", false); }
     });
-  },
-
-  scheduleDeliveryButtonClicked: function(event) {
-    $.get("/schedules/assignments/new");
   }
 });

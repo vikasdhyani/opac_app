@@ -88,14 +88,4 @@ describe("DeliveryOrder", function() {
       expect($(".add_notes_button")).not.toBeDisabled();
     });
   });
-
-  describe("scheduling delivery", function() {
-    it("makes an ajax call to get ", function(){
-      spyOn($, "ajax").andCallFake(function(params){
-        expect(params.url).toEqual("/schedules/assignments/new");
-      });
-      $(".scheduleDeliveryButton").click();
-      expect($.ajax).wasCalled();
-    });
-  });
 });
