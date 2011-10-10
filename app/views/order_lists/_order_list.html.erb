@@ -10,6 +10,7 @@
     <div>
       <table>
         <tr>
+          <td class="table_heading"><input type="checkbox" class="selectAll" /></td>
           <td class="table_heading">Order Type</td>
           <td class="table_heading">Placed</td>
           <td class="table_heading">Title Name</td>
@@ -19,8 +20,11 @@
         <%= render :partial => "delivery_order", :collection => order_list.orders, :locals => {:membership_no => order_list.membership_no} %>
       </table>
     </div>
+    <button class="right">Schedule</button>
+    <div class="clear"></div>
     <div class="notes" data-membership-no="<%= order_list.membership_no %>" style="display: none;"></div>
 	<div class="last right"></div>
   </div>
 </div>
 <br/>
+<hr>
