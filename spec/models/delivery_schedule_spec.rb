@@ -21,6 +21,7 @@ describe DeliverySchedule do
     order = Factory(:delivery_order)
     schedule = Factory(:delivery_schedule, :delivery_orders => [order])
     schedule.add_delivery_orders_by_id([order.id])
+    schedule.save!
     DeliverySchedule.find(schedule.id).should have(1).delivery_orders
   end
 end

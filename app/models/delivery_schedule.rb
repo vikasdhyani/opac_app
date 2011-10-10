@@ -8,6 +8,5 @@ class DeliverySchedule < ActiveRecord::Base
   def add_delivery_orders_by_id(delivery_orders)
     orders = DeliveryOrder.find(delivery_orders)
     self.delivery_orders += orders
-    save!
   end
 end
