@@ -44,6 +44,10 @@
   <hr/>
   <div class="order_lists">
     <%= render :partial => "order_list", :collection => @order_lists %>
+    <hr />
+    <%= will_paginate(@order_lists) %>
+  <br/>
+  <hr />
   </div>
   <script type="text/javascript">
     $(document).ready(function(){

@@ -1,6 +1,6 @@
 class OrderListsController < ApplicationController
   def index
-    @order_lists = OrderList.all_by_date
+    @order_lists = OrderList.all_by_date.paginate(:page => params[:page], :per_page => 5)
   end
 
   def search

@@ -13,6 +13,14 @@ describe OrderListsController do
       list = assigns[:order_lists][0]
       list.membership_no.should == "M2"
     end
+
+    it "should paginate to 5 members" do
+      (1..10).each { |i| Factory(:delivery_order, :membership_no => "M00#{i}") }
+      get :index
+      response.should be_success
+      list = assigns[:order_lists]
+      list.should have(5).things
+    end
   end
 
   context "GET search" do
