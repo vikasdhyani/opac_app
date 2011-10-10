@@ -46,4 +46,5 @@ describe DeliveryOrder do
   it { should belong_to(:title) }
   it { should belong_to(:ibtr)}
   it { should have_many(:delivery_notes)}
+  it { should belong_to(:delivery_schedule) }
 end

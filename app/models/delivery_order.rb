@@ -15,6 +15,7 @@ class DeliveryOrder < ActiveRecord::Base
 
   belongs_to :title
   belongs_to :ibtr
+  belongs_to :delivery_schedule
   has_many   :delivery_notes
 
   def ready_for_processing?

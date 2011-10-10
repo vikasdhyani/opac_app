@@ -3,4 +3,5 @@ class DeliverySchedule < ActiveRecord::Base
   validates_presence_of :delivery_date
   validates_presence_of :delivery_slot_id
   validates_uniqueness_of :delivery_date, :scope => :delivery_slot_id
+  has_many :delivery_orders
 end
