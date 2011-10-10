@@ -7,6 +7,12 @@ Strata.DeliverySchedule = Class.extend({
 
     var self = this;
     this.container.find(".scheduleDeliveryButton").live("click", function(event) { self.scheduleDeliveryButtonClicked(event); } );
+    this.container.find(".cancelSchedule").live("click", function(event) { self.cancelScheduleClicked(event); } );
+  },
+
+  cancelScheduleClicked: function(event) {
+    var parent = $(event.target).parents(".scheduleDelivery");
+    parent.html('<button class="scheduleDeliveryButton">Schedule</button>')
   },
 
   scheduleDeliveryButtonClicked: function(event) {
