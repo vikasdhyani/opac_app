@@ -15,21 +15,18 @@ Strata.DeliveryOrder = Class.extend({
       return "/delivery_orders/" + delivery_order_id + "/delivery_notes";
   },
 
-  displayCommentsHandler: function(membership_no) {
-    var self = this;
-
+  displayCommentsHandler: function(order_list_div) {
     return function(data) {
-      var destination = self.container.find(".notes[data-membership-no=\""+ membership_no + "\"]");
+      var destination = order_list_div.find(".notes");
       destination.html(data);
       destination.show(400);
     }
   },
 
   showNotesClicked: function(event) {
-    // FIXME: Identify a parent to put this attribute on
-    var delivery_order_id = $(event.target).attr("data-delivery-order");
-    var membership_no = $(event.target).attr("data-membership-no");
-    $.get(this.deliveryNotesPath(delivery_order_id), this.displayCommentsHandler(membership_no));
+    var delivery_order_id = $(event.target).parents("tr").attr("data-delivery-order");
+    var order_list_div = $(event.target).parents(".order_list");
+    $.get(this.deliveryNotesPath(delivery_order_id), this.displayCommentsHandler(order_list_div));
   },
 
   hideNotesClicked: function(event) {
@@ -44,13 +41,13 @@ Strata.DeliveryOrder = Class.extend({
 
     addNotesDiv.find(".add_notes_button").attr("disabled", true);
     var delivery_order_id = addNotesDiv.attr("data-delivery-order");
-    var membership_no = addNotesDiv.attr("data-membership-no");
+    var order_list_div = addNotesDiv.parents(".order_list");
 
     $.ajax({
       type: "POST",
       url: this.deliveryNotesPath(delivery_order_id),
       data: { delivery_note: { content: content } },
-      success: this.displayCommentsHandler(membership_no),
+      success: this.displayCommentsHandler(order_list_div),
       error: function(error) { addNotesDiv.find(".add_notes_button").attr("disabled", false); }
     });
   }

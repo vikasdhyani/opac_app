@@ -1,4 +1,4 @@
-<tr>
+<tr data-delivery-order="<%= delivery_order.id %>">
   <td><input type="checkbox" class="selectForDelivery" /></td>
   <td><%= delivery_type(delivery_order) %></td>
   <td><%= distance_of_time_in_words(delivery_order.created_at, Time.zone.now) %> ago</td>
@@ -6,6 +6,6 @@
   <td><%= delivery_order.ready_for_processing? %></td>
   <td>
     <%= delivery_order.delivery_notes.size %>
-    <a class="show_notes_button" data-delivery-order="<%= delivery_order.id %>" data-membership-no="<%= membership_no %>" target="#">View</a>
+    <a class="show_notes_button" target="#">View</a>
   </td>
 </tr>

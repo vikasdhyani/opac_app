@@ -3,21 +3,22 @@
     <div class="span-12">
       <h4><%= order_list.membership_no %> - <%= order_list.name %></h4>
       <div>Landline: <%= order_list.lphone %></div>
-      <div>Mobile: <%= order_list.mphone  %></div>
+      <div>Mobile: <%= order_list.mphone %></div>
       <div>Address:<%= order_list.address %></div>
-	</div>
+    </div>
     <p></p>
+
     <div>
       <table>
         <tr>
-          <td class="table_heading"><input type="checkbox" class="selectAll" /></td>
+          <td class="table_heading"><input type="checkbox" class="selectAll"/></td>
           <td class="table_heading">Order Type</td>
           <td class="table_heading">Placed</td>
           <td class="table_heading">Title Name</td>
           <td class="table_heading">Ready</td>
           <td class="table_heading">Notes</td>
         </tr>
-        <%= render :partial => "delivery_order", :collection => order_list.orders, :locals => {:membership_no => order_list.membership_no} %>
+        <%= render :partial => "delivery_order", :collection => order_list.orders %>
       </table>
     </div>
     <div class="scheduleDelivery right">
@@ -25,7 +26,7 @@
     </div>
     <div class="clear"></div>
     <div class="notes" data-membership-no="<%= order_list.membership_no %>" style="display: none;"></div>
-	<div class="last right"></div>
+    <div class="last right"></div>
   </div>
 </div>
 <br/>
