@@ -1,6 +1,6 @@
-<div class="span-14 order_list">
-  <div class="span-14">
-    <div class="span-12">
+<div class="order_list">
+  <div>
+    <div>
       <h4><%= order_list.membership_no %> - <%= order_list.name %></h4>
       <div>Landline: <%= order_list.lphone %></div>
       <div>Mobile: <%= order_list.mphone %></div>
@@ -16,6 +16,7 @@
           <td class="table_heading">Placed</td>
           <td class="table_heading">Title Name</td>
           <td class="table_heading">Ready</td>
+          <td class="table_heading">Scheduled At</td>
           <td class="table_heading">Notes</td>
         </tr>
         <%= render :partial => "delivery_order", :collection => order_list.orders %>
@@ -28,6 +29,7 @@
     <div class="notes" data-membership-no="<%= order_list.membership_no %>" style="display: none;"></div>
     <div class="last right"></div>
   </div>
+  <br/>
+  <hr>
 </div>
-<br/>
-<hr>
+

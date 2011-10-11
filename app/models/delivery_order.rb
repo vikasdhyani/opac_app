@@ -9,6 +9,8 @@ class DeliveryOrder < ActiveRecord::Base
 
   scope :live_orders, lambda { where(:status => PENDING) }
 
+  delegate :delivery_date, :delivery_slot, :to => :delivery_schedule
+
   def pickup?
    order_type == PICKUP
   end
@@ -20,5 +22,9 @@ class DeliveryOrder < ActiveRecord::Base
 
   def ready_for_processing?
     pickup? or ibtr.in_warehouse?
+  end
+
+  def scheduled?
+    not delivery_schedule_id.nil?
   end
 end

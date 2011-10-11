@@ -16,6 +16,11 @@ describe DeliveryOrder do
     Factory(:delivery_order, :order_type => DeliveryOrder::DELIVERY).should_not be_pickup
   end
 
+  it "is scheduled if it has a delivery schedule" do
+    Factory(:delivery_order, :delivery_schedule => Factory(:delivery_schedule)).should be_scheduled
+    Factory(:delivery_order, :delivery_schedule => nil).should_not be_scheduled
+  end
+
   context "availability of the book" do
     it "should be available if the ibtr state is Dispatched" do
       order = Factory(:ready_delivery_order)

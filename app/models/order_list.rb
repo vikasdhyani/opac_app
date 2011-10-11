@@ -10,7 +10,7 @@ class OrderList
   end
 
   def number_of_pickups
-    pickup_orders = orders.select(&:pickup?).size
+    orders.select(&:pickup?).size
   end
 
   def member
