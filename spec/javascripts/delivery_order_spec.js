@@ -166,8 +166,10 @@ describe("DeliveryOrder", function() {
         spyOn($, "ajax").andCallFake(function(params) {
           params.success("foobar")
         });
+        spyOn(Strata.DeliveryOrder, "refreshDeliveryOrders");
         $(".submitButton").click();
         expect($(".scheduleDelivery")).toHaveText("foobar");
+        expect(Strata.DeliveryOrder.refreshDeliveryOrders).wasCalled();
       });
 
       describe("validations", function() {
@@ -211,7 +213,6 @@ describe("DeliveryOrder", function() {
   describe("refreshing the table", function() {
     beforeEach(function() {
       loadFixtures("delivery_order_with_no_notes_visible.html");
-      deliveryOrder = new Strata.DeliveryOrder($(".order_lists"), "/foobar", "/submit/schedule");
     });
 
     it("fires an ajax call to fetch the table", function(){
@@ -219,7 +220,7 @@ describe("DeliveryOrder", function() {
         expect(params.type).toEqual("GET");
         expect(params.url, "/delivery_orders/table/M1234");
       });
-      deliveryOrder.refreshDeliveryOrders("M1234");
+      Strata.DeliveryOrder.refreshDeliveryOrders($(".order_list"));
       expect($.ajax).wasCalled();
     });
 
@@ -227,7 +228,7 @@ describe("DeliveryOrder", function() {
       spyOn($, "ajax").andCallFake(function(params){
         params.success("foo");
       });
-      deliveryOrder.refreshDeliveryOrders("M1234");
+      Strata.DeliveryOrder.refreshDeliveryOrders($(".order_list"));
       expect($(".deliveryOrdersTable")).toHaveText("foo");
     });
   });

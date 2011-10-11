@@ -1,5 +1,4 @@
 var Strata = Strata || {};
-Strata.DATE_FORMAT = 'dd/M/yy';
 
 Strata.DeliveryOrder = Class.extend({
   init: function(container, new_appointment_path, create_appointment_path) {
@@ -68,7 +67,7 @@ Strata.DeliveryOrder = Class.extend({
 
     $.get(this.new_appointment_path, function(data){
       parent.html(data);
-      parent.find(".datePicker").datepicker({ dateFormat: Strata.DATE_FORMAT });
+      parent.find(".datePicker").datepicker({ dateFormat: Strata.DeliveryOrder.DATE_FORMAT });
     });
   },
 
@@ -79,46 +78,48 @@ Strata.DeliveryOrder = Class.extend({
     if($.isEmptyObject(submitParams.delivery_date))
       errors.push("Please select a date to schedule");
     else {
-      var delivery_date = $.datepicker.parseDate(Strata.DATE_FORMAT, submitParams.delivery_date);
+      var delivery_date = $.datepicker.parseDate(Strata.DeliveryOrder.DATE_FORMAT, submitParams.delivery_date);
       if(delivery_date < new Date()) errors.push("Please select a delivery date in future");
     }
 
     return errors;
   },
 
-  submitSuccessfulHandler: function(parent) {
+  submitSuccessfulHandler: function(order_list) {
     return function(data) {
-      parent.find(".scheduleDelivery").html(data);
+      order_list.find(".scheduleDelivery").html(data);
+      Strata.DeliveryOrder.refreshDeliveryOrders(order_list);
     }
   },
 
   submitScheduleClicked: function(event) {
-    var parent = $(event.target).parents(".order_list");
+    var order_list = $(event.target).parents(".order_list");
 
     var delivery_orders = [];
-    $.each(parent.find(".deliveryOrderCheckbox"), function(index, checkbox) {
+    $.each(order_list.find(".deliveryOrderCheckbox"), function(index, checkbox) {
       if(checkbox.checked)
         delivery_orders.push($(checkbox).parents("tr").attr("data-delivery-order"));
     });
 
     var params = {
-      delivery_date: parent.find(".datePicker").val(),
-      delivery_slot_id: parent.find(".slotSelect").val(),
+      delivery_date: order_list.find(".datePicker").val(),
+      delivery_slot_id: order_list.find(".slotSelect").val(),
       delivery_orders: delivery_orders
     };
 
     var errors = this.validateSubmitScheduleParams(params);
     if($.isEmptyObject(errors))
-      $.post(this.create_appointment_path, params, this.submitSuccessfulHandler(parent));
+      $.post(this.create_appointment_path, params, this.submitSuccessfulHandler(order_list));
     else
-      parent.find(".scheduleErrorMessages").html(errors.join("<br/>"));
-  },
-
-  refreshDeliveryOrders: function(membership_no){
-    var self = this;
-    $.get("/delivery_orders/table/"+membership_no, function(data){
-      var order_list_div = self.container.find('.order_list[data-membership-no="' + membership_no + '"]');
-      order_list_div.find(".deliveryOrdersTable").html(data);
-    });
+      order_list.find(".scheduleErrorMessages").html(errors.join("<br/>"));
   }
 });
+
+Strata.DeliveryOrder.refreshDeliveryOrders = function(order_list) {
+  var membership_no = order_list.attr("data-membership-no");
+  $.get("/delivery_orders/table/" + membership_no, function(data) {
+    order_list.find(".deliveryOrdersTable").html(data);
+  });
+};
+
+Strata.DeliveryOrder.DATE_FORMAT = 'dd/M/yy';
