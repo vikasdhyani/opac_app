@@ -64,6 +64,14 @@ describe("DeliverySchedule", function() {
         expect($.ajax).wasCalled();
       });
 
+      it("show the data returned by server on successfully submitting", function() {
+        spyOn($, "ajax").andCallFake(function(params) {
+          params.success("foobar")
+        });
+        $(".submitButton").click();
+        expect($(".scheduleDelivery")).toHaveText("foobar");
+      });
+
       describe("validations", function() {
         it("should not fix the delivery schedule if no checkbox is selected", function() {
           spyOn($, "ajax");

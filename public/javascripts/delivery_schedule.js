@@ -42,6 +42,12 @@ Strata.DeliverySchedule = Class.extend({
     return errors;
   },
 
+  submitSuccessfulHandler: function(parent) {
+    return function(data) {
+      parent.find(".scheduleDelivery").html(data);
+    }
+  },
+
   submitScheduleClicked: function(event) {
     var parent = $(event.target).parents(".order_list");
 
@@ -59,7 +65,7 @@ Strata.DeliverySchedule = Class.extend({
 
     var errors = this.validateSubmitScheduleParams(params);
     if($.isEmptyObject(errors))
-      $.post(this.submit_path, params);
+      $.post(this.submit_path, params, this.submitSuccessfulHandler(parent));
     else
       parent.find(".scheduleErrorMessages").html(errors.join("<br/>"));
   }
