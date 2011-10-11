@@ -35,10 +35,15 @@ describe("DeliverySchedule", function() {
     });
 
     describe("submitting new form", function() {
+      var tomorrow;
+      var dateFormat = "dd/M/yy";
+
       beforeEach(function() {
-        $("#checkboxToBeSelected").click();
-        $(".datePicker").val("02/Oct/2013");
+        $("#checkboxToBeSelected").attr("checked", true);
         $("select").val("1000");
+        tomorrow = new Date();
+        tomorrow.setTime(tomorrow.getTime() + (1000*3600*24));
+        $(".datePicker").val($.datepicker.formatDate(dateFormat, tomorrow));
       });
 
       it("on submitting new form, selected delivery orders should have chosen delivery schedule", function() {
@@ -51,12 +56,38 @@ describe("DeliverySchedule", function() {
 
       it("passes a list of delivery_order ids, date and delivery_slot id", function() {
         spyOn($, "ajax").andCallFake(function(params) {
-          expect(params.data.delivery_date).toEqual("02/Oct/2013");
+          expect(params.data.delivery_date).toEqual($.datepicker.formatDate(dateFormat, tomorrow));
           expect(params.data.delivery_slot_id).toEqual("1000");
           expect(params.data.delivery_orders).toEqual(["1234"]);
         });
         $(".submitButton").click();
         expect($.ajax).wasCalled();
+      });
+
+      describe("validations", function() {
+        it("should not fix the delivery schedule if no checkbox is selected", function() {
+          spyOn($, "ajax");
+          $("#checkboxToBeSelected").attr("checked", false);
+          $(".submitButton").click();
+          expect($.ajax).not.wasCalled();
+          expect($(".scheduleErrorMessages")).toHaveText("Please select at least one order to schedule");
+        });
+
+        it("should not fix the delivery schedule if date is not selected", function() {
+          spyOn($, "ajax");
+          $(".datePicker").val("");
+          $(".submitButton").click();
+          expect($.ajax).not.wasCalled();
+          expect($(".scheduleErrorMessages")).toHaveText("Please select a date to schedule");
+        });
+
+        it("should not fix the delivery schedule if delivery slot is not selected", function() {
+          spyOn($, "ajax");
+          $("select").val("");
+          $(".submitButton").click();
+          expect($.ajax).not.wasCalled();
+          expect($(".scheduleErrorMessages")).toHaveText("Please select a delivery slot to schedule");
+        });
       });
     });
   });

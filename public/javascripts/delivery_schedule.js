@@ -26,6 +26,15 @@ Strata.DeliverySchedule = Class.extend({
     });
   },
 
+  validateSubmitScheduleParams: function(submitParams) {
+    var errors = [];
+    if($.isEmptyObject(submitParams.delivery_orders)) errors.push("Please select at least one order to schedule");
+    if($.isEmptyObject(submitParams.delivery_slot_id)) errors.push("Please select a delivery slot to schedule");
+    if($.isEmptyObject(submitParams.delivery_date)) errors.push("Please select a date to schedule");
+    //if($.parse(delivery_date)) errors.push("Please select a date to schedule");
+    return errors;
+  },
+
   submitScheduleClicked: function(event) {
     var parent = $(event.target).parents(".order_list");
 
@@ -40,6 +49,11 @@ Strata.DeliverySchedule = Class.extend({
       delivery_slot_id: parent.find(".slotSelect").val(),
       delivery_orders: delivery_orders
     };
-    $.post(this.submit_path, params);
+
+    var errors = this.validateSubmitScheduleParams(params);
+    if($.isEmptyObject(errors))
+      $.post(this.submit_path, params);
+    else
+      parent.find(".scheduleErrorMessages").text(errors[0]);
   }
 });
