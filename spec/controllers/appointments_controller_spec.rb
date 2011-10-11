@@ -17,7 +17,7 @@ describe AppointmentsController do
 
     it "creates the appointment on a particular date for a particular slot"do
       post :create, post_params
-      response.should be_created
+      response.should be_success
       schedule = DeliverySchedule.find_by_delivery_slot_id(delivery_slot.id)
       schedule.delivery_date.should == tomorrow
       schedule.should have(1).delivery_orders

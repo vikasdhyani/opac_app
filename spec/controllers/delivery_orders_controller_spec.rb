@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe DeliveryOrderController do
+describe DeliveryOrdersController do
   before(:each) do
     sign_in Factory(:user)
   end
@@ -31,6 +31,16 @@ describe DeliveryOrderController do
       list = assigns[:order_lists]
       list.size.should == 1
       list[0].membership_no.should == "M2"
+    end
+  end
+
+  context "GET table" do
+    it "should list all pending orders for give membership no" do
+      Factory(:delivery_order, :membership_no => "M2")
+      get :table, :membership_no => "M2"
+      response.should be_success
+      list = assigns[:order_list]
+      list.membership_no.should == "M2"
     end
   end
 end

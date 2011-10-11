@@ -52,8 +52,9 @@ Opac::Application.routes.draw do
   match 'ibtrs_alttitle' => 'ibtrs#setAltTitle'
   match 'ibtrs_drillrpt' =>   'ibtrs#drillrpt'
 
-  resources :delivery_orders, :only => [:index], :controller => :delivery_order do
+  resources :delivery_orders, :only => [:index] do
     get :search, :on => :collection
+    get "table/:membership_no", :on => :collection, :action => :table
     resources :delivery_notes, :only => [:create, :index]
   end
 

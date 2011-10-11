@@ -7,10 +7,6 @@ describe DeliveryOrder do
     DeliveryOrder.live_orders.all.should == [order1]
   end
 
-  it "is valid when constructed by the factory" do
-    Factory.build(:delivery_order).should be_valid
-  end
-
   it "knows if it is a pickup" do
     Factory(:delivery_order, :order_type => DeliveryOrder::PICKUP).should be_pickup
     Factory(:delivery_order, :order_type => DeliveryOrder::DELIVERY).should_not be_pickup

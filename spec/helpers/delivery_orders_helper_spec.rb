@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe DeliveryOrderHelper do
+describe DeliveryOrdersHelper do
 
   context "delivery type" do
     it "should decode delivery type" do

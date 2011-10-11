@@ -13,4 +13,5 @@ class DeliveryNotesController < ApplicationController
     @notes = @delivery_order.delivery_notes.order("created_at DESC")
     render :partial => "index"
   end
+
 end
