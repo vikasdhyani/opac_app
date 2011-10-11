@@ -1,11 +1,11 @@
 describe("DeliverySchedule", function() {
-  beforeEach(function() {
-    loadFixtures("delivery_schedule.html");
-    new Strata.DeliverySchedule($(".order_lists"), "/foobar", "/submit/schedule")
-  });
+  describe("when schedule is hidden", function() {
+    beforeEach(function() {
+      loadFixtures("delivery_schedule_with_schedule_hidden.html");
+      new Strata.DeliverySchedule($(".order_lists"), "/foobar", "/submit/schedule")
+    });
 
-  describe("schedule delivery button", function() {
-    it("makes an ajax call to get ", function() {
+    it("makes an ajax call to get new form", function() {
       spyOn($, "ajax").andCallFake(function(params) {
         expect(params.url).toEqual("/foobar");
       });
@@ -18,41 +18,46 @@ describe("DeliverySchedule", function() {
         params.success('<input class="datePicker"/>')
       });
       $(".scheduleDeliveryButton").click();
-      expect($("#divForTestingShowScheduleForm .datePicker")).toExist();
+      expect($(".scheduleDelivery .datePicker")).toExist();
       expect($(".datePicker")).toHaveClass("hasDatepicker");
     });
   });
 
-  describe("cancel schedule delivery", function() {
+  describe("when schedule is visible", function() {
+    beforeEach(function() {
+      loadFixtures("delivery_schedule_with_schedule_visible.html");
+      new Strata.DeliverySchedule($(".order_lists"), "/foobar", "/submit/schedule")
+    });
+
     it("should hide new appointment form on clicking cancel", function() {
       $(".cancelSchedule").click();
-      expect($("#divForTestingHideScheduleForm .scheduleDeliveryButton")).toExist();
-    });
-  });
-
-  describe("submitting new form", function() {
-    beforeEach(function(){
-      $("#checkboxToBeSelected").click();
-      $(".datePicker").val("02/Oct/2013");
-      $("select").val("1000");
+      expect($(".scheduleDelivery .scheduleDeliveryButton")).toExist();
     });
 
-    it("on submitting new form, selected delivery orders should have chosen delivery schedule", function() {
-      spyOn($, "ajax").andCallFake(function(params) {
-        expect(params.url).toEqual("/submit/schedule");
+    describe("submitting new form", function() {
+      beforeEach(function() {
+        $("#checkboxToBeSelected").click();
+        $(".datePicker").val("02/Oct/2013");
+        $("select").val("1000");
       });
-      $(".submitButton").click();
-      expect($.ajax).wasCalled();
-    });
 
-    it("passes a list of delivery_order ids, date and delivery_slot id", function() {
-      spyOn($, "ajax").andCallFake(function(params) {
-        expect(params.data.delivery_date).toEqual("02/Oct/2013");
-        expect(params.data.delivery_slot_id).toEqual("1000");
-        expect(params.data.delivery_orders).toEqual(["1234"]);
+      it("on submitting new form, selected delivery orders should have chosen delivery schedule", function() {
+        spyOn($, "ajax").andCallFake(function(params) {
+          expect(params.url).toEqual("/submit/schedule");
+        });
+        $(".submitButton").click();
+        expect($.ajax).wasCalled();
       });
-      $(".submitButton").click();
-      expect($.ajax).wasCalled();
+
+      it("passes a list of delivery_order ids, date and delivery_slot id", function() {
+        spyOn($, "ajax").andCallFake(function(params) {
+          expect(params.data.delivery_date).toEqual("02/Oct/2013");
+          expect(params.data.delivery_slot_id).toEqual("1000");
+          expect(params.data.delivery_orders).toEqual(["1234"]);
+        });
+        $(".submitButton").click();
+        expect($.ajax).wasCalled();
+      });
     });
   });
 });
