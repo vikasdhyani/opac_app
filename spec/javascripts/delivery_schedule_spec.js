@@ -88,6 +88,16 @@ describe("DeliverySchedule", function() {
           expect($.ajax).not.wasCalled();
           expect($(".scheduleErrorMessages")).toHaveText("Please select a delivery slot to schedule");
         });
+
+        it("should not fix the delivery schedule if delivery slot is not selected", function() {
+          var yesterday = new Date();
+          yesterday.setTime(yesterday.getTime() - (1000*3600*24));
+          spyOn($, "ajax");
+          $(".datePicker").val($.datepicker.formatDate(dateFormat, yesterday));
+          $(".submitButton").click();
+          expect($.ajax).not.wasCalled();
+          expect($(".scheduleErrorMessages")).toHaveText("Please select a delivery date in future");
+        });
       });
     });
   });

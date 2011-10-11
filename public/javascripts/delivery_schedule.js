@@ -1,6 +1,8 @@
 var Strata = Strata || {};
 
+Strata.DATE_FORMAT = 'dd/M/yy';
 Strata.DeliverySchedule = Class.extend({
+
   init: function(container, new_path, submit_path) {
     this.container = container;
     this.new_path = new_path;
@@ -22,7 +24,7 @@ Strata.DeliverySchedule = Class.extend({
 
     $.get(this.new_path, function(data){
       parent.html(data);
-      parent.find(".datePicker").datepicker({ dateFormat: 'dd/M/yy' });
+      parent.find(".datePicker").datepicker({ dateFormat: Strata.DATE_FORMAT });
     });
   },
 
@@ -30,8 +32,13 @@ Strata.DeliverySchedule = Class.extend({
     var errors = [];
     if($.isEmptyObject(submitParams.delivery_orders)) errors.push("Please select at least one order to schedule");
     if($.isEmptyObject(submitParams.delivery_slot_id)) errors.push("Please select a delivery slot to schedule");
-    if($.isEmptyObject(submitParams.delivery_date)) errors.push("Please select a date to schedule");
-    //if($.parse(delivery_date)) errors.push("Please select a date to schedule");
+    if($.isEmptyObject(submitParams.delivery_date))
+      errors.push("Please select a date to schedule")
+    else {
+      var delivery_date = $.datepicker.parseDate(Strata.DATE_FORMAT, submitParams.delivery_date);
+      if(delivery_date < new Date()) errors.push("Please select a delivery date in future");
+    }
+
     return errors;
   },
 
@@ -54,6 +61,6 @@ Strata.DeliverySchedule = Class.extend({
     if($.isEmptyObject(errors))
       $.post(this.submit_path, params);
     else
-      parent.find(".scheduleErrorMessages").text(errors[0]);
+      parent.find(".scheduleErrorMessages").html(errors.join("<br/>"));
   }
 });
