@@ -20,11 +20,12 @@ Strata.DeliveryOrder = Class.extend({
       return "/delivery_orders/" + delivery_order_id + "/delivery_notes";
   },
 
-  displayCommentsHandler: function(order_list_div) {
+  displayCommentsHandler: function(order_list) {
     return function(data) {
-      var destination = order_list_div.find(".notes");
+      var destination = order_list.find(".notes");
       destination.html(data);
       destination.show(400);
+      Strata.DeliveryOrder.refreshDeliveryOrders(order_list);
     }
   },
 
@@ -46,13 +47,13 @@ Strata.DeliveryOrder = Class.extend({
 
     addNotesDiv.find(".add_notes_button").attr("disabled", true);
     var delivery_order_id = addNotesDiv.attr("data-delivery-order");
-    var order_list_div = addNotesDiv.parents(".order_list");
+    var order_list = addNotesDiv.parents(".order_list");
 
     $.ajax({
       type: "POST",
       url: this.deliveryNotesPath(delivery_order_id),
       data: { delivery_note: { content: content } },
-      success: this.displayCommentsHandler(order_list_div),
+      success: this.displayCommentsHandler(order_list),
       error: function(error) { addNotesDiv.find(".add_notes_button").attr("disabled", false); }
     });
   },

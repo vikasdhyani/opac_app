@@ -64,12 +64,14 @@ describe("DeliveryOrder", function() {
       });
 
       it("reloads the index page after adding a new comment", function() {
+        spyOn(Strata.DeliveryOrder, "refreshDeliveryOrders");
         spyOn($, "ajax").andCallFake(function(params) {
           params.success("foobar");
         });
         $(".notesTextArea").text("foo");
         $(".add_notes_button").click();
         expect($(".notes")).toHaveText("foobar");
+        expect(Strata.DeliveryOrder.refreshDeliveryOrders).wasCalled();
       });
 
       it("disables the add notes button after adding a new comment", function() {

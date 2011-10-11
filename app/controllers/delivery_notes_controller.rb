@@ -14,4 +14,8 @@ class DeliveryNotesController < ApplicationController
     render :partial => "index"
   end
 
+  def table
+    @order_list = DeliveryOrder.find_all_by_membership_no(params[:membership_no])
+    render :partial => "table"
+  end
 end
