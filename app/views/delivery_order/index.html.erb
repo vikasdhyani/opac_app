@@ -53,7 +53,7 @@
   <script type="text/javascript">
     $(document).ready(function(){
       new Strata.DeliveryOrder($(".order_lists"));
-      new Strata.DeliverySchedule($(".order_lists"), "<%= new_appointment_path %>");
+      new Strata.DeliverySchedule($(".order_lists"), "<%= new_appointment_path %>", "<%= appointments_path %>");
     });
   </script>
 </div>
