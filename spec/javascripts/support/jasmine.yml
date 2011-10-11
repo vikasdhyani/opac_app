@@ -16,7 +16,6 @@ src_files:
   - public/javascripts/jquery-ui.min.js
   - public/javascripts/jquery.*.js
   - public/javascripts/delivery_order.js
-  - public/javascripts/delivery_schedule.js
 
 # stylesheets
 #
