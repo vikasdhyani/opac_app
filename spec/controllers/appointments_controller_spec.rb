@@ -39,5 +39,12 @@ describe AppointmentsController do
       list = assigns[:delivery_slots]
       list.should have(2).things
     end
+
+    it "caches the rendered form" do
+      Factory(:delivery_slot, :name => "Morning")
+      Factory(:delivery_slot, :name => "Afternoon")
+      get :new
+      response.should have_header('Cache-Control' => 'max-age=10800, private')
+    end
   end
 end

@@ -13,6 +13,7 @@ class AppointmentsController < ApplicationController
 
   def new
     @delivery_slots = DeliverySlot.all
+    expires_in 3.hours
     render :layout => false
   end
 end
