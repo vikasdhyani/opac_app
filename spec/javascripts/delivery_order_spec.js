@@ -1,9 +1,10 @@
 describe("DeliveryOrder", function() {
-  var deliveryOrder = new Strata.DeliveryOrder($(".order_lists"), "/foobar", "/submit/schedule");
+  var deliveryOrder;
 
   describe("when no notes are visible", function() {
     beforeEach(function() {
       loadFixtures("delivery_order_with_no_notes_visible.html");
+      deliveryOrder = new Strata.DeliveryOrder($(".order_lists"), "/foobar", "/submit/schedule");
     });
 
     it("fetch notes when notes button is clicked", function() {
@@ -35,6 +36,7 @@ describe("DeliveryOrder", function() {
   describe("when notes are visible", function() {
     beforeEach(function() {
       loadFixtures("delivery_order_with_one_note_visible.html");
+      deliveryOrder = new Strata.DeliveryOrder($(".order_lists"), "/foobar", "/submit/schedule");
     });
 
     it("hides the member's notes on clicking the hide link", function() {
@@ -98,6 +100,7 @@ describe("DeliveryOrder", function() {
   describe("when schedule is hidden", function() {
     beforeEach(function() {
       loadFixtures("delivery_order_with_schedule_hidden.html");
+      deliveryOrder = new Strata.DeliveryOrder($(".order_lists"), "/foobar", "/submit/schedule");
     });
 
     it("makes an ajax call to get new form", function() {
@@ -121,6 +124,7 @@ describe("DeliveryOrder", function() {
   describe("when schedule is visible", function() {
     beforeEach(function() {
       loadFixtures("delivery_order_with_schedule_visible.html");
+      deliveryOrder = new Strata.DeliveryOrder($(".order_lists"), "/foobar", "/submit/schedule");
     });
 
     it("should hide new appointment form on clicking cancel", function() {
@@ -201,6 +205,30 @@ describe("DeliveryOrder", function() {
           expect($(".scheduleErrorMessages")).toHaveText("Please select a delivery date in future");
         });
       });
+    });
+  });
+
+  describe("refreshing the table", function() {
+    beforeEach(function() {
+      loadFixtures("delivery_order_with_no_notes_visible.html");
+      deliveryOrder = new Strata.DeliveryOrder($(".order_lists"), "/foobar", "/submit/schedule");
+    });
+
+    it("fires an ajax call to fetch the table", function(){
+      spyOn($, "ajax").andCallFake(function(params){
+        expect(params.type).toEqual("GET");
+        expect(params.url, "/delivery_orders/table/M1234");
+      });
+      deliveryOrder.refreshDeliveryOrders("M1234");
+      expect($.ajax).wasCalled();
+    });
+
+    it("replaces the table with refresh data on success", function(){
+      spyOn($, "ajax").andCallFake(function(params){
+        params.success("foo");
+      });
+      deliveryOrder.refreshDeliveryOrders("M1234");
+      expect($(".deliveryOrdersTable")).toHaveText("foo");
     });
   });
 });

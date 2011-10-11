@@ -2,10 +2,10 @@ var Strata = Strata || {};
 Strata.DATE_FORMAT = 'dd/M/yy';
 
 Strata.DeliveryOrder = Class.extend({
-  init: function(container, new_path, submit_path) {
+  init: function(container, new_appointment_path, create_appointment_path) {
     this.container = container;
-    this.new_path = new_path;
-    this.submit_path = submit_path;
+    this.new_appointment_path = new_appointment_path;
+    this.create_appointment_path = create_appointment_path;
 
     var self = this;
     this.container.find(".scheduleDeliveryButton").live("click", function(event) { self.scheduleDeliveryButtonClicked(event); } );
@@ -66,7 +66,7 @@ Strata.DeliveryOrder = Class.extend({
   scheduleDeliveryButtonClicked: function(event) {
     var parent = $(event.target).parents(".scheduleDelivery");
 
-    $.get(this.new_path, function(data){
+    $.get(this.new_appointment_path, function(data){
       parent.html(data);
       parent.find(".datePicker").datepicker({ dateFormat: Strata.DATE_FORMAT });
     });
@@ -109,8 +109,16 @@ Strata.DeliveryOrder = Class.extend({
 
     var errors = this.validateSubmitScheduleParams(params);
     if($.isEmptyObject(errors))
-      $.post(this.submit_path, params, this.submitSuccessfulHandler(parent));
+      $.post(this.create_appointment_path, params, this.submitSuccessfulHandler(parent));
     else
       parent.find(".scheduleErrorMessages").html(errors.join("<br/>"));
+  },
+
+  refreshDeliveryOrders: function(membership_no){
+    var self = this;
+    $.get("/delivery_orders/table/"+membership_no, function(data){
+      var order_list_div = self.container.find('.order_list[data-membership-no="' + membership_no + '"]');
+      order_list_div.find(".deliveryOrdersTable").html(data);
+    });
   }
 });

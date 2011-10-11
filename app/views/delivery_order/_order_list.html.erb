@@ -1,4 +1,4 @@
-<div class="order_list">
+<div class="order_list" data-membership-no="<%= order_list.membership_no %>">
   <div>
     <div>
       <h4><%= order_list.membership_no %> - <%= order_list.name %></h4>
@@ -8,7 +8,7 @@
     </div>
     <p></p>
 
-    <div>
+    <div class="deliveryOrdersTable">
       <table>
         <tr>
           <td class="table_heading"><input type="checkbox" class="selectAll"/></td>
