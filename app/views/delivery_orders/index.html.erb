@@ -36,11 +36,12 @@
   </section>
   <br/>
   <hr/>
-  <form method="GET" action="<%= search_delivery_orders_path %>">
-    Search By Member Number: <input name="criteria[membership_no]"/><br/>
+  <%= form_tag(search_delivery_orders_path, :method => :get) do %>
+    Search By Member Number: <%= text_field :criteria, :membership_no %>
+    <br/>
     Search by Delivery Type: <%= collection_select(:criteria, :order_type, DeliveryOrder::DELIVERY_TYPES, :to_s, :to_s, :prompt => "Any") %>
     <input type="submit"/>
-  </form>
+  <% end %>
   <br/>
   <hr/>
   <div class="order_lists">

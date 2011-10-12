@@ -32,6 +32,14 @@ describe DeliveryOrdersController do
       list.size.should == 1
       list[0].membership_no.should == "M2"
     end
+
+    it "should persist the criteria" do
+      Factory(:delivery_order, :membership_no => "M2")
+      get :search, :criteria => { :membership_no => "M2" }
+      response.should be_success
+      criteria = assigns[:criteria]
+      criteria.membership_no.should == "M2"
+    end
   end
 
   context "GET table" do

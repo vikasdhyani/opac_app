@@ -1,3 +1,5 @@
+require 'ostruct'
+
 class DeliveryOrdersController < ApplicationController
   def index
     @order_lists = OrderList.all_by_date.paginate(:page => params[:page], :per_page => 5)
@@ -5,6 +7,7 @@ class DeliveryOrdersController < ApplicationController
 
   def search
     @order_lists = OrderList.all_matching(params[:criteria]).paginate(:page => params[:page], :per_page => 5)
+    @criteria = OpenStruct.new(params[:criteria])
     render :index
   end
 
@@ -12,5 +15,4 @@ class DeliveryOrdersController < ApplicationController
     @order_list = OrderList.all_matching(:membership_no => params[:membership_no])[0]
     render :partial => "table", :locals => { :order_list => @order_list }
   end
-
 end
