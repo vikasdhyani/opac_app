@@ -138,6 +138,17 @@ describe("DeliveryOrder", function() {
       expect($(".scheduleDelivery .scheduleDeliveryButton")).toExist();
     });
 
+    it("should check all delivery orders on clicking select all", function() {
+      document.getElementById("selectAllCheckbox").click();
+      expect($(".deliveryOrderCheckbox")).toBeChecked();
+    });
+
+    it("should unselect all when clicking twice", function() {
+      document.getElementById("selectAllCheckbox").click();
+      document.getElementById("selectAllCheckbox").click();
+      expect($(".deliveryOrderCheckbox")).not.toBeChecked();
+    });
+
     describe("submitting new form", function() {
       var tomorrow;
       var dateFormat = "dd/M/yy";
