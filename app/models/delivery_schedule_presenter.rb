@@ -1,4 +1,4 @@
-class DeliveryPlan
+class DeliverySchedulePresenter
   attr_reader :dates
 
   def initialize(start_date = Date.today, end_date = start_date + 6.days)
