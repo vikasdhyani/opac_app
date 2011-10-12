@@ -1,10 +1,14 @@
+function createDeliveryOrder() {
+  return new Strata.DeliveryOrder($(".order_lists"), "/foobar", "/submit/schedule", "/delivery_schedules");
+}
+
 describe("DeliveryOrder", function() {
   var deliveryOrder;
 
   describe("when no notes are visible", function() {
     beforeEach(function() {
       loadFixtures("delivery_order_with_no_notes_visible.html");
-      deliveryOrder = new Strata.DeliveryOrder($(".order_lists"), "/foobar", "/submit/schedule");
+      deliveryOrder = createDeliveryOrder();
     });
 
     it("fetch notes when notes button is clicked", function() {
@@ -36,7 +40,7 @@ describe("DeliveryOrder", function() {
   describe("when notes are visible", function() {
     beforeEach(function() {
       loadFixtures("delivery_order_with_one_note_visible.html");
-      deliveryOrder = new Strata.DeliveryOrder($(".order_lists"), "/foobar", "/submit/schedule");
+      deliveryOrder = createDeliveryOrder();
     });
 
     it("hides the member's notes on clicking the hide link", function() {
@@ -102,7 +106,7 @@ describe("DeliveryOrder", function() {
   describe("when schedule is hidden", function() {
     beforeEach(function() {
       loadFixtures("delivery_order_with_schedule_hidden.html");
-      deliveryOrder = new Strata.DeliveryOrder($(".order_lists"), "/foobar", "/submit/schedule");
+      deliveryOrder = createDeliveryOrder();
     });
 
     it("makes an ajax call to get new form", function() {
@@ -126,7 +130,7 @@ describe("DeliveryOrder", function() {
   describe("when schedule is visible", function() {
     beforeEach(function() {
       loadFixtures("delivery_order_with_schedule_visible.html");
-      deliveryOrder = new Strata.DeliveryOrder($(".order_lists"), "/foobar", "/submit/schedule");
+      deliveryOrder = createDeliveryOrder();
     });
 
     it("should hide new appointment form on clicking cancel", function() {
@@ -168,10 +172,19 @@ describe("DeliveryOrder", function() {
         spyOn($, "ajax").andCallFake(function(params) {
           params.success("foobar")
         });
-        spyOn(Strata.DeliveryOrder, "refreshDeliveryOrders");
         $(".submitButton").click();
         expect($(".scheduleDelivery")).toHaveText("foobar");
+      });
+
+      it("should refresh schedules table on successfully submitting", function() {
+        spyOn($, "ajax").andCallFake(function(params) {
+          params.success("foobar")
+        });
+        spyOn(Strata.DeliveryOrder, "refreshDeliveryOrders");
+        spyOn(Strata.DeliveryOrder, "refreshDeliverySchedulesTable");
+        $(".submitButton").click();
         expect(Strata.DeliveryOrder.refreshDeliveryOrders).wasCalled();
+        expect(Strata.DeliveryOrder.refreshDeliverySchedulesTable).wasCalled();
       });
 
       describe("validations", function() {
@@ -215,6 +228,7 @@ describe("DeliveryOrder", function() {
   describe("refreshing the table", function() {
     beforeEach(function() {
       loadFixtures("delivery_order_with_no_notes_visible.html");
+      deliveryOrder = createDeliveryOrder();
     });
 
     it("fires an ajax call to fetch the table", function(){
@@ -232,6 +246,30 @@ describe("DeliveryOrder", function() {
       });
       Strata.DeliveryOrder.refreshDeliveryOrders($(".order_list"));
       expect($(".deliveryOrdersTable")).toHaveText("foo");
+    });
+  });
+
+  describe("refreshing the delivery schedules table", function() {
+    beforeEach(function() {
+      loadFixtures("delivery_order_with_no_notes_visible.html");
+      deliveryOrder = createDeliveryOrder();
+    });
+
+    it("fires an ajax call to fetch the table", function(){
+      spyOn($, "ajax").andCallFake(function(params){
+        expect(params.type).toEqual("GET");
+        expect(params.url, "/delivery_schedules");
+      });
+      Strata.DeliveryOrder.refreshDeliverySchedulesTable(deliveryOrder);
+      expect($.ajax).wasCalled();
+    });
+
+    it("replaces the table with refresh data on success", function(){
+      spyOn($, "ajax").andCallFake(function(params){
+        params.success("foo");
+      });
+      Strata.DeliveryOrder.refreshDeliverySchedulesTable(deliveryOrder);
+      expect($(".scheduleTable")).toHaveText("foo");
     });
   });
 });

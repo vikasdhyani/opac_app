@@ -1,10 +1,11 @@
 var Strata = Strata || {};
 
 Strata.DeliveryOrder = Class.extend({
-  init: function(container, new_appointment_path, create_appointment_path) {
+  init: function(container, new_appointment_path, create_appointment_path, delivery_schedules_path) {
     this.container = container;
     this.new_appointment_path = new_appointment_path;
     this.create_appointment_path = create_appointment_path;
+    this.delivery_schedule_path = delivery_schedules_path;
 
     var self = this;
     this.container.find(".scheduleDeliveryButton").live("click", function(event) { self.scheduleDeliveryButtonClicked(event); } );
@@ -87,9 +88,12 @@ Strata.DeliveryOrder = Class.extend({
   },
 
   submitSuccessfulHandler: function(order_list) {
+    var self = this;
+
     return function(data) {
       order_list.find(".scheduleDelivery").html(data);
       Strata.DeliveryOrder.refreshDeliveryOrders(order_list);
+      Strata.DeliveryOrder.refreshDeliverySchedulesTable(self);
     }
   },
 
@@ -113,6 +117,13 @@ Strata.DeliveryOrder = Class.extend({
       $.post(this.create_appointment_path, params, this.submitSuccessfulHandler(order_list));
     else
       order_list.find(".scheduleErrorMessages").html(errors.join("<br/>"));
+  },
+
+  refreshDeliverySchedulesTable: function() {
+    var self = this;
+    $.get(this.delivery_schedule_path, function(data) {
+      self.container.find(".scheduleTable").html(data);
+    });
   }
 });
 
@@ -121,6 +132,11 @@ Strata.DeliveryOrder.refreshDeliveryOrders = function(order_list) {
   $.get("/delivery_orders/table/" + membership_no, function(data) {
     order_list.find(".deliveryOrdersTable").html(data);
   });
+};
+
+// This is just done so that I can mock it, and get around a jasmine bug
+Strata.DeliveryOrder.refreshDeliverySchedulesTable = function(deliveryOrder) {
+  deliveryOrder.refreshDeliverySchedulesTable();
 };
 
 Strata.DeliveryOrder.DATE_FORMAT = 'dd/M/yy';
