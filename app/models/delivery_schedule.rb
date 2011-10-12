@@ -1,6 +1,4 @@
 class DeliverySchedule < ActiveRecord::Base
-  MAX_ORDERS_PER_SLOT = 30
-
   belongs_to :delivery_slot
   has_many :delivery_orders
 
@@ -20,8 +18,6 @@ class DeliverySchedule < ActiveRecord::Base
 
   private
   def max_delivery_order_limit
-   if (members_count > MAX_ORDERS_PER_SLOT)
-     errors.add(:delivery_orders, "maximum order limit exceeded")
-   end
+   errors.add(:delivery_orders, "maximum order limit exceeded") if members_count > OpacSettings.deliveries_per_slot
   end
 end

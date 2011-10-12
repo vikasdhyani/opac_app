@@ -33,7 +33,7 @@ describe DeliverySchedule do
   end
 
   it "should not allow more than specified upper limit of orders per slot" do
-    orders = (DeliverySchedule::MAX_ORDERS_PER_SLOT).times.collect{|i| Factory(:delivery_order, :membership_no => "M#{i}") }
+    orders = (OpacSettings.deliveries_per_slot).times.collect{|i| Factory(:delivery_order, :membership_no => "M#{i}") }
     schedule = Factory(:delivery_schedule, :delivery_orders => orders)
     schedule.delivery_orders << Factory(:delivery_order, :membership_no => "A001")
     schedule.should_not be_valid

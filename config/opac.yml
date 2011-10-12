@@ -1,0 +1,8 @@
+development:
+  deliveries_per_slot: 30
+
+production:
+  deliveries_per_slot: 30
+
+test:
+  deliveries_per_slot: 5

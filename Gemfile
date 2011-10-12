@@ -16,6 +16,7 @@ gem 'acts_as_versioned'
 gem 'omniauth'
 gem 'mechanize'
 gem 'activeadmin'
+gem 'settingslogic', '~> 2.0'
 
 # Use unicorn as the web server
 # gem 'unicorn'
