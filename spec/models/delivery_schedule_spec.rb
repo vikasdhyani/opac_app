@@ -31,4 +31,12 @@ describe DeliverySchedule do
     schedule = Factory(:delivery_schedule, :delivery_orders => [order1, order2])
     schedule.members_count.should == 1
   end
+
+  it "should not allow more than specified upper limit of orders per slot" do
+    orders = (DeliverySchedule::MAX_ORDERS_PER_SLOT).times.collect{|i| Factory(:delivery_order, :membership_no => "M#{i}") }
+    schedule = Factory(:delivery_schedule, :delivery_orders => orders)
+    schedule.delivery_orders << Factory(:delivery_order, :membership_no => "A001")
+    schedule.should_not be_valid
+    schedule.should have(1).error_on(:delivery_orders)
+  end
 end
