@@ -3,11 +3,13 @@ require 'ostruct'
 class DeliveryOrdersController < ApplicationController
   def index
     @order_lists = OrderList.all_by_date.paginate(:page => params[:page], :per_page => 5)
+    @delivery_schedule_presenter = DeliverySchedulePresenter.new
   end
 
   def search
     @order_lists = OrderList.all_matching(params[:criteria]).paginate(:page => params[:page], :per_page => 5)
     @criteria = OpenStruct.new(params[:criteria])
+    @delivery_schedule_presenter = DeliverySchedulePresenter.new
     render :index
   end
 

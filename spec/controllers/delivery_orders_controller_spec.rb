@@ -21,6 +21,12 @@ describe DeliveryOrdersController do
       list = assigns[:order_lists]
       list.should have(5).things
     end
+
+    it "should create a delivery schedule presenter for the view" do
+      get :index
+      response.should be_success
+      assigns[:delivery_schedule_presenter].should_not be_nil
+    end
   end
 
   context "GET search" do
@@ -39,6 +45,12 @@ describe DeliveryOrdersController do
       response.should be_success
       criteria = assigns[:criteria]
       criteria.membership_no.should == "M2"
+    end
+
+    it "should create a delivery schedule presenter for the view" do
+      get :search, :criteria => { :membership_no => "M2" }
+      response.should be_success
+      assigns[:delivery_schedule_presenter].should_not be_nil
     end
   end
 

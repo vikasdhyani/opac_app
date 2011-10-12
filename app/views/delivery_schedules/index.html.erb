@@ -1,7 +1,1 @@
-<% @delivery_schedule_presenter.dates.each do |date| %>
-  <%= date %>
-  <% @delivery_schedule_presenter.slots.each do |slot| %>
-    <%= @delivery_schedule_presenter.deliveries_on(date, slot).size %>
-  <% end %>
-  <br/>
-<% end %>
+<%= render :partial => 'schedule_table' %>

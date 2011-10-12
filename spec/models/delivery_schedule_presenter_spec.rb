@@ -26,4 +26,19 @@ describe DeliverySchedulePresenter do
     delivery_plan = DeliverySchedulePresenter.new
     delivery_plan.slots.should == [delivery_slot]
   end
+
+  it "should know the count of deliveries for delivery schedules of upcoming week" do
+    delivery_schedule = Factory(:delivery_schedule, :delivery_date => Date.tomorrow)
+    Factory(:delivery_order, :delivery_schedule => delivery_schedule)
+    delivery_plan = DeliverySchedulePresenter.new
+    delivery_plan.members_count(delivery_schedule.delivery_date, delivery_schedule.delivery_slot).should == 1
+  end
+
+  it "counts two deliveries to the same member as a single delivery" do
+    delivery_schedule = Factory(:delivery_schedule, :delivery_date => Date.tomorrow)
+    Factory(:delivery_order, :delivery_schedule => delivery_schedule, :membership_no => "M1234")
+    Factory(:delivery_order, :delivery_schedule => delivery_schedule, :membership_no => "M1234")
+    delivery_plan = DeliverySchedulePresenter.new
+    delivery_plan.members_count(delivery_schedule.delivery_date, delivery_schedule.delivery_slot).should == 1
+  end
 end

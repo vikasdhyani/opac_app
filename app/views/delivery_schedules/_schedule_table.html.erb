@@ -1,0 +1,18 @@
+<div class="scheduleTable">
+  <table>
+    <tr>
+      <td></td>
+      <% @delivery_schedule_presenter.dates.each do |date| %>
+        <td><%= date.strftime("%a %b %d") %></td>
+      <% end %>
+    </tr>
+    <% @delivery_schedule_presenter.slots.each do |slot| %>
+      <tr>
+        <td><%= slot.name %></td>
+        <% @delivery_schedule_presenter.dates.each do |date| %>
+          <td><%= @delivery_schedule_presenter.members_count(date, slot) %></td>
+        <% end %>
+      </tr>
+    <% end %>
+  </table>
+</div>

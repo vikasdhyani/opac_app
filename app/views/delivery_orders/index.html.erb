@@ -36,6 +36,9 @@
   </section>
   <br/>
   <hr/>
+  <%= render :partial => "delivery_schedules/schedule_table" %>
+  <br/>
+  <hr/>
   <%= form_tag(search_delivery_orders_path, :method => :get) do %>
     Search By Member Number: <%= text_field :criteria, :membership_no %>
     <br/>
