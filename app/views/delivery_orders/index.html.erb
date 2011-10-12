@@ -37,13 +37,8 @@
   <br/>
   <hr/>
   <form method="GET" action="<%= search_delivery_orders_path %>">
-    Search By Member Number: <input name="criteria[membership_no]"/>
-    <input type="submit"/>
-  </form>
-  <br/>
-  <form method="GET" action="<%= search_delivery_orders_path %>">
-    <!-- FIXME: Using to_s is a little bit of an ugly hack -->
-    Search by Delivery Type: <%= collection_select(:criteria, :order_type, DeliveryOrder::DELIVERY_TYPES, :to_s, :to_s, :prompt => "Select Delivery Type")%>
+    Search By Member Number: <input name="criteria[membership_no]"/><br/>
+    Search by Delivery Type: <%= collection_select(:criteria, :order_type, DeliveryOrder::DELIVERY_TYPES, :to_s, :to_s, :prompt => "Any") %>
     <input type="submit"/>
   </form>
   <br/>

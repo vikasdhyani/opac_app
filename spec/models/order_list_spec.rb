@@ -29,6 +29,11 @@ describe OrderList do
       lists = OrderList.all_matching(:membership_no => "M2")
       lists.size.should == 1
       lists[0].membership_no.should == "M2"
+      end
+
+    it "loads all orders if no criteria is specified" do
+      lists = OrderList.all_matching(:membership_no => "")
+      lists.size.should == 2
     end
   end
 

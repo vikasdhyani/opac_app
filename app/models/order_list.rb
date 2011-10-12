@@ -45,7 +45,8 @@ class OrderList
     end
 
     def all_matching(criteria)
-      all_orders = DeliveryOrder.live_orders.where(criteria)
+      where_criteria = criteria.clone.delete_if { |k, v| v.empty? }
+      all_orders = DeliveryOrder.live_orders.where(where_criteria)
       create_from_delivery_orders all_orders
     end
   end
