@@ -52,13 +52,14 @@ Opac::Application.routes.draw do
   match 'ibtrs_alttitle' => 'ibtrs#setAltTitle'
   match 'ibtrs_drillrpt' =>   'ibtrs#drillrpt'
 
-  resources :delivery_orders, :only => [:index] do
+  resources :delivery_orders, :only => :index do
     get :search, :on => :collection
     get "table/:membership_no", :on => :collection, :action => :table
     resources :delivery_notes, :only => [:create, :index]
   end
 
   resources :appointments, :only => [:create, :new]
+  resources :delivery_schedules, :only => :index
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
