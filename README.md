@@ -8,3 +8,4 @@ Domain Terminology
 * Ready for Processing => This means the order is ready for delivery/pickup
 * DeliverySlot => A slot on which delivery can happen, ie, Morning, Evening, Etc...
 * DeliverySchedule => The schedule for a particular slot on a particular day
+* DeliveryPlan => The plan is the delivery schedule for a week
