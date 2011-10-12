@@ -232,3 +232,7 @@ table.form tbody td {font-size:120%;font-weight:normal;}
 .table_heading {
     font-weight:bold;
 }
+
+.center {
+  text-align: center;
+}

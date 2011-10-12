@@ -3,14 +3,14 @@
     <tr>
       <td></td>
       <% @delivery_schedule_presenter.dates.each do |date| %>
-        <td><%= date.strftime("%a %b %d") %></td>
+        <td class="table_heading center"><%= date.strftime("%a %b %d") %></td>
       <% end %>
     </tr>
     <% @delivery_schedule_presenter.slots.each do |slot| %>
       <tr>
-        <td><%= slot.name %></td>
+        <td class="table_heading"><%= slot.name %></td>
         <% @delivery_schedule_presenter.dates.each do |date| %>
-          <td><%= @delivery_schedule_presenter.members_count(date, slot) %></td>
+          <td class="center"><%= @delivery_schedule_presenter.members_count(date, slot) %></td>
         <% end %>
       </tr>
     <% end %>
