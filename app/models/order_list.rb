@@ -35,8 +35,8 @@ class OrderList
 
   class << self
     def create_from_delivery_orders(all_orders)
-      orderlists = all_orders.group_by(&:membership_no).collect { |membership_no, orders| OrderList.new(membership_no, orders) }
-      orderlists.sort!
+      order_lists = all_orders.group_by(&:membership_no).collect { |membership_no, orders| OrderList.new(membership_no, orders) }
+      order_lists.sort!
     end
 
     def all_by_date

@@ -30,14 +30,20 @@
 
 <div class="span-18">
   <section class="round">
-	<% flash.each do |key, value| %>
-		<div class="flash <%= key %>"><%= value %></div>
-	<% end %>
+    <% flash.each do |key, value| %>
+      <div class="flash <%= key %>"><%= value %></div>
+    <% end %>
   </section>
   <br/>
   <hr/>
   <form method="GET" action="<%= search_delivery_orders_path %>">
     Search By Member Number: <input name="criteria[membership_no]"/>
+    <input type="submit"/>
+  </form>
+  <br/>
+  <form method="GET" action="<%= search_delivery_orders_path %>">
+    <!-- FIXME: Using to_s is a little bit of an ugly hack -->
+    Search by Delivery Type: <%= collection_select(:criteria, :order_type, DeliveryOrder::DELIVERY_TYPES, :to_s, :to_s, :prompt => "Select Delivery Type")%>
     <input type="submit"/>
   </form>
   <br/>
