@@ -17,3 +17,4 @@ app/views/devise/sessions/new.html.erb
 /.idea
 /bin
 /db/schema.rb
+/public/stylesheets/*.css

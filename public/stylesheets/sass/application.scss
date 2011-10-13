@@ -229,10 +229,16 @@ table.form tbody td {font-size:120%;font-weight:normal;}
     color:#ccc;
 }
 
-.table_heading {
-    font-weight:bold;
-}
-
 .center {
   text-align: center;
+}
+
+.order_lists {
+  .scheduleErrorMessages {
+    color: red;
+  }
+
+  .table_heading {
+      font-weight:bold;
+  }
 }

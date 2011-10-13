@@ -244,6 +244,7 @@ DEPENDENCIES
   rspec-http
   rspec-rails (~> 2.6)
   ruby-oci8
+  sass
   settingslogic (~> 2.0)
   shoulda-matchers
   simplecov
