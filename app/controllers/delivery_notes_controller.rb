@@ -12,7 +12,14 @@ class DeliveryNotesController < ApplicationController
 
   def index
     delivery_order = DeliveryOrder.find(params[:delivery_order_id])
-    @notes = delivery_order.delivery_notes.order("created_at DESC")
-    render :json => @notes.to_json(:only => [:content, :created_at])
+    render :json => {
+      :id => delivery_order.id,
+#      :title => delivery_order.title.title,
+      :membership_no => delivery_order.membership_no,
+      :delivery_notes => delivery_order.delivery_notes.order("created_at DESC").collect{ |note| {
+        :created_date => note.created_at.strftime("%d %b %Y"),
+        :content => note.content,
+      }},
+    }
   end
 end

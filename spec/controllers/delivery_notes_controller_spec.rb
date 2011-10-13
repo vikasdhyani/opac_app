@@ -26,12 +26,14 @@ describe DeliveryNotesController do
   end
 
   context "GET index" do
-    it "returns a list of all notes for a delivery order" do
+    it "returns properties of the delivery order" do
       order = Factory(:delivery_order, :membership_no => "M1234")
       Factory(:delivery_note, :delivery_order_id => order.id, :content => "foo")
       get :index, :delivery_order_id => order.id, :format => :json
       response.should be_success
-      assigns[:notes][0].content.should == "foo"
+      json = JSON.load(response.body)
+      json["membership_no"].should == "M1234"
+      json["id"].should == order.id
     end
 
     it "returns a list of all notes for a delivery order in descending order of time" do
@@ -40,7 +42,8 @@ describe DeliveryNotesController do
       Factory(:delivery_note, :delivery_order_id => order.id, :content => "bar", :created_at => 1.day.ago)
       get :index, :delivery_order_id => order.id, :format => :json
       response.should be_success
-      assigns[:notes].collect(&:content).should == ["bar", "foo"]
+      json = JSON.load(response.body)
+      json["delivery_notes"].collect {|note| note["content"] }.should == ["bar", "foo"]
     end
   end
 end
