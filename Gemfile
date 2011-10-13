@@ -17,7 +17,7 @@ gem 'omniauth'
 gem 'mechanize'
 gem 'activeadmin'
 gem 'settingslogic', '~> 2.0'
-gem 'sass'
+gem 'sass', '~> 3.1'
 
 # Use unicorn as the web server
 # gem 'unicorn'
