@@ -18,6 +18,6 @@ class DeliverySchedule < ActiveRecord::Base
 
   private
   def max_delivery_order_limit
-   errors.add(:delivery_orders, "maximum order limit exceeded") if members_count > OpacSettings.deliveries_per_slot
+   errors.add(:delivery_orders, "cannot be more than #{OpacSettings.deliveries_per_slot} per slot") if members_count > OpacSettings.deliveries_per_slot
   end
 end

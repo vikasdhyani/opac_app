@@ -9,24 +9,21 @@ describe AppointmentsController do
     let(:delivery_order) { Factory(:delivery_order) }
     let(:delivery_slot) { Factory(:delivery_slot) }
     let(:tomorrow) { Date.tomorrow }
-    let(:post_params) { {
-        :delivery_date => tomorrow.strftime("%d/%b/%Y"),
-        :delivery_slot_id => delivery_slot.id, :delivery_orders => [delivery_order.id]
-      }
-    }
 
     it "creates the appointment on a particular date for a particular slot"do
-      post :create, post_params
+      post :create, :delivery_date => tomorrow.strftime("%d/%b/%Y"), :delivery_slot_id => delivery_slot.id, :delivery_orders => [delivery_order.id]
       response.should be_success
       schedule = DeliverySchedule.find_by_delivery_slot_id(delivery_slot.id)
       schedule.delivery_date.should == tomorrow
       schedule.should have(1).delivery_orders
     end
 
-    it "returns a un processable entity if save fails" do
-      DeliverySchedule.any_instance.stub(:save).and_return(false)
-      post :create, post_params
+    it "returns a un processable entity if the number of delivery slots is exceeded" do
+      orders = OpacSettings.deliveries_per_slot.times.collect { |i| Factory(:delivery_order, :membership_no => "M8888#{i}") }
+      Factory(:delivery_schedule, :delivery_orders => orders, :delivery_date =>tomorrow, :delivery_slot => delivery_slot)
+      post :create, :delivery_date => tomorrow.strftime("%d/%b/%Y"), :delivery_slot_id => delivery_slot.id, :delivery_orders => [delivery_order.id]
       response.should be_unprocessable_entity
+      response.body.should include("Delivery orders cannot")
     end
   end
 

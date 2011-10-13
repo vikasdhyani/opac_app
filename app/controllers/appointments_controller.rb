@@ -6,8 +6,7 @@ class AppointmentsController < ApplicationController
     if schedule.save
       render :layout => false
     else
-      Rails.logger.error schedule.errors
-      head :status => :unprocessable_entity
+      render :json => { :errors => schedule.errors.full_messages }, :status => :unprocessable_entity
     end
   end
 
