@@ -6,7 +6,7 @@ class DeliverySchedulePresenter
   end
 
   def schedule_for(delivery_date, delivery_slot)
-    DeliverySchedule.find_by_delivery_date_and_delivery_slot_id(delivery_date, delivery_slot) || DeliverySchedule.new
+    DeliverySchedule.find_or_initialize_by_delivery_date_and_delivery_slot_id(delivery_date, delivery_slot)
   end
 
   def deliveries_on(delivery_date, delivery_slot)

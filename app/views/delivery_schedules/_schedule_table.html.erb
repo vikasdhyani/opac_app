@@ -10,7 +10,11 @@
       <tr>
         <td class="table_heading"><%= slot.name %></td>
         <% @delivery_schedule_presenter.dates.each do |date| %>
-          <td class="center"><%= @delivery_schedule_presenter.members_count(date, slot) %></td>
+          <td class="center">
+            <a href="<%= schedule_by_date_and_slot_path(date, slot) %>">
+              <%= @delivery_schedule_presenter.members_count(date, slot) %>
+            </a>
+          </td>
         <% end %>
       </tr>
     <% end %>

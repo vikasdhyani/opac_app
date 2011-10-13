@@ -32,5 +32,8 @@ module ApplicationHelper
   def default_image_url
     "http://justbooksclc.com/images/noimage.jpg"
   end
-  
+
+  def schedule_by_date_and_slot_path(delivery_date, slot)
+    display_delivery_schedules_path(:delivery_date => delivery_date.strftime("%Y/%m/%d"), :slot_id => slot.id )
+  end
 end

@@ -19,15 +19,16 @@ describe DeliverySchedulesController do
      let(:delivery_slot) { Factory(:delivery_slot) }
      let(:tomorrow) { Date.tomorrow }
 
-     it "should get the list of all appointment for given delivery date" do
+     it "should get the list of all appointment for given delivery date and slot" do
        delivery_schedule = Factory(:delivery_schedule, :delivery_date => tomorrow, :delivery_slot => delivery_slot)
        get :show, :delivery_date =>tomorrow.strftime("%Y/%m/%d"), :slot_id => delivery_slot.id
        assigns[:delivery_schedule].should == delivery_schedule
      end
 
      it "returns a new object if there is no schedule created" do
-       get :show, :delivery_date =>tomorrow.strftime("%Y/%m/%d"), :slot_id => delivery_slot.id
+       get :show, :delivery_date => tomorrow.strftime("%Y/%m/%d"), :slot_id => delivery_slot.id
        assigns[:delivery_schedule].delivery_orders.should be_empty
+       assigns[:delivery_schedule].delivery_slot.should == delivery_slot
      end
    end
 end
