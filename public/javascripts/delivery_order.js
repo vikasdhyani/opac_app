@@ -95,13 +95,20 @@ Strata.DeliveryOrder = Class.extend({
     return errors;
   },
 
-  submitSuccessfulHandler: function(order_list) {
+  submitScheduleSuccessfulHandler: function(order_list) {
     var self = this;
 
     return function(data) {
       order_list.find(".scheduleDelivery").html(data);
       Strata.DeliveryOrder.refreshDeliveryOrders(order_list);
       Strata.DeliveryOrder.refreshDeliverySchedulesTable(self);
+    }
+  },
+
+  submitScheduleFailureHandler: function(order_list) {
+    return function(jqXHR) {
+      var json = $.parseJSON(jqXHR.responseText);
+      order_list.find(".scheduleErrorMessages").html(json.errors.join("<br/>"));
     }
   },
 
@@ -122,7 +129,14 @@ Strata.DeliveryOrder = Class.extend({
 
     var errors = this.validateSubmitScheduleParams(params);
     if($.isEmptyObject(errors))
-      $.post(this.create_appointment_path, params, this.submitSuccessfulHandler(order_list));
+      $.ajax({
+        type: "POST",
+        dataType: "JSON",
+        url: this.create_appointment_path,
+        data: params,
+        success: this.submitScheduleSuccessfulHandler(order_list),
+        error: this.submitScheduleFailureHandler(order_list)
+      });
     else
       order_list.find(".scheduleErrorMessages").html(errors.join("<br/>"));
   },

@@ -187,6 +187,14 @@ describe("DeliveryOrder", function() {
         expect($(".scheduleDelivery")).toHaveText("foobar");
       });
 
+      it("show the error message if appointment creation fails", function() {
+        spyOn($, "ajax").andCallFake(function(params) {
+          params.error({responseText: "{\"errors\":[\"foobar\"]}"});
+        });
+        $(".submitButton").click();
+        expect($(".scheduleErrorMessages")).toHaveText("foobar");
+      });
+
       it("should refresh schedules table on successfully submitting", function() {
         spyOn($, "ajax").andCallFake(function(params) {
           params.success("foobar")
