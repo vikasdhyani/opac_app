@@ -1,5 +1,5 @@
 development:
-  deliveries_per_slot: 1
+  deliveries_per_slot: 30
 
 production:
   deliveries_per_slot: 30

@@ -21,12 +21,21 @@ describe DeliverySchedulesController do
 
      it "should get the list of all appointment for given delivery date and slot" do
        delivery_schedule = Factory(:delivery_schedule, :delivery_date => tomorrow, :delivery_slot => delivery_slot)
-       get :show, :delivery_date =>tomorrow.strftime("%Y/%m/%d"), :slot_id => delivery_slot.id
+       get :show, :delivery_date => tomorrow.strftime("%Y/%m/%d"), :slot_id => delivery_slot.id
+       response.should be_success
        assigns[:delivery_schedule].should == delivery_schedule
+     end
+
+     it "should get the list of all distinct appointments for given delivery date and slot" do
+       delivery_schedule = Factory(:delivery_schedule, :delivery_date => tomorrow, :delivery_slot => delivery_slot, :delivery_orders => [Factory(:delivery_order)])
+       get :show, :delivery_date => tomorrow.strftime("%Y/%m/%d"), :slot_id => delivery_slot.id
+       response.should be_success
+       assigns[:order_lists].size.should == 1
      end
 
      it "returns a new object if there is no schedule created" do
        get :show, :delivery_date => tomorrow.strftime("%Y/%m/%d"), :slot_id => delivery_slot.id
+       response.should be_success
        assigns[:delivery_schedule].delivery_orders.should be_empty
        assigns[:delivery_schedule].delivery_slot.should == delivery_slot
      end

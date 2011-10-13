@@ -1,0 +1,22 @@
+<%= javascript_include_tag 'delivery_order'%>
+<div class="span-4 colborder">
+	<hr/>
+	<div class="span-4">
+		<p></p>
+		<p><%= link_to "Home", root_path %>	</p>
+    <p><%= link_to "Back", :back %> </p>
+	</div>
+</div>
+
+<div class="span-18">
+  <section class="round">
+    <% flash.each do |key, value| %>
+      <div class="flash <%= key %>"><%= value %></div>
+    <% end %>
+  </section>
+  <div class="delivery_schedule">
+    <table>
+
+    </table>
+  </div>
+</div>
