@@ -15,8 +15,18 @@
     <% end %>
   </section>
   <div class="delivery_schedule">
-    <table>
-
-    </table>
+    <%= render :partial => "delivery_schedules/schedule_table" %>
+    <hr>
+    <h3>Detailed Delivery Schedule for <%= @delivery_schedule.delivery_slot.name %> of <%= @delivery_schedule.delivery_date.strftime("%d %B %Y") %> </h3>
+    <hr/>
+    <div class="order_lists">
+      <%= render :partial => "delivery_orders/order_list", :collection => @order_lists, :locals => { :do_not_show_schedule_button => true } %>
+    </div>
   </div>
 </div>
+
+  <script type="text/javascript">
+    $(document).ready(function(){
+      new Strata.DeliveryOrder($(".order_lists"), "<%= new_appointment_path %>", "<%= appointments_path %>", "<%= delivery_schedules_path %>");
+    });
+  </script>

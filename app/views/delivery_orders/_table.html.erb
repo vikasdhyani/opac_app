@@ -1,9 +1,10 @@
+<% do_not_show_schedule_button ||= false %>
 <div class="deliveryOrdersTable">
   <table>
     <tr>
-      <td class="table_heading">
-        <input type="checkbox" class="selectAllCheckbox"/>
-      </td>
+      <% unless do_not_show_schedule_button %>
+        <td class="table_heading"><input type="checkbox" class="selectAllCheckbox"/></td>
+      <% end %>
       <td class="table_heading">Order Type</td>
       <td class="table_heading">Placed</td>
       <td class="table_heading">Title Name</td>
@@ -11,6 +12,6 @@
       <td class="table_heading">Scheduled At</td>
       <td class="table_heading">Notes</td>
     </tr>
-    <%= render :partial => "delivery_order", :collection => order_list.orders %>
+    <%= render :partial => "delivery_orders/delivery_order", :collection => order_list.orders, :locals => { :do_not_show_schedule_button => do_not_show_schedule_button } %>
   </table>
 </div>

@@ -1,5 +1,7 @@
 <tr data-delivery-order="<%= delivery_order.id %>">
-  <td><input type="checkbox" class="deliveryOrderCheckbox" /></td>
+  <% unless do_not_show_schedule_button %>
+    <td><input type="checkbox" class="deliveryOrderCheckbox" /></td>
+  <% end %>
   <td><%= delivery_type(delivery_order) %></td>
   <td><%= distance_of_time_in_words(delivery_order.created_at, Time.zone.now) %> ago</td>
   <td><%= delivery_order.title.title %></td>

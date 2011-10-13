@@ -27,11 +27,17 @@ describe DeliverySchedulesController do
      end
 
      it "should get the list of all distinct appointments for given delivery date and slot" do
-       delivery_schedule = Factory(:delivery_schedule, :delivery_date => tomorrow, :delivery_slot => delivery_slot, :delivery_orders => [Factory(:delivery_order)])
+       Factory(:delivery_schedule, :delivery_date => tomorrow, :delivery_slot => delivery_slot, :delivery_orders => [Factory(:delivery_order)])
        get :show, :delivery_date => tomorrow.strftime("%Y/%m/%d"), :slot_id => delivery_slot.id
        response.should be_success
        assigns[:order_lists].size.should == 1
      end
+
+    it "should create a delivery schedule presenter for the view" do
+      get :show, :delivery_date => tomorrow.strftime("%Y/%m/%d"), :slot_id => delivery_slot.id
+      response.should be_success
+      assigns[:delivery_schedule_presenter].should_not be_nil
+    end
 
      it "returns a new object if there is no schedule created" do
        get :show, :delivery_date => tomorrow.strftime("%Y/%m/%d"), :slot_id => delivery_slot.id

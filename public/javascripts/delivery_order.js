@@ -22,11 +22,23 @@ Strata.DeliveryOrder = Class.extend({
       return "/delivery_orders/" + delivery_order_id + "/delivery_notes";
   },
 
+  displayComments: function(order_list, data) {
+    var destination = order_list.find(".notes");
+    destination.html(data);
+    destination.show(400);
+  },
+
   displayCommentsHandler: function(order_list) {
+    var self = this;
     return function(data) {
-      var destination = order_list.find(".notes");
-      destination.html(data);
-      destination.show(400);
+      self.displayComments(order_list, data);
+    }
+  },
+
+  addCommentsSuccessfulHandler: function(order_list) {
+    var self = this;
+    return function(data) {
+      self.displayComments(order_list, data);
       Strata.DeliveryOrder.refreshDeliveryOrders(order_list);
     }
   },
@@ -55,7 +67,7 @@ Strata.DeliveryOrder = Class.extend({
       type: "POST",
       url: this.deliveryNotesPath(delivery_order_id),
       data: { delivery_note: { content: content } },
-      success: this.displayCommentsHandler(order_list),
+      success: this.addCommentsSuccessfulHandler(order_list),
       error: function(error) { addNotesDiv.find(".add_notes_button").attr("disabled", false); }
     });
   },

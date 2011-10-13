@@ -1,3 +1,5 @@
+<% do_not_show_schedule_button ||= false %>
+
 <div class="order_list" data-membership-no="<%= order_list.membership_no %>">
   <div>
     <div>
@@ -7,10 +9,12 @@
       <div>Address:<%= order_list.address %></div>
     </div>
     <p></p>
-    <%= render :partial => 'table', :locals => { :order_list => order_list} %>
-    <div class="scheduleDelivery right">
-      <button class="scheduleDeliveryButton">Schedule</button>
-    </div>
+    <%= render :partial => 'delivery_orders/table', :locals => { :order_list => order_list, :do_not_show_schedule_button => do_not_show_schedule_button} %>
+    <% unless do_not_show_schedule_button %>
+      <div class="scheduleDelivery right">
+        <button class="scheduleDeliveryButton">Schedule</button>
+      </div>
+    <% end %>
     <div class="clear"></div>
     <div class="notes" data-membership-no="<%= order_list.membership_no %>" style="display: none;"></div>
     <div class="last right"></div>
