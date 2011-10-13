@@ -19,7 +19,7 @@ Strata.DeliveryOrder = Class.extend({
 
   // FIXME: This is a hardcoded string
   deliveryNotesPath: function(delivery_order_id) {
-      return "/delivery_orders/" + delivery_order_id + "/delivery_notes";
+      return "/delivery_orders/" + delivery_order_id + "/delivery_notes.json";
   },
 
   displayComments: function(order_list, data) {
