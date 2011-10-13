@@ -59,7 +59,9 @@ Opac::Application.routes.draw do
   end
 
   resources :appointments, :only => [:create, :new]
-  resources :delivery_schedules, :only => :index
+  resources :delivery_schedules, :only => :index do
+    get "/:delivery_date/slot/:slot_id", :action => :show, :on => :collection, :constraints => { :delivery_date => /[0-9]{4}\/[0-9]{2}\/[0-9]{2}/ }
+  end
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
