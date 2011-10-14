@@ -46,7 +46,7 @@ Strata.DeliveryOrder = Class.extend({
   showNotesClicked: function(event) {
     var delivery_order_id = $(event.target).parents("tr").attr("data-delivery-order");
     var order_list_div = $(event.target).parents(".order_list");
-    $.get(this.deliveryNotesPath(delivery_order_id), this.displayCommentsHandler(order_list_div));
+    $.get(this.deliveryNotesPath(delivery_order_id), this.displayCommentsHandler(order_list_div), 'json');
   },
 
   hideNotesClicked: function(event) {
@@ -66,6 +66,7 @@ Strata.DeliveryOrder = Class.extend({
     $.ajax({
       type: "POST",
       url: this.deliveryNotesPath(delivery_order_id),
+      dataType: 'json',
       data: { delivery_note: { content: content } },
       success: this.addCommentsSuccessfulHandler(order_list),
       error: function(error) { addNotesDiv.find(".add_notes_button").attr("disabled", false); }

@@ -76,7 +76,7 @@
 
       $(".ignoreMePasteHere").click(function(){
         var html = $("#someTemplate").html();
-        var applied = $.mustache(html, {name: "Tejas", items: [{name: "Chocolate", foos: [{t: "p"}, {t: "n"}] }, {name: "Cookies"}]});
+        var applied = $.mustache(html, {name: "Tejas", items: [{name: "Chocolate", foos: [{t: "p"}, {t: "n"}] },       {name: "Cookies"}]});
         $(".ignoreMePasteHere").html(applied);
       });
     });

@@ -14,7 +14,8 @@ describe("DeliveryOrder", function() {
     it("fetch notes when notes button is clicked", function() {
       spyOn($, "ajax").andCallFake(function(params) {
         expect(params.type).toEqual("GET");
-        expect(params.url).toEqual("/delivery_orders/1234/delivery_notes");
+        expect(params.url).toEqual("/delivery_orders/1234/delivery_notes.json");
+        expect(params.dataType).toEqual("json");
       });
       $(".show_notes_button").click();
       expect($.ajax).wasCalled();
@@ -58,7 +59,8 @@ describe("DeliveryOrder", function() {
       it("adds a new note to existing delivery order when add notes button is clicked", function() {
         spyOn($, "ajax").andCallFake(function(params) {
           expect(params.type).toEqual("POST");
-          expect(params.url).toEqual("/delivery_orders/4567/delivery_notes");
+          expect(params.url).toEqual("/delivery_orders/4567/delivery_notes.json");
+          expect(params.dataType).toEqual("json");
           expect(params.data.delivery_note.content).toEqual("foo")
         });
 
