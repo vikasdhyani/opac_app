@@ -35,6 +35,13 @@ describe OrderList do
       lists = OrderList.all_matching(:membership_no => "")
       lists.size.should == 2
     end
+
+    it "allows criteria to be specified on the schedules table" do
+      schedule = Factory(:delivery_schedule)
+      Factory(:delivery_order, :delivery_schedule => schedule)
+      list = OrderList.all_matching("delivery_schedules.delivery_slot_id" => schedule.delivery_slot.id.to_s)
+      list.size.should == 1
+    end
   end
 
   it "gets the number of pending pickups" do

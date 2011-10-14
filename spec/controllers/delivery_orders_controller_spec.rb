@@ -63,4 +63,15 @@ describe DeliveryOrdersController do
       list.membership_no.should == "M2"
     end
   end
+
+  context "GET by slot and date" do
+    it "should list all pending orders for give membership no ans slot and delivery date" do
+      schedule = Factory(:delivery_schedule)
+      Factory(:delivery_order, :membership_no => "M2", :delivery_schedule => schedule)
+      get :search_by_slot_and_date, :membership_no => "M2", :slot_id => schedule.delivery_slot_id.to_s, :delivery_date => schedule.delivery_date.strftime("%Y/%m/%d")
+      response.should be_success
+      list = assigns[:order_list]
+      list.membership_no.should == "M2"
+    end
+  end
 end
