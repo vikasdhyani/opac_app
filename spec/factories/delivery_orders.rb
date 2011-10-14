@@ -1,7 +1,7 @@
 FactoryGirl.define do
   factory :delivery_order do
     membership_no "M1234"
-    title_id 1234
+    title_id { Factory(:dev_title).id }
     ibtr { Factory(:ibtr) }
     status DeliveryOrder::PENDING
     branch_id 1

@@ -182,5 +182,26 @@ ActiveRecord::Schema.define(:version => 20111003135157) do
     t.string   "lphone"
     t.string   "mphone"
   end
+
+  create_table "dev_titles", :force => true do |t|
+     t.integer  "id"
+     t.string   "title"
+     t.integer  "author_id"
+     t.integer  "publisher_id"
+     t.integer   "yearofpublication"
+     t.string   "edition"
+     t.integer   "category_id"
+     t.string    "isbn10"
+     t.string    "isbn13"
+     t.integer   "noofpages"
+     t.string    "language"
+     t.integer    "cnt_rated"
+     t.integer    "rating"
+     t.integer    "no_of_rented"
+     t.string     "title_type"
+     t.string     "format"
+     t.string    "length"
+     t.string     "isbn"
+  end
   # adding test only db table ends
 end

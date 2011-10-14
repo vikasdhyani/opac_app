@@ -2,3 +2,6 @@
 
 class DevMembership < ActiveRecord::Base
 end
+
+class DevTitle < ActiveRecord::Base
+end
