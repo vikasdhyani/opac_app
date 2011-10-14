@@ -15,6 +15,7 @@ src_files:
   - public/javascripts/jquery.min.js
   - public/javascripts/jquery-ui.min.js
   - public/javascripts/jquery.*.js
+  - public/javascripts/path_helpers.js
   - public/javascripts/delivery_order.js
 
 # stylesheets

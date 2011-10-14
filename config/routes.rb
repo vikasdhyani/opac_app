@@ -63,6 +63,8 @@ Opac::Application.routes.draw do
     get "/:delivery_date/slots/:slot_id", :action => :show, :as => :display, :on => :collection, :constraints => { :delivery_date => /[0-9]{4}\/[0-9]{2}\/[0-9]{2}/ }
   end
 
+  get "/javascripts/path_helpers.js" => "javascripts#path_helpers"
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

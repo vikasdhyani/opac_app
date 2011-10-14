@@ -17,11 +17,6 @@ Strata.DeliveryOrder = Class.extend({
     this.container.find(".selectAllCheckbox").live("click", function(event) { self.selectAllClicked(event); } );
   },
 
-  // FIXME: This is a hardcoded string
-  deliveryNotesPath: function(delivery_order_id) {
-      return "/delivery_orders/" + delivery_order_id + "/delivery_notes.json";
-  },
-
   displayComments: function(order_list, data) {
     var destination = order_list.find(".notes");
     var template = this.container.find("#deliveryNotesTemplate");
@@ -47,7 +42,7 @@ Strata.DeliveryOrder = Class.extend({
   showNotesClicked: function(event) {
     var delivery_order_id = $(event.target).parents("tr").attr("data-delivery-order");
     var order_list_div = $(event.target).parents(".order_list");
-    $.get(this.deliveryNotesPath(delivery_order_id), this.displayCommentsHandler(order_list_div), 'json');
+    $.get(Strata.PathHelpers.deliveryNotesPath(delivery_order_id), this.displayCommentsHandler(order_list_div), 'json');
   },
 
   hideNotesClicked: function(event) {
@@ -66,7 +61,7 @@ Strata.DeliveryOrder = Class.extend({
 
     $.ajax({
       type: "POST",
-      url: this.deliveryNotesPath(delivery_order_id),
+      url: Strata.PathHelpers.deliveryNotesPath(delivery_order_id),
       dataType: 'json',
       data: { delivery_note: { content: content } },
       success: this.addCommentsSuccessfulHandler(order_list),

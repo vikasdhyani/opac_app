@@ -1,0 +1,9 @@
+var Strata = Strata || {};
+
+Strata.PathHelpers = {};
+
+Strata.PathHelpers.deliveryNotesPath = function(delivery_order_id) {
+  return '<%= delivery_order_delivery_notes_path(:delivery_order_id => ":delivery_order_id", :format => :json) %>'.replace(":delivery_order_id", delivery_order_id);
+};
+
+Strata.PathHelpers.foo = "bar";
