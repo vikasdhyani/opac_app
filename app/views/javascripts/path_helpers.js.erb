@@ -6,4 +6,6 @@ Strata.PathHelpers.deliveryNotesPath = function(delivery_order_id) {
   return '<%= delivery_order_delivery_notes_path(:delivery_order_id => ":delivery_order_id", :format => :json) %>'.replace(":delivery_order_id", delivery_order_id);
 };
 
-Strata.PathHelpers.foo = "bar";
+Strata.PathHelpers.tableDeliveryOrdersPath = function(membership_no) {
+  return '<%= table_delivery_orders_path(:membership_no => ":membership_no") %>'.replace(":membership_no", membership_no);
+};

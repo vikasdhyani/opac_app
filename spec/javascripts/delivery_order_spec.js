@@ -1,5 +1,5 @@
 function createDeliveryOrder() {
-  return new Strata.DeliveryOrder($(".order_lists"), "/foobar", "/submit/schedule", "/delivery_schedules");
+  return new Strata.DeliveryOrder($(".order_lists"), "/foobar", "/submit/schedule", "/delivery_schedules", new Strata.DeliveryOrder.DeliveryOrderPathGenerator());
 }
 
 describe("DeliveryOrder", function() {
@@ -263,7 +263,7 @@ describe("DeliveryOrder", function() {
         expect(params.type).toEqual("GET");
         expect(params.url, "/delivery_orders/table/M1234");
       });
-      Strata.DeliveryOrder.refreshDeliveryOrders($(".order_list"));
+      Strata.DeliveryOrder.refreshDeliveryOrders($(".order_list"), new Strata.DeliveryOrder.DeliveryOrderPathGenerator());
       expect($.ajax).wasCalled();
     });
 
@@ -271,7 +271,7 @@ describe("DeliveryOrder", function() {
       spyOn($, "ajax").andCallFake(function(params){
         params.success("foo");
       });
-      Strata.DeliveryOrder.refreshDeliveryOrders($(".order_list"));
+      Strata.DeliveryOrder.refreshDeliveryOrders($(".order_list"), new Strata.DeliveryOrder.DeliveryOrderPathGenerator());
       expect($(".deliveryOrdersTable")).toHaveText("foo");
     });
   });
@@ -298,5 +298,12 @@ describe("DeliveryOrder", function() {
       Strata.DeliveryOrder.refreshDeliverySchedulesTable(deliveryOrder);
       expect($(".scheduleTable")).toHaveText("foo");
     });
+  });
+});
+
+describe("path generator", function(){
+  it("delivery orders page generator generates a path for a membership no", function(){
+    var generator = new Strata.DeliveryOrder.DeliveryOrderPathGenerator();
+    expect(generator.refreshTablePath("ABCD")).toEqual("/delivery_orders/table/ABCD");
   });
 });

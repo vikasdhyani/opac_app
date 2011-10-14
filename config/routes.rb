@@ -54,7 +54,7 @@ Opac::Application.routes.draw do
 
   resources :delivery_orders, :only => :index do
     get :search, :on => :collection
-    get "table/:membership_no", :on => :collection, :action => :table
+    get "table/:membership_no", :on => :collection, :action => :table, :as => :table
     resources :delivery_notes, :only => [:create, :index]
   end
 

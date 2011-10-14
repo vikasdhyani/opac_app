@@ -1,11 +1,15 @@
 var Strata = Strata || {};
 
+// foo1(membership_no) => /delivery_orders/table/membership_to
+// foo2(membership_no) => /delivery_schedule/xgz/membership_to
+
 Strata.DeliveryOrder = Class.extend({
-  init: function(container, new_appointment_path, create_appointment_path, delivery_schedules_path) {
+  init: function(container, new_appointment_path, create_appointment_path, delivery_schedules_path, path_generator) {
     this.container = container;
     this.new_appointment_path = new_appointment_path;
     this.create_appointment_path = create_appointment_path;
     this.delivery_schedule_path = delivery_schedules_path;
+    this.path_generator = path_generator;
 
     var self = this;
     this.container.find(".scheduleDeliveryButton").live("click", function(event) { self.scheduleDeliveryButtonClicked(event); } );
@@ -35,7 +39,7 @@ Strata.DeliveryOrder = Class.extend({
     var self = this;
     return function(data) {
       self.displayComments(order_list, data);
-      Strata.DeliveryOrder.refreshDeliveryOrders(order_list);
+      Strata.DeliveryOrder.refreshDeliveryOrders(order_list, self.path_generator);
     }
   },
 
@@ -109,7 +113,7 @@ Strata.DeliveryOrder = Class.extend({
 
     return function(data) {
       order_list.find(".scheduleDelivery").html(data);
-      Strata.DeliveryOrder.refreshDeliveryOrders(order_list);
+      Strata.DeliveryOrder.refreshDeliveryOrders(order_list, self.path_generator);
       Strata.DeliveryOrder.refreshDeliverySchedulesTable(self);
     }
   },
@@ -158,9 +162,9 @@ Strata.DeliveryOrder = Class.extend({
   }
 });
 
-Strata.DeliveryOrder.refreshDeliveryOrders = function(order_list) {
+Strata.DeliveryOrder.refreshDeliveryOrders = function(order_list, path_generator) {
   var membership_no = order_list.attr("data-membership-no");
-  $.get("/delivery_orders/table/" + membership_no, function(data) {
+  $.get(path_generator.refreshTablePath(membership_no), function(data) {
     order_list.find(".deliveryOrdersTable").html(data);
   });
 };
@@ -175,3 +179,9 @@ Strata.DeliveryOrder.applyMustache = function(destination, template, data) {
 };
 
 Strata.DeliveryOrder.DATE_FORMAT = 'dd/M/yy';
+
+Strata.DeliveryOrder.DeliveryOrderPathGenerator = Class.extend({
+  refreshTablePath: function(membership_no) {
+    return Strata.PathHelpers.tableDeliveryOrdersPath(membership_no);
+  }
+});
