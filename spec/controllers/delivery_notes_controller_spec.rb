@@ -32,7 +32,7 @@ describe DeliveryNotesController do
       get :index, :delivery_order_id => order.id, :format => :json
       response.should be_success
       json = JSON.load(response.body)
-      json["membership_no"].should == "M1234"
+      json["membership_no"].should == order.membership_no
       json["id"].should == order.id
     end
 

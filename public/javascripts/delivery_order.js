@@ -24,7 +24,8 @@ Strata.DeliveryOrder = Class.extend({
 
   displayComments: function(order_list, data) {
     var destination = order_list.find(".notes");
-    destination.html(data);
+    var template = this.container.find("#deliveryNotesTemplate");
+    Strata.DeliveryOrder.applyMustache(destination, template, data);
     destination.show(400);
   },
 
@@ -172,6 +173,10 @@ Strata.DeliveryOrder.refreshDeliveryOrders = function(order_list) {
 // This is just done so that I can mock it, and get around a jasmine bug
 Strata.DeliveryOrder.refreshDeliverySchedulesTable = function(deliveryOrder) {
   deliveryOrder.refreshDeliverySchedulesTable();
+};
+
+Strata.DeliveryOrder.applyMustache = function(destination, template, data) {
+  destination.html($.mustache(template.html(), data));
 };
 
 Strata.DeliveryOrder.DATE_FORMAT = 'dd/M/yy';

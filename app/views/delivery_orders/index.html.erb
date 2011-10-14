@@ -51,34 +51,16 @@
     <%= render :partial => "order_list", :collection => @order_lists %>
     <hr />
     <%= will_paginate(@order_lists) %>
-  <br/>
-  <hr />
+    <br/>
+    <hr />
+    <script type="text/html" id="deliveryNotesTemplate">
+      <%= render :partial => "delivery_notes_template" %>
+    </script>
   </div>
-  <div class="ignoreMePasteHere">Click Here</div>
-  <script type=text/html id="someTemplate">
-    Foo bar {{name}}<br />
-    blah blah
-    <ul>
-      {{#items}}
-        <li>{{name}}</li>
-      {{/items}}
 
-      {{#items}}
-        {{#foos}}
-          {{t}}
-        {{/foos}}
-      {{/items}}
-    </ul>
-  </script>
   <script type="text/javascript">
     $(document).ready(function(){
       new Strata.DeliveryOrder($(".order_lists"), "<%= new_appointment_path %>", "<%= appointments_path %>", "<%= delivery_schedules_path %>");
-
-      $(".ignoreMePasteHere").click(function(){
-        var html = $("#someTemplate").html();
-        var applied = $.mustache(html, {name: "Tejas", items: [{name: "Chocolate", foos: [{t: "p"}, {t: "n"}] },       {name: "Cookies"}]});
-        $(".ignoreMePasteHere").html(applied);
-      });
     });
   </script>
 </div>

@@ -21,18 +21,23 @@ describe("DeliveryOrder", function() {
       expect($.ajax).wasCalled();
     });
 
-    it("writes the content returned into notes div with matching membership no", function() {
+    it("writes the content returned into notes div", function() {
       spyOn($, "ajax").andCallFake(function(params) {
-        params.success("foo");
+        params.success({foo: "bar"});
+      });
+      spyOn(Strata.DeliveryOrder, "applyMustache").andCallFake(function(destination, template, data) {
+        expect(data.foo).toEqual("bar");
+        expect(destination).toHaveClass("notes");
       });
       $(".show_notes_button").click();
-      expect($(".notes")).toHaveText("foo");
+      expect(Strata.DeliveryOrder.applyMustache).wasCalled();
     });
 
     it("unhides the member's notes on clicking the view link", function() {
       spyOn($, "ajax").andCallFake(function(params) {
-        params.success("foo");
+        params.success({foo: "bar"});
       });
+      spyOn(Strata.DeliveryOrder, "applyMustache");
       $(".show_notes_button").click();
       expect($(".notes")).toBeVisible();
     });
@@ -71,13 +76,14 @@ describe("DeliveryOrder", function() {
 
       it("reloads the index page after adding a new comment", function() {
         spyOn(Strata.DeliveryOrder, "refreshDeliveryOrders");
+        spyOn(Strata.DeliveryOrder, "applyMustache");
         spyOn($, "ajax").andCallFake(function(params) {
-          params.success("foobar");
+          params.success({foo: "bar"});
         });
         $(".notesTextArea").text("foo");
         $(".add_notes_button").click();
-        expect($(".notes")).toHaveText("foobar");
         expect(Strata.DeliveryOrder.refreshDeliveryOrders).wasCalled();
+        expect(Strata.DeliveryOrder.applyMustache).wasCalled();
       });
 
       it("disables the add notes button after adding a new comment", function() {

@@ -1,8 +1,8 @@
 <div>
-  Notes for <b><%= @delivery_order.title.title %></b>
+  Notes for <b>Title Here</b>
 </div>
 <div style="float: right"><a class="hide_notes_button" target="#">X</a></div>
-<div class="addNotes" data-delivery-order="<%= @delivery_order.id %>" data-membership-no="<%= @delivery_order.membership_no %>">
+<div class="addNotes" data-delivery-order="{{id}}" data-membership-no="{{membership_no}}">
   <textarea class="notesTextArea"></textarea>
   <button class="add_notes_button">Add Comment</button>
 </div>
@@ -11,10 +11,10 @@
     <td class="table_heading">Time</td>
     <td class="table_heading">Comment</td>
   </tr>
-  <% @notes.each do |note| %>
+  {{#delivery_notes}}
     <tr>
-      <td><%= note.created_at.strftime("%b %d %Y") %></td>
-      <td><%= note.content %></td>
+      <td>{{created_date}}</td>
+      <td>{{content}}</td>
     </tr>
-  <% end %>
+  {{/delivery_notes}}
 </table>
