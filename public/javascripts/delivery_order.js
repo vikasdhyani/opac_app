@@ -185,3 +185,14 @@ Strata.DeliveryOrder.DeliveryOrderPathGenerator = Class.extend({
     return Strata.PathHelpers.tableDeliveryOrdersPath(membership_no);
   }
 });
+
+Strata.DeliveryOrder.DeliverySchedulePathGenerator = Class.extend({
+  init: function(date, slot_id){
+    this.date = date;
+    this.slot_id = slot_id;
+  },
+
+  refreshTablePath: function(membership_no) {
+    return Strata.PathHelpers.deliveryOrdersByMemberAndSlotPath(this.date, this.slot_id, membership_no);
+  }
+});

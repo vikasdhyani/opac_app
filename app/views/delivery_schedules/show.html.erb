@@ -30,6 +30,7 @@
 
   <script type="text/javascript">
     $(document).ready(function(){
-      new Strata.DeliveryOrder($(".order_lists"), "<%= new_appointment_path %>", "<%= appointments_path %>", "<%= delivery_schedules_path %>", new Strata.DeliveryOrder.DeliveryOrderPathGenerator());
+      var deliverySchedulePathGenerator = new Strata.DeliveryOrder.DeliverySchedulePathGenerator('<%= @delivery_schedule.delivery_date.strftime("%Y/%m/%d") %>', '<%= @delivery_schedule.delivery_slot_id %>');
+      new Strata.DeliveryOrder($(".order_lists"), "<%= new_appointment_path %>", "<%= appointments_path %>", "<%= delivery_schedules_path %>", deliverySchedulePathGenerator);
     });
   </script>

@@ -306,4 +306,9 @@ describe("path generator", function(){
     var generator = new Strata.DeliveryOrder.DeliveryOrderPathGenerator();
     expect(generator.refreshTablePath("ABCD")).toEqual("/delivery_orders/table/ABCD");
   });
+
+  it("delivery schedules generator generates a path for a membership no for given slot and date", function(){
+    var generator = new Strata.DeliveryOrder.DeliverySchedulePathGenerator('2010/01/02', '15');
+    expect(generator.refreshTablePath("ABCD")).toEqual("/delivery_schedules/2010/01/02/slots/15/delivery_orders/ABCD");
+  });
 });

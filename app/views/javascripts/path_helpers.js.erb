@@ -9,3 +9,10 @@ Strata.PathHelpers.deliveryNotesPath = function(delivery_order_id) {
 Strata.PathHelpers.tableDeliveryOrdersPath = function(membership_no) {
   return '<%= table_delivery_orders_path(:membership_no => ":membership_no") %>'.replace(":membership_no", membership_no);
 };
+
+Strata.PathHelpers.deliveryOrdersByMemberAndSlotPath = function(delivery_date, delivery_slot_id, membership_no){
+  return '<%= orders_of_member_delivery_schedules_path(:membership_no => ":membership_no", :slot_id => ":delivery_slot_id", :delivery_date => "0000/00/00") %>'.
+    replace(":membership_no", membership_no).
+    replace(":delivery_slot_id", delivery_slot_id).
+    replace("0000/00/00", delivery_date);
+};
