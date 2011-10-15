@@ -11,4 +11,9 @@
     <%= delivery_order.delivery_notes.size %>
     <a class="show_notes_button" target="#">View</a>
   </td>
+  <td>
+    <%= form_tag delivery_order_closure_path(delivery_order) do %>
+      <%= submit_tag "Close" %>
+    <% end %>
+  </td>
 </tr>
