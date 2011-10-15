@@ -44,6 +44,16 @@ describe OrderList do
     end
   end
 
+  context "overdue orders" do
+    it "should load all overdue delivery orders" do
+      order1 = Factory(:delivery_order, :delivery_schedule => Factory(:delivery_schedule, :delivery_date => Date.yesterday), :membership_no => "M1")
+      order2 = Factory(:delivery_order, :delivery_schedule => Factory(:delivery_schedule, :delivery_date => Date.today), :membership_no => "M2")
+      list = OrderList.overdue_orders
+      list.size.should == 1
+      list[0].membership_no.should == "M1"
+    end
+  end
+
   it "gets the number of pending pickups" do
     order = OrderList.new("Foobar", [Factory(:delivery_order, :order_type => DeliveryOrder::PICKUP),
                                       Factory(:delivery_order, :order_type => DeliveryOrder::DELIVERY)])

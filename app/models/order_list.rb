@@ -49,5 +49,9 @@ class OrderList
       all_orders = DeliveryOrder.live_orders.includes(:delivery_schedule).where(where_criteria)
       create_from_delivery_orders all_orders
     end
+
+    def overdue_orders
+      create_from_delivery_orders DeliveryOrder.overdue_orders
+    end
   end
 end

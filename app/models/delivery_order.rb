@@ -11,6 +11,7 @@ class DeliveryOrder < ActiveRecord::Base
   ]
 
   scope :live_orders, lambda { where(:status => PENDING) }
+  scope :overdue_orders, lambda { live_orders.includes(:delivery_schedule).where("delivery_schedules.delivery_date < ?", Date.today) }
 
   delegate :delivery_date, :delivery_slot, :to => :delivery_schedule
 

@@ -64,6 +64,23 @@ describe DeliveryOrdersController do
     end
   end
 
+  context "GET overdue orders" do
+    it "should list all overdue orders" do
+      Factory(:delivery_order, :membership_no => "M1", :delivery_schedule => Factory(:delivery_schedule, :delivery_date => Date.yesterday))
+      Factory(:delivery_order, :membership_no => "M2", :delivery_schedule => Factory(:delivery_schedule, :delivery_date => Date.today))
+      get :overdue
+      response.should be_success
+      list = assigns[:order_lists]
+      list[0].membership_no.should == "M1"
+    end
+
+    it "creates a delivery_schedule presenter for the view" do
+      get :overdue
+      response.should be_success
+      assigns[:delivery_schedule_presenter].should_not be_nil
+    end
+  end
+
   context "GET by slot and date" do
     it "should list all pending orders for give membership no ans slot and delivery date" do
       schedule = Factory(:delivery_schedule)

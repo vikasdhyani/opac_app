@@ -1,24 +1,9 @@
 <%= javascript_include_tag 'delivery_order'%>
 <div class="span-4 colborder">
 	<div class="span-4">
-		<p></p>
-		<p><%= link_to "New Requests", ibtrs_path(:state => 'New') %> </p>
-		<p><%= link_to "Assigned Requests", ibtrs_path(:state => 'Assigned') %> </p>
-		<p><%= link_to "PO Placed", ibtrs_path(:state => 'POPlaced') %> </p>
-		<p><%= link_to "Declined Requests", ibtrs_path(:state => 'Declined') %> </p>
-		<p><%= link_to "Fulfilled Requests", ibtrs_path(:state => 'Fulfilled') %> </p>
-		<p><%= link_to "Cancelled Requests", ibtrs_path(:state => 'Cancelled') %> </p>
-		<p><%= link_to "Dispatched Requests", ibtrs_path(:state => 'Dispatched') %> </p>
-		<p><%= link_to "Received Requests", ibtrs_path(:state => 'Received') %> </p>
-		<p><%= link_to "Delivered Requests", ibtrs_path(:state => 'Delivered') %> </p>
-        <p><%= link_to "Timedout Requests", ibtrs_path(:state => 'Timedout') %> </p>
-		<p><%= link_to "All Requests", ibtrs_path %>	</p>
-	</div>
-	<hr/>
-	<div class="span-4">
-		<p></p>
-		<p><%= link_to "Search", ibtrs_search_path %>	</p>
-    <p><%= link_to "Sort Failed Search", consignments_booksearch_path %> </p>
+	  <p></p>
+      <p><%= link_to "All Live Deliveries", delivery_orders_path %></p>
+      <p><%= link_to "Overdue Deliveries", overdue_delivery_orders_path %></p>
 	</div>
 	<hr/>
 	<div class="span-4">

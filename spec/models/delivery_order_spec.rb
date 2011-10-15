@@ -17,6 +17,12 @@ describe DeliveryOrder do
     Factory(:delivery_order, :delivery_schedule => nil).should_not be_scheduled
   end
 
+  it "loads overdue orders" do
+    overdue = Factory(:delivery_order, :delivery_schedule => Factory(:delivery_schedule, :delivery_date => Date.yesterday), :membership_no => "M1")
+    Factory(:delivery_order, :delivery_schedule => Factory(:delivery_schedule, :delivery_date => Date.today), :membership_no => "M2")
+    DeliveryOrder.overdue_orders.should == [overdue]
+  end
+
   context "availability of the book" do
     it "should be available if the ibtr state is Dispatched" do
       order = Factory(:ready_delivery_order)
