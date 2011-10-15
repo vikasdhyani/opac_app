@@ -1,11 +1,6 @@
 <%= javascript_include_tag 'delivery_order'%>
 <div class="span-4 colborder">
-	<hr/>
-	<div class="span-4">
-		<p></p>
-		<p><%= link_to "Home", root_path %>	</p>
-    <p><%= link_to "Back", :back %> </p>
-	</div>
+  <%= render :partial => 'delivery_orders/delivery_links' %>
 </div>
 
 <div class="span-18">

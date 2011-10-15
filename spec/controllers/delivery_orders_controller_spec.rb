@@ -99,7 +99,7 @@ describe DeliveryOrdersController do
       post :cancellation, :delivery_order_id => order.id
       response.should redirect_to(request.env["HTTP_REFERER"])
       delivery_order = DeliveryOrder.find(order.id)
-      delivery_order.status.should == DeliveryOrder::DONE
+      delivery_order.status.should == DeliveryOrder::CANCELLED
       delivery_order.delivery_notes[0].content.should include("foo@bar.com")
     end
 

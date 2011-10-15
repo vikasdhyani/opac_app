@@ -2,7 +2,8 @@ class DeliveryOrder < ActiveRecord::Base
 
   DELIVERY_ORDER_STATUS = [
     PENDING = "P",
-    DONE = "D"
+    DONE = "D",
+    CANCELLED = "C"
   ]
 
   DELIVERY_TYPES = [
@@ -33,7 +34,8 @@ class DeliveryOrder < ActiveRecord::Base
   end
 
   def cancel(email_id)
-    self.status = DONE
+    self.status = CANCELLED
     self.delivery_notes.build(:content => "Cancelled on #{Date.today.strftime("%d/%m/%Y")} by #{email_id}")
+    self.delivery_schedule = nil
   end
 end

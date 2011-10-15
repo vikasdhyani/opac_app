@@ -50,14 +50,14 @@ describe DeliveryOrder do
     end
   end
 
-  context "close delivery order" do
+  context "cancel delivery order" do
     it "marks a delivery order as closed" do
       order = Factory(:delivery_order, :status => DeliveryOrder::PENDING)
       order.cancel("vikas@strata.co.in")
-      order.status.should == DeliveryOrder::DONE
+      order.status.should == DeliveryOrder::CANCELLED
     end
 
-    it "creates a delivery note on closure" do
+    it "creates a delivery note on cancellation" do
       order = Factory(:delivery_order, :status => DeliveryOrder::PENDING)
       order.cancel("vikas@strata.co.in")
       order.should have(1).delivery_notes
@@ -68,6 +68,12 @@ describe DeliveryOrder do
       order = Factory(:delivery_order, :status => DeliveryOrder::PENDING)
       order.cancel("vikas@strata.co.in")
       order.delivery_notes[0].content.should include("vikas@strata.co.in")
+    end
+
+    it "should remove the order from schedule once cancelled" do
+      order = Factory(:delivery_order, :status => DeliveryOrder::PENDING, :delivery_schedule => Factory(:delivery_schedule))
+      order.cancel("a@b.com")
+      order.should_not be_scheduled
     end
   end
 
