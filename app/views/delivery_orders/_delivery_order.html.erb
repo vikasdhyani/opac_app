@@ -12,8 +12,8 @@
     <a class="show_notes_button" target="#">View</a>
   </td>
   <td>
-    <%= form_tag delivery_order_closure_path(delivery_order) do %>
-      <%= submit_tag "Close" %>
+    <%= form_tag delivery_order_cancellation_path(delivery_order) do %>
+      <%= submit_tag "Cancel" %>
     <% end %>
   </td>
 </tr>
