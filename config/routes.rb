@@ -56,6 +56,7 @@ Opac::Application.routes.draw do
     get :search, :on => :collection
     get "table/:membership_no", :on => :collection, :action => :table, :as => :table
     get :overdue, :on => :collection
+    post :closure
     resources :delivery_notes, :only => [:create, :index]
   end
 

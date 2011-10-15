@@ -91,4 +91,21 @@ describe DeliveryOrdersController do
       list.membership_no.should == "M2"
     end
   end
+
+  context "POST close delivery order" do
+    it "should close the delivery order" do
+      request.env["HTTP_REFERER"] = "http://google.com"
+      order = Factory(:delivery_order, :status => DeliveryOrder::PENDING)
+      post :closure, :delivery_order_id => order.id
+      response.should redirect_to(request.env["HTTP_REFERER"])
+      DeliveryOrder.find(order.id).status.should == DeliveryOrder::DONE
+    end
+
+    it "should return 422 if the delivery_order cannot be closed" do
+      order = Factory(:delivery_order, :status => DeliveryOrder::PENDING)
+      DeliveryOrder.any_instance.should_receive(:save).and_return(false)
+      post :closure, :delivery_order_id => order.id
+      response.should be_unprocessable_entity
+    end
+  end
 end

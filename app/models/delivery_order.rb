@@ -31,4 +31,8 @@ class DeliveryOrder < ActiveRecord::Base
   def scheduled?
     not delivery_schedule_id.nil?
   end
+
+  def close
+    self.status = DONE
+  end
 end

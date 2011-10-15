@@ -50,6 +50,14 @@ describe DeliveryOrder do
     end
   end
 
+  context "close delivery order" do
+    it "marks a delivery order as closed" do
+      order = Factory(:delivery_order, :status => DeliveryOrder::PENDING)
+      order.close
+      order.status.should == DeliveryOrder::DONE
+    end
+  end
+
   it { should belong_to(:title) }
   it { should belong_to(:ibtr)}
   it { should have_many(:delivery_notes)}

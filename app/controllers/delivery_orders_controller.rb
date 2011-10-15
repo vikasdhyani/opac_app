@@ -31,4 +31,14 @@ class DeliveryOrdersController < ApplicationController
     @order_lists = order_lists.paginate(:page => params[:page], :per_page => 5)
     @delivery_schedule_presenter = DeliverySchedulePresenter.new
   end
+
+  def closure
+    delivery_order = DeliveryOrder.find(params[:delivery_order_id])
+    delivery_order.close
+    if delivery_order.save
+      redirect_to :back
+    else
+      head :status => :unprocessable_entity
+    end
+  end
 end
