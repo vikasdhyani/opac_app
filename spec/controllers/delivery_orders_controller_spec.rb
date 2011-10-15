@@ -92,21 +92,21 @@ describe DeliveryOrdersController do
     end
   end
 
-  context "POST close delivery order" do
-    it "should close the delivery order" do
+  context "POST cancellation delivery order" do
+    it "should cancel the delivery order" do
       request.env["HTTP_REFERER"] = "http://google.com"
       order = Factory(:delivery_order, :status => DeliveryOrder::PENDING)
-      post :closure, :delivery_order_id => order.id
+      post :cancellation, :delivery_order_id => order.id
       response.should redirect_to(request.env["HTTP_REFERER"])
       delivery_order = DeliveryOrder.find(order.id)
       delivery_order.status.should == DeliveryOrder::DONE
       delivery_order.delivery_notes[0].content.should include("foo@bar.com")
     end
 
-    it "should return 422 if the delivery_order cannot be closed" do
+    it "should return 422 if the delivery_order cannot be cancelled" do
       order = Factory(:delivery_order, :status => DeliveryOrder::PENDING)
       DeliveryOrder.any_instance.should_receive(:save).and_return(false)
-      post :closure, :delivery_order_id => order.id
+      post :cancellation, :delivery_order_id => order.id
       response.should be_unprocessable_entity
     end
   end

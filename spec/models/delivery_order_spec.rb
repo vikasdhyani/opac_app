@@ -53,20 +53,20 @@ describe DeliveryOrder do
   context "close delivery order" do
     it "marks a delivery order as closed" do
       order = Factory(:delivery_order, :status => DeliveryOrder::PENDING)
-      order.close("vikas@strata.co.in")
+      order.cancel("vikas@strata.co.in")
       order.status.should == DeliveryOrder::DONE
     end
 
     it "creates a delivery note on closure" do
       order = Factory(:delivery_order, :status => DeliveryOrder::PENDING)
-      order.close("vikas@strata.co.in")
+      order.cancel("vikas@strata.co.in")
       order.should have(1).delivery_notes
-      order.delivery_notes[0].content.starts_with?("Closed").should be_true
+      order.delivery_notes[0].content.starts_with?("Cancelled").should be_true
     end
 
     it "saves the name of the user in the note" do
       order = Factory(:delivery_order, :status => DeliveryOrder::PENDING)
-      order.close("vikas@strata.co.in")
+      order.cancel("vikas@strata.co.in")
       order.delivery_notes[0].content.should include("vikas@strata.co.in")
     end
   end

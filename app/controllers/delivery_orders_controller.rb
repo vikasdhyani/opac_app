@@ -32,9 +32,9 @@ class DeliveryOrdersController < ApplicationController
     @delivery_schedule_presenter = DeliverySchedulePresenter.new
   end
 
-  def closure
+  def cancellation
     delivery_order = DeliveryOrder.find(params[:delivery_order_id])
-    delivery_order.close(current_user.email)
+    delivery_order.cancel(current_user.email)
     if delivery_order.save
       redirect_to :back
     else
