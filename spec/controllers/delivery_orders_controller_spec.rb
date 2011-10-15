@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe DeliveryOrdersController do
   before(:each) do
-    sign_in Factory(:user)
+    sign_in Factory(:user, :email => "foo@bar.com")
   end
 
   context "GET index" do
@@ -98,7 +98,9 @@ describe DeliveryOrdersController do
       order = Factory(:delivery_order, :status => DeliveryOrder::PENDING)
       post :closure, :delivery_order_id => order.id
       response.should redirect_to(request.env["HTTP_REFERER"])
-      DeliveryOrder.find(order.id).status.should == DeliveryOrder::DONE
+      delivery_order = DeliveryOrder.find(order.id)
+      delivery_order.status.should == DeliveryOrder::DONE
+      delivery_order.delivery_notes[0].content.should include("foo@bar.com")
     end
 
     it "should return 422 if the delivery_order cannot be closed" do

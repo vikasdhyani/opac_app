@@ -34,7 +34,7 @@ class DeliveryOrdersController < ApplicationController
 
   def closure
     delivery_order = DeliveryOrder.find(params[:delivery_order_id])
-    delivery_order.close
+    delivery_order.close(current_user.email)
     if delivery_order.save
       redirect_to :back
     else

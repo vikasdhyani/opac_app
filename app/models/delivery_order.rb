@@ -32,7 +32,8 @@ class DeliveryOrder < ActiveRecord::Base
     not delivery_schedule_id.nil?
   end
 
-  def close
+  def close(email_id)
     self.status = DONE
+    self.delivery_notes.build(:content => "Closed on #{Date.today.strftime("%d/%m/%Y")} by #{email_id}")
   end
 end
