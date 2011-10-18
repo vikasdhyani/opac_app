@@ -1,7 +1,8 @@
 class DeliverySchedule < ActiveRecord::Base
   belongs_to :delivery_slot
   has_many :delivery_orders
-  has_many :delivery_person_allotments
+  has_many :delivery_person_allotments, :autosave => true
+  has_many :delivery_persons, :through => :delivery_person_allotments
 
   validates_presence_of :delivery_date
   validates_presence_of :delivery_slot_id
@@ -19,6 +20,17 @@ class DeliverySchedule < ActiveRecord::Base
 
   def order_lists
     @order_lists ||= OrderList.create_from_delivery_orders(delivery_orders)
+  end
+
+  def delivery_person_for_membership_no(membership_no)
+    delivery_persons.where("delivery_person_allotments.membership_no = ?", membership_no).first
+  end
+
+  def allot_delivery_people(allotments)
+    allotments.each do |membership_no, delivery_person_id|
+      allotment = delivery_person_allotments.detect{ |dpa| dpa.membership_no == membership_no } || delivery_person_allotments.build(:membership_no => membership_no)
+      allotment.delivery_person_id = delivery_person_id
+    end
   end
 
   class << self
