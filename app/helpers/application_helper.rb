@@ -6,17 +6,17 @@ module ApplicationHelper
     else
       "#{base_title} | #{@title}"
     end
-  end  
-  
+  end
+
   def sortable(column, title = nil)
     title ||= column.titleize
     css_class = column == sort_column ? "current #{sort_direction}" : nil
     sortdir = column == sort_column && sort_direction == "asc" ? "desc" : "asc"
     link_to title, params.merge(:sort => column, :sortdir => sortdir, :page => nil), {:class => css_class}
   end
-  
+
   def image_url(titleId)
-    
+
     if titleId then
       title = Title.find_all_by_id(titleId)
       if title.blank? or title[0].username.nil? or title[0].username.blank? or !title[0].username.eql?('AMS')
@@ -28,12 +28,12 @@ module ApplicationHelper
       "#"
     end
   end
-  
+
   def default_image_url
     "http://justbooksclc.com/images/noimage.jpg"
   end
 
   def schedule_by_date_and_slot_path(delivery_date, slot)
-    display_delivery_schedules_path(:delivery_date => delivery_date.strftime("%Y/%m/%d"), :slot_id => slot.id )
+    show_delivery_schedule_path(:delivery_date => delivery_date.strftime("%Y/%m/%d"), :slot_id => slot.id )
   end
 end

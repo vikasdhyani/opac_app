@@ -61,11 +61,11 @@ Opac::Application.routes.draw do
   end
 
   resources :appointments, :only => [:create, :new]
-  resources :delivery_schedules, :only => :index do
-    constraints = {:delivery_date => /[0-9]{4}\/[0-9]{2}\/[0-9]{2}/}
 
-    get "/:delivery_date/slots/:slot_id", :action => :show, :as => :display, :on => :collection, :constraints => constraints
-    get "/:delivery_date/slots/:slot_id/delivery_orders/:membership_no" => "delivery_orders#search_by_slot_and_date" , :as => :orders_of_member, :on => :collection, :constraints => constraints
+  resources :delivery_schedules, :only => :index
+  scope "/delivery_schedules/:delivery_date", :constraints => {:delivery_date => /[0-9]{4}\/[0-9]{2}\/[0-9]{2}/} do
+    get "slots/:slot_id" => "delivery_schedules#show", :as => :show_delivery_schedule
+    get "slots/:slot_id/delivery_orders/:membership_no" => "delivery_orders#search_by_slot_and_date" , :as => :orders_of_member_delivery_schedule
   end
 
   get "/javascripts/path_helpers.js" => "javascripts#path_helpers"
