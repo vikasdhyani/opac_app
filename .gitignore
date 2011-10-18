@@ -19,3 +19,4 @@ app/views/devise/sessions/new.html.erb
 /db/schema.rb
 /public/stylesheets/*.css
 /public/javascripts/path_helpers.js
+tags
