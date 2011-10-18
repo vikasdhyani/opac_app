@@ -16,6 +16,12 @@ class DeliverySchedule < ActiveRecord::Base
     delivery_orders.count(:membership_no, :distinct => true)
   end
 
+  class << self
+    def by_date_and_slot_id(delivery_date, slot_id)
+      find_or_initialize_by_delivery_date_and_delivery_slot_id(delivery_date, slot_id)
+    end
+  end
+
   private
   def max_delivery_order_limit
    errors.add(:delivery_orders, "cannot be more than #{OpacSettings.deliveries_per_slot} per slot") if members_count > OpacSettings.deliveries_per_slot

@@ -39,4 +39,20 @@ describe DeliverySchedule do
     schedule.should_not be_valid
     schedule.should have(1).error_on(:delivery_orders)
   end
+
+  context "search by a date and slot" do
+    let(:slot) { Factory(:delivery_slot) }
+    let(:tomorrow) { Date.tomorrow }
+
+    it "can search for a delivery schedule by date and slot id" do
+      schedule = Factory(:delivery_schedule, :delivery_date => tomorrow, :delivery_slot => slot)
+      DeliverySchedule.by_date_and_slot_id(tomorrow.strftime("%Y/%m/%d"), slot.id).should == schedule
+    end
+
+    it "returns a blank object if there is no schedule found" do
+      schedule = DeliverySchedule.by_date_and_slot_id(tomorrow.strftime("%Y/%m/%d"), slot.id)
+      schedule.should be_valid
+      schedule.should have(0).delivery_orders
+    end
+  end
 end
