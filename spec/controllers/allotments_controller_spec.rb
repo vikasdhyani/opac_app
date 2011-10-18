@@ -32,7 +32,7 @@ describe AllotmentsController do
 
     it "saves the new allotment schedule" do
       post :create, :delivery_date => "2010/02/01", :allotment => { :slot_id => slot.id, :delivery_people => { "M1" => delivery_person.id} }
-      response.should be_success
+      response.should redirect_to(delivery_schedule_allotment_path(:delivery_date => "2010/02/01"))
       DeliverySchedule.find_by_delivery_date("2010/02/01").should have(1).delivery_person_allotments
     end
 
