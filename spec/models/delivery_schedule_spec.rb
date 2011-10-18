@@ -40,6 +40,14 @@ describe DeliverySchedule do
     schedule.should have(1).error_on(:delivery_orders)
   end
 
+  it "returns a set of deliveries grouped by member" do
+    order1 = Factory(:delivery_order, :membership_no=>"M1")
+    order2 = Factory(:delivery_order, :membership_no=>"M1")
+    schedule = Factory(:delivery_schedule, :delivery_orders => [order1, order2])
+    schedule.order_lists.should have(1).things
+    schedule.order_lists[0].membership_no.should == "M1"
+  end
+
   context "search by a date and slot" do
     let(:slot) { Factory(:delivery_slot) }
     let(:tomorrow) { Date.tomorrow }

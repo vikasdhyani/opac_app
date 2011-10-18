@@ -16,6 +16,10 @@ class DeliverySchedule < ActiveRecord::Base
     delivery_orders.count(:membership_no, :distinct => true)
   end
 
+  def order_lists
+    @order_lists ||= OrderList.create_from_delivery_orders(delivery_orders)
+  end
+
   class << self
     def by_date_and_slot_id(delivery_date, slot_id)
       find_or_initialize_by_delivery_date_and_delivery_slot_id(delivery_date, slot_id)

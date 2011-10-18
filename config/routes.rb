@@ -66,7 +66,7 @@ Opac::Application.routes.draw do
   scope "/delivery_schedules/:delivery_date", :constraints => {:delivery_date => /[0-9]{4}\/[0-9]{2}\/[0-9]{2}/}, :as => :delivery_schedule, :controller => :delivery_schedules do
     get "slots/:slot_id", :action => :show
     get "slots/:slot_id/delivery_orders/:membership_no" => "delivery_orders#search_by_slot_and_date" , :as => :for_member_by_slot
-    resource :allotment, :only => [:show, :update]
+    resource :allotment, :only => [:show, :create]
   end
 
   get "/javascripts/path_helpers.js" => "javascripts#path_helpers"
