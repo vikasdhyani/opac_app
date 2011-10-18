@@ -34,6 +34,6 @@ module ApplicationHelper
   end
 
   def schedule_by_date_and_slot_path(delivery_date, slot)
-    show_delivery_schedule_path(:delivery_date => delivery_date.strftime("%Y/%m/%d"), :slot_id => slot.id )
+    delivery_schedule_path(:delivery_date => delivery_date.strftime("%Y/%m/%d"), :slot_id => slot.id )
   end
 end
