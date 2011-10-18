@@ -6,7 +6,7 @@
 	You are a staff of <b><%= Branch.branch_name_from_subdomain(current_user.subdomain) %>.</b>
 	If this is not correct, call tech support.
 	<br/>
-	You are currently logged into <%= user_session['current_branch'].name %>. 
+	You are currently logged into <%= user_session['current_branch'].name %>.
 	<% if  @associate_branches.length > 1 -%>
 		<hr/>
 		Click on any of the following branches to change your current branch.
@@ -16,7 +16,7 @@
 				<li><%= link_to b.name, dashboard_path(:current_branch => b.id), :confirm => "Are you sure you want to change the branch to #{b.name}?" %></li>
 			<% end -%>
 		</ol>
-	<% end -%>		
+	<% end -%>
 </div>
 
 <% if current_user.frontoffice? -%>
@@ -60,11 +60,21 @@
 					Books Correction
 				</div>
 			</div>
+			<div class='span-2 menu-button menu-color'>
+				<div class='menu-icon'>
+					<%= link_to delivery_orders_path do -%>
+            <%= image_tag 'BookTruck.jpg', :size => "66x67" %>
+					<% end -%>
+				</div>
+				<div class='span-1 menu-text'>
+					Home Delivery
+				</div>
+			</div>
     </div>
-      
+
 		<div class='span-24' style='height:10px'>
 		</div>
-    <div class='span-24'>  
+    <div class='span-24'>
       <div class='span-1 menu-button menu-color'>
 				<div class='menu-icon'>
 					<%= link_to :controller => 'ib_assignments', :action => 'index', :branchVal => user_session['current_branch'].id, :criteria =>'unpicked',:show => 'all' do -%>
@@ -100,13 +110,13 @@
               <%= image_tag 'consignment.png' %>
             <% end -%>
           <% end %>
-            
+
         </div>
         <div class='span-1 menu-text'>
           Consignments
         </div>
       </div>
     </div>
-      
-    
+
+
 	</div>
