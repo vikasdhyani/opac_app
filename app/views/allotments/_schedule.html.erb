@@ -1,5 +1,5 @@
 <h3><%= schedule.delivery_slot.name %></h3>
-<%= form_tag :method => :put do %>
+<%= form_tag do %>
   <%= hidden_field_tag "allotment[slot_id]", schedule.delivery_slot.id, :id => nil %>
   <table>
     <tr>
@@ -13,7 +13,7 @@
         <td><%= order_list.membership_no %></td>
         <td><%= order_list.member.name %></td>
         <td><%= order_list.member.address %></td>
-        <td><%= select_tag("allotment[delivery_person[#{order_list.membership_no}]]", options_from_collection_for_select(@delivery_people, 'id', 'name')) %></td>
+        <td><%= select_tag("allotment[delivery_people[#{order_list.membership_no}]]", options_from_collection_for_select(@delivery_people, 'id', 'name')) %></td>
       </tr>
     <% end %>
   </table>

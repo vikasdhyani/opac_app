@@ -35,7 +35,8 @@ class DeliverySchedule < ActiveRecord::Base
 
   class << self
     def by_date_and_slot_id(delivery_date, slot_id)
-      find_or_initialize_by_delivery_date_and_delivery_slot_id(delivery_date, slot_id)
+      date = Date.parse(delivery_date)
+      find_or_initialize_by_delivery_date_and_delivery_slot_id(date, slot_id)
     end
   end
 

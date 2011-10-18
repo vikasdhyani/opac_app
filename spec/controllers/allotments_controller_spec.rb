@@ -25,4 +25,21 @@ describe AllotmentsController do
       assigns[:delivery_people].should == [delivery_person]
     end
   end
+
+  context "POST create" do
+    let(:slot) { Factory(:delivery_slot) }
+    let(:delivery_person) { Factory(:delivery_person) }
+
+    it "saves the new allotment schedule" do
+      post :create, :delivery_date => "2010/02/01", :allotment => { :slot_id => slot.id, :delivery_people => { "M1" => delivery_person.id} }
+      response.should be_success
+      DeliverySchedule.find_by_delivery_date("2010/02/01").should have(1).delivery_person_allotments
+    end
+
+    it "returns a 422 if save fails" do
+      DeliverySchedule.any_instance.should_receive(:save).and_return(false)
+      post :create, :delivery_date => "2010/02/01", :allotment => { :slot_id => slot.id, :delivery_people => { "M1" => delivery_person.id} }
+      response.should be_unprocessable_entity
+    end
+  end
 end

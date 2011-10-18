@@ -1,7 +1,6 @@
 class AppointmentsController < ApplicationController
   def create
-    delivery_date = Date.parse(params[:delivery_date])
-    schedule = DeliverySchedule.by_date_and_slot_id(delivery_date, params[:delivery_slot_id])
+    schedule = DeliverySchedule.by_date_and_slot_id(params[:delivery_date], params[:delivery_slot_id])
     schedule.add_delivery_orders_by_id params[:delivery_orders]
     if schedule.save
       render :text => "Selected deliveries scheduled successfully"

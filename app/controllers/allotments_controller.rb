@@ -8,6 +8,12 @@ class AllotmentsController < ApplicationController
   end
 
   def create
-    render :text => YAML.dump(params)
+    schedule = DeliverySchedule.by_date_and_slot_id(params[:delivery_date], params[:allotment][:slot_id])
+    schedule.allot_delivery_people(params[:allotment][:delivery_people])
+    if schedule.save
+      head :status => :ok
+    else
+      head :status => :unprocessable_entity
+    end
   end
 end
