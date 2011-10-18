@@ -1,0 +1,7 @@
+<div class="allotments">
+  <% @delivery_schedules.each do |schedule| %>
+    <%= render :partial => "schedule", :locals => { :schedule => schedule } %>
+    <br/>
+    <hr/>
+  <% end %>
+</div>
