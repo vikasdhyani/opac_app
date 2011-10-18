@@ -8,6 +8,7 @@ Domain Terminology
 * Ready for Processing => This means the order is ready for delivery/pickup
 * DeliverySlot => A slot on which delivery can happen, ie, Morning, Evening, Etc...
 * DeliverySchedule => The schedule for a particular slot on a particular day
+* Allotment => An assignment of a particular delivery (for a particular member) to a delivery person. It has a delivery schedule, and the delivery consists of all delivery orders for the member in that schedule
 
 Technical Terminology
 =====================
