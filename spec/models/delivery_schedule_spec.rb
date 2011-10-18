@@ -8,6 +8,7 @@ describe DeliverySchedule do
     it { should validate_presence_of(:delivery_date) }
     it { should validate_uniqueness_of(:delivery_date).scoped_to(:delivery_slot_id)}
     it { should have_many(:delivery_orders) }
+    it { should have_many(:delivery_person_allotments) }
   end
 
   it "adds delivery orders to the schedule" do

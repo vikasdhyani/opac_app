@@ -1,6 +1,7 @@
 class DeliverySchedule < ActiveRecord::Base
   belongs_to :delivery_slot
   has_many :delivery_orders
+  has_many :delivery_person_allotments
 
   validates_presence_of :delivery_date
   validates_presence_of :delivery_slot_id
