@@ -18,5 +18,11 @@
         <% end %>
       </tr>
     <% end %>
+    <tr>
+      <td></td>
+      <% @delivery_schedule_presenter.dates.each do |date| %>
+        <td class="center"><%= link_to "Allotment", schedule_allotment_path(date) %></td>
+      <% end %>
+    </tr>
   </table>
 </div>
