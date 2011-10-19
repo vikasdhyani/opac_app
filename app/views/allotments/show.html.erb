@@ -1,4 +1,7 @@
 <div class="allotments">
+  <h3>Schedule for <%= Date.parse(@delivery_date).strftime("%d %b %Y") %></h3>
+  <h4><%= link_to "printable_version", delivery_schedule_printable_report_path(:delivery_date => @delivery_date) %></h4>
+
   <% @delivery_schedules.each do |schedule| %>
     <%= render :partial => "schedule", :locals => { :schedule => schedule } %>
     <br/>

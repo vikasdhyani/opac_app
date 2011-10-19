@@ -1,0 +1,2 @@
+class PrintableReportsController < ApplicationController
+end

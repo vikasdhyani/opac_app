@@ -26,6 +26,10 @@ class DeliverySchedule < ActiveRecord::Base
     delivery_persons.where("delivery_person_allotments.membership_no = ?", membership_no).first
   end
 
+  def members_for_delivery_person(delivery_person)
+    delivery_person_allotments.where(:delivery_person_id => delivery_person).collect(&:membership_no)
+  end
+
   def allot_delivery_people(allotments)
     allotments.each do |membership_no, delivery_person_id|
       allotment = delivery_person_allotments.detect{ |dpa| dpa.membership_no == membership_no } || delivery_person_allotments.build(:membership_no => membership_no)
