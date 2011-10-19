@@ -2,7 +2,7 @@
 
    def index
      prepare_for_index OrderList.overdue_orders
-     head :status => :ok
+     render 'delivery_orders/index'
    end
 
  end

@@ -60,7 +60,8 @@ Opac::Application.routes.draw do
     resources :delivery_notes, :only => [:create, :index]
   end
 
-  resources :overdue_delivery_orders, :only => [:index]
+  resources :overdue_delivery_orders, :only => :index
+  resources :delivery_orders_cancellation, :only => :create
 
   resources :appointments, :only => [:create, :new]
 
