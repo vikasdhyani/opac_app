@@ -29,11 +29,14 @@ describe AllotmentsController do
   context "POST create" do
     let(:slot) { Factory(:delivery_slot) }
     let(:delivery_person) { Factory(:delivery_person) }
+    let(:tomorrow) { Date.tomorrow }
 
     it "saves the new allotment schedule" do
-      post :create, :delivery_date => "2010/02/01", :allotment => { :slot_id => slot.id, :delivery_people => { "M1" => delivery_person.id} }
-      response.should redirect_to(delivery_schedule_allotment_path(:delivery_date => "2010/02/01"))
-      DeliverySchedule.find_by_delivery_date("2010/02/01").should have(1).delivery_person_allotments
+      Factory(:delivery_schedule, :delivery_date => tomorrow, :delivery_slot => slot)
+      tomorrow_string = tomorrow.strftime("%Y/%m/%d")
+      post :create, :delivery_date => tomorrow_string, :allotment => { :slot_id => slot.id, :delivery_people => { "M1" => delivery_person.id} }
+      response.should redirect_to(delivery_schedule_allotment_path(:delivery_date => tomorrow_string))
+      DeliverySchedule.find_by_delivery_date(tomorrow_string).should have(1).delivery_person_allotments
     end
 
     it "returns a 422 if save fails" do
