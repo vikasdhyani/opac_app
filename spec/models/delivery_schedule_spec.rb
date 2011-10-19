@@ -74,11 +74,6 @@ describe DeliverySchedule do
       schedule.delivery_person_for_membership_no("M1").should == person
     end
 
-    it "finds the members alloted to a particular delivery person" do
-      Factory(:delivery_person_allotment, :delivery_schedule => schedule, :membership_no => "M1", :delivery_person => person)
-      schedule.members_for_delivery_person(person).should == ["M1"]
-    end
-
     it "returns nil if the delivery person is not found" do
       Factory(:delivery_person_allotment)
       schedule.delivery_person_for_membership_no("M150").should be_nil
@@ -98,6 +93,16 @@ describe DeliverySchedule do
       schedule.save!
       schedule.should have(1).delivery_person_allotments
       schedule.delivery_person_for_membership_no("M1").should == person2
+    end
+
+    it "finds the members alloted to a particular delivery person" do
+      Factory(:delivery_person_allotment, :delivery_schedule => schedule, :membership_no => "M1", :delivery_person => person)
+      schedule.members_for_delivery_person(person).should == ["M1"]
+    end
+    it "finds the delivery orders for a delivery person" do
+      Factory(:delivery_person_allotment, :delivery_schedule => schedule, :membership_no => "M1", :delivery_person => person)
+      order = Factory(:delivery_order, :membership_no => "M1", :delivery_schedule => schedule)
+      schedule.delivery_orders_for_delivery_person(person).should == [order]
     end
   end
 end
