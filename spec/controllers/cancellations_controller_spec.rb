@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe DeliveryOrdersCancellationController do
+describe CancellationsController do
   before(:each) { sign_in Factory(:user) }
 
   context "POST create delivery order cancellation" do

@@ -1,4 +1,4 @@
-class DeliveryOrdersCancellationController < DeliveryOrdersController
+class CancellationsController < DeliveryOrdersController
 
   def create
     delivery_order = DeliveryOrder.find(params[:delivery_order_id])

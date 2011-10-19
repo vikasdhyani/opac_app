@@ -55,13 +55,11 @@ Opac::Application.routes.draw do
   resources :delivery_orders, :only => :index do
     get :search, :on => :collection
     get "table/:membership_no", :on => :collection, :action => :table, :as => :table
-    # get :overdue, :on => :collection
-    post :cancellation
+    resource :cancellation, :only => :create
     resources :delivery_notes, :only => [:create, :index]
   end
 
   resources :overdue_delivery_orders, :only => :index
-  resources :delivery_orders_cancellation, :only => :create
 
   resources :appointments, :only => [:create, :new]
 
