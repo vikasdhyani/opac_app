@@ -4,11 +4,11 @@ class PrintableReportPresenter
   end
 
   def slots
-    DeliverySlot.all
+    @slots ||= DeliverySlot.all
   end
 
   def delivery_people
-    DeliveryPerson.all
+    @delivery_people ||= DeliveryPerson.all
   end
 
   def order_lists_for(person, slot)

@@ -1,10 +1,30 @@
-delivery_person.each do |dboy|
-  slots.each do |slot|
-    order_lists_for(dboy, slot).each do |order_list|
-      member_info
-      order_list.delivery_orders.each do |delivery_order|
-        more_info_about_the_book
-      end
-    end
-  end
-end
+<html>
+  <head>
+    <title>Delivery Schedule</title>
+  </head>
+  <body>
+    <% @printable_report_presenter.delivery_people.each do |person| %>
+      <h3><%= person.name %></h3>
+      <% @printable_report_presenter.slots.each do |slot| %>
+        <h4><%= slot.name %></h4>
+        <table border="1">
+          <% @printable_report_presenter.order_lists_for(person, slot).each do |order_list| %>
+            <tr>
+              <td><%= order_list.membership_no %></td>
+              <td><%= order_list.member.name %></td>
+              <td><%= order_list.member.address %></td>
+              <td><%= order_list.member.mphone %> <br/> <%= order_list.member.lphone %></td>
+              <td>
+                <ul>
+                  <% order_list.each do |delivery_order| %>
+                    <li><%= delivery_order.order_type %> - <%= delivery_order.title.title %></li>
+                  <% end %>
+                </ul>
+              </td>
+            </tr>
+          <% end %>
+        </table>
+      <% end %>
+    <% end %>
+  </body>
+</html>

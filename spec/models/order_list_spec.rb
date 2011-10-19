@@ -67,6 +67,13 @@ describe OrderList do
     lists[0].name.should == "Blah"
   end
 
+  it "implements enumerable" do
+    Factory(:delivery_order, :membership_no => "M1", :order_type => "P")
+    Factory(:delivery_order, :membership_no => "M1", :order_type => "D")
+    list = OrderList.all[0]
+    list.collect(&:order_type).should == ["P", "D"]
+  end
+
   context "sorting the order list" do
     it "returns the newest element first" do
       earlier_order_list = OrderList.new("foo", [Factory(:ready_delivery_order, :created_at => 2.days.ago)])

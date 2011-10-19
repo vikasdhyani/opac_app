@@ -1,5 +1,6 @@
 class OrderList
   include Comparable
+  include Enumerable
 
   attr_accessor :membership_no
   attr_accessor :orders
@@ -31,6 +32,12 @@ class OrderList
     return 1 unless self.at_least_one_item_ready?
     return -1 unless other.at_least_one_item_ready?
     other.max_date <=> self.max_date
+  end
+
+  def each
+    @orders.each do |order|
+      yield order
+    end
   end
 
   class << self
