@@ -1,6 +1,4 @@
-require 'ostruct'
-
-class HashToObject < OpenStruct
+class HashToObject
   def initialize(values, *methods_to_support)
     @values = values
     methods_to_support.each do |method|
