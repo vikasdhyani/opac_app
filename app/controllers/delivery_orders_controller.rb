@@ -1,9 +1,8 @@
-require 'ostruct'
-
 class DeliveryOrdersController < ApplicationController
   def index
-    @criteria = OpenStruct.new(params[:criteria])
-    prepare_for_index OrderList.all(params[:criteria] || {})
+    criteria = params[:criteria] || {}
+    @criteria = HashToObject.new(criteria, :membership_no, :order_type)
+    prepare_for_index OrderList.all(criteria)
   end
 
   def table

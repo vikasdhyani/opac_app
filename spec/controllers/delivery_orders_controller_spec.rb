@@ -45,6 +45,14 @@ describe DeliveryOrdersController do
       criteria = assigns[:criteria]
       criteria.membership_no.should == "M2"
     end
+
+    it "should create a criteria object that responds to all search criteria" do
+      get :index, :criteria => { :membership_no => "M2" }
+      response.should be_success
+      [:membership_no, :order_type].each do |method|
+        assigns[:criteria].should respond_to(method)
+      end
+    end
   end
 
   context "GET table" do
