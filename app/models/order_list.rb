@@ -39,12 +39,7 @@ class OrderList
       order_lists.sort!
     end
 
-    def all_by_date
-      all_orders = DeliveryOrder.live_orders.all
-      create_from_delivery_orders all_orders
-    end
-
-    def all_matching(criteria)
+    def all(criteria = {})
       where_criteria = criteria.clone.delete_if { |k, v| v.empty? }
       all_orders = DeliveryOrder.live_orders.includes(:delivery_schedule).where(where_criteria)
       create_from_delivery_orders all_orders

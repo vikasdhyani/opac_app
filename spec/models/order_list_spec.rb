@@ -9,37 +9,37 @@ describe OrderList do
     end
 
     it "returns one order list per member" do
-      lists = OrderList.all_by_date
+      lists = OrderList.all
       lists.size.should == 2
     end
 
     it "sorts order list most recent date" do
-      lists = OrderList.all_by_date
+      lists = OrderList.all
       lists[0].membership_no.should == "M2"
       lists[1].membership_no.should == "M1"
     end
 
     it "should give orders per member" do
-      lists = OrderList.all_by_date
+      lists = OrderList.all
       lists[0].orders.size.should == 2
       lists[1].orders.size.should == 1
     end
 
     it "loads orders by criteria" do
-      lists = OrderList.all_matching(:membership_no => "M2")
+      lists = OrderList.all(:membership_no => "M2")
       lists.size.should == 1
       lists[0].membership_no.should == "M2"
       end
 
     it "loads all orders if no criteria is specified" do
-      lists = OrderList.all_matching(:membership_no => "")
+      lists = OrderList.all(:membership_no => "")
       lists.size.should == 2
     end
 
     it "allows criteria to be specified on the schedules table" do
       schedule = Factory(:delivery_schedule)
       Factory(:delivery_order, :delivery_schedule => schedule)
-      list = OrderList.all_matching("delivery_schedules.delivery_slot_id" => schedule.delivery_slot.id.to_s)
+      list = OrderList.all("delivery_schedules.delivery_slot_id" => schedule.delivery_slot.id.to_s)
       list.size.should == 1
     end
   end
@@ -63,7 +63,7 @@ describe OrderList do
   it "gets the member name" do
     Factory(:delivery_order, :membership_no => "M1")
     Factory(:dev_membership, :card_id => "M1", :member => "Blah")
-    lists = OrderList.all_by_date
+    lists = OrderList.all
     lists[0].name.should == "Blah"
   end
 

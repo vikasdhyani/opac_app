@@ -27,12 +27,11 @@ describe DeliveryOrdersController do
       response.should be_success
       assigns[:delivery_schedule_presenter].should_not be_nil
     end
-  end
 
-  context "GET search" do
     it "should list all pending orders for give membership no" do
+      Factory(:delivery_order, :membership_no => "member_not_matching_criteria")
       Factory(:delivery_order, :membership_no => "M2")
-      get :search, :criteria => { :membership_no => "M2" }
+      get :index, :criteria => { :membership_no => "M2" }
       response.should be_success
       list = assigns[:order_lists]
       list.size.should == 1
@@ -41,16 +40,10 @@ describe DeliveryOrdersController do
 
     it "should persist the criteria" do
       Factory(:delivery_order, :membership_no => "M2")
-      get :search, :criteria => { :membership_no => "M2" }
+      get :index, :criteria => { :membership_no => "M2" }
       response.should be_success
       criteria = assigns[:criteria]
       criteria.membership_no.should == "M2"
-    end
-
-    it "should create a delivery schedule presenter for the view" do
-      get :search, :criteria => { :membership_no => "M2" }
-      response.should be_success
-      assigns[:delivery_schedule_presenter].should_not be_nil
     end
   end
 

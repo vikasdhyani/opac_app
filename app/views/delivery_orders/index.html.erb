@@ -11,7 +11,7 @@
   </section>
   <br/>
   <hr/>
-  <%= form_tag(search_delivery_orders_path, :method => :get) do %>
+  <%= form_tag(delivery_orders_path, :method => :get) do %>
     Search By Member Number: <%= text_field :criteria, :membership_no %>
     <br/>
     Search by Delivery Type: <%= collection_select(:criteria, :order_type, DeliveryOrder::DELIVERY_TYPES, :to_s, :to_s, :prompt => "Any") %>
