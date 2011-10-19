@@ -5,10 +5,6 @@ class DeliveryOrdersController < ApplicationController
     prepare_for_index OrderList.all_by_date
   end
 
-  def overdue
-    prepare_for_index OrderList.overdue_orders
-    render :index
-  end
 
   def search
     @criteria = OpenStruct.new(params[:criteria])
