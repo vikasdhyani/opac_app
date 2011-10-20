@@ -66,10 +66,21 @@ describe("DeliveryOrder", function() {
           expect(params.type).toEqual("POST");
           expect(params.url).toEqual("/delivery_orders/4567/delivery_notes.json");
           expect(params.dataType).toEqual("json");
-          expect(params.data.delivery_note.content).toEqual("foo")
+          expect(params.data.delivery_note.content).toEqual("foo");
         });
 
         $(".notesTextArea").text("foo");
+        $(".add_notes_button").click();
+        expect($.ajax).wasCalled();
+      });
+
+     it("shares the note when share checkbox is clicked", function() {
+        spyOn($, "ajax").andCallFake(function(params) {
+          expect(params.data.delivery_note.shared).toEqual(true);
+        });
+
+        $(".notesTextArea").text("foo");
+        $(".shareDeliveryNoteCheckbox").attr("checked", true);
         $(".add_notes_button").click();
         expect($.ajax).wasCalled();
       });

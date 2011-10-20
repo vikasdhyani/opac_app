@@ -56,7 +56,7 @@ Strata.DeliveryOrder = Class.extend({
   addNotesClicked: function(event) {
     var addNotesDiv = $(event.target).parents(".addNotes");
     var content = addNotesDiv.find(".notesTextArea").val();
-
+    var shared = addNotesDiv.find(".shareDeliveryNoteCheckbox").attr("checked");
     if (!content) return;
 
     addNotesDiv.find(".add_notes_button").attr("disabled", true);
@@ -67,7 +67,7 @@ Strata.DeliveryOrder = Class.extend({
       type: "POST",
       url: Strata.PathHelpers.deliveryNotesPath(delivery_order_id),
       dataType: 'json',
-      data: { delivery_note: { content: content } },
+      data: { delivery_note: { content: content, shared: shared } },
       success: this.addCommentsSuccessfulHandler(order_list),
       error: function(error) { addNotesDiv.find(".add_notes_button").attr("disabled", false); }
     });

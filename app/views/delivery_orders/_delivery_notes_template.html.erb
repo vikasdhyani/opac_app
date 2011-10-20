@@ -4,17 +4,20 @@
 <div style="float: right"><a class="hide_notes_button" target="#">X</a></div>
 <div class="addNotes" data-delivery-order="{{id}}" data-membership-no="{{membership_no}}">
   <textarea class="notesTextArea"></textarea>
+  Share: <input type="checkbox" class="shareDeliveryNoteCheckbox" />
   <button class="add_notes_button">Add Comment</button>
 </div>
 <table class="delivery_notes">
   <tr>
     <td class="table_heading">Time</td>
     <td class="table_heading">Comment</td>
+    <td class="table_heading">Shared</td>
   </tr>
   {{#delivery_notes}}
     <tr>
       <td>{{created_date}}</td>
       <td>{{content}}</td>
+      <td>{{shared}}</td>
     </tr>
   {{/delivery_notes}}
 </table>
