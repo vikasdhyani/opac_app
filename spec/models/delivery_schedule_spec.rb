@@ -86,6 +86,13 @@ describe DeliverySchedule do
       schedule.delivery_person_for_membership_no("M1").should == person
     end
 
+    it "resets the allotment if the delivery person id is blank" do
+      schedule.allot_delivery_people("M1" => "")
+      schedule.save!
+      schedule.should have(1).delivery_person_allotments
+      schedule.delivery_person_for_membership_no("M1").should be_nil
+    end
+
     it "changes the allotment to a particular member" do
       Factory(:delivery_person_allotment, :delivery_schedule => schedule, :membership_no => "M1", :delivery_person => person)
       person2 = Factory(:delivery_person, :name => "P2")
