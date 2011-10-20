@@ -14,7 +14,9 @@
         <td><%= order_list.member.name %></td>
         <td><%= order_list.member.address %></td>
         <% delivery_person = schedule.delivery_person_for_membership_no(order_list.membership_no) %>
-        <td><%= select_tag("allotment[delivery_people[#{order_list.membership_no}]]", options_from_collection_for_select(@delivery_people, 'id', 'name', (delivery_person ? delivery_person.id : "") )) %></td>
+         <!-- FIXME: Hack for default selection. We cannot use collection select as this is not activemodel -->
+        <td><%= blank_value = HashToObject.new({:name => "None", :id => ""}, :name, :id)
+                select_tag("allotment[delivery_people[#{order_list.membership_no}]]", options_from_collection_for_select([blank_value]+ @delivery_people, 'id', 'name', (delivery_person ? delivery_person.id : ""))) %></td>
       </tr>
     <% end %>
   </table>
