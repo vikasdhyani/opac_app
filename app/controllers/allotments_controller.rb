@@ -11,6 +11,7 @@ class AllotmentsController < ApplicationController
     schedule = DeliverySchedule.by_date_and_slot_id(params[:delivery_date], params[:allotment][:slot_id])
     schedule.allot_delivery_people(params[:allotment][:delivery_people])
     if schedule.save
+      flash[:notice] = "Delivery Person Allotted"
       redirect_to delivery_schedule_allotment_path(:delivery_date => params[:delivery_date])
     else
       head :status => :unprocessable_entity

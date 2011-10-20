@@ -17,7 +17,7 @@ class DeliveryNotesController < ApplicationController
       :title => delivery_order.title.title,
       :membership_no => delivery_order.membership_no,
       :delivery_notes => delivery_order.delivery_notes.order("created_at DESC").collect{ |note| {
-        :created_date => note.created_at.strftime("%d %b %Y"),
+        :created_date => note.created_at.strftime("%d %b %Y at %H:%M"),
         :content => note.content,
       }},
     }

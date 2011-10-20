@@ -39,6 +39,14 @@ describe AllotmentsController do
       DeliverySchedule.find_by_delivery_date(tomorrow_string).should have(1).delivery_person_allotments
     end
 
+    it "sets a flash message when saved" do
+      Factory(:delivery_schedule, :delivery_date => tomorrow, :delivery_slot => slot)
+      tomorrow_string = tomorrow.strftime("%Y/%m/%d")
+      post :create, :delivery_date => tomorrow_string, :allotment => { :slot_id => slot.id, :delivery_people => { "M1" => delivery_person.id} }
+      response.should be_redirect
+      flash[:notice].should == "Delivery Person Allotted"
+    end
+
     it "returns a 422 if save fails" do
       DeliverySchedule.any_instance.should_receive(:save).and_return(false)
       post :create, :delivery_date => "2010/02/01", :allotment => { :slot_id => slot.id, :delivery_people => { "M1" => delivery_person.id} }
