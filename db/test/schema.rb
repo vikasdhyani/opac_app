@@ -1,4 +1,4 @@
-ActiveRecord::Schema.define(:version => 20111003135157) do
+ActiveRecord::Schema.define(:version => 20110928064823) do
   create_table "authentications", :force => true do |t|
     t.integer  "user_id",    :precision => 38, :scale => 0
     t.string   "provider"
