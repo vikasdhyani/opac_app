@@ -38,4 +38,8 @@ class DeliveryOrder < ActiveRecord::Base
     self.delivery_notes.build(:content => "Cancelled on #{Date.today.strftime("%d/%m/%Y")} by #{email_id}")
     self.delivery_schedule = nil
   end
+
+  def shared_notes
+    delivery_notes.where(:shared => true)
+  end
 end

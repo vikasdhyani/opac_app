@@ -48,6 +48,13 @@ describe DeliveryOrder do
       reloaded = DeliveryOrder.find(order.id)
       reloaded.should have(1).delivery_notes
     end
+
+    it "contains shared notes" do
+      order = Factory(:delivery_order, :membership_no => "M1")
+      note1 = Factory(:delivery_note, :delivery_order => order, :shared => false)
+      note2 = Factory(:delivery_note, :delivery_order => order, :shared => true)
+      DeliveryOrder.find(order.id).shared_notes.should == [note2]
+    end
   end
 
   context "cancel delivery order" do

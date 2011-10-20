@@ -40,6 +40,10 @@ class OrderList
     end
   end
 
+  def shared_notes
+    @orders.inject([]){ |sum, order| sum + order.shared_notes }
+  end
+
   class << self
     def create_from_delivery_orders(all_orders)
       order_lists = all_orders.group_by(&:membership_no).collect { |membership_no, orders| OrderList.new(membership_no, orders) }

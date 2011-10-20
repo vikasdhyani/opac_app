@@ -91,4 +91,12 @@ describe OrderList do
       [later_order_list, earlier_order_list].sort.should == [earlier_order_list, later_order_list]
     end
   end
+
+  it "gives the list of all shared notes" do
+    order = Factory(:delivery_order, :membership_no => "M1")
+    note1 = Factory(:delivery_note,:delivery_order => order, :shared => false)
+    note2 = Factory(:delivery_note,:delivery_order => order, :shared => true)
+    order_list = OrderList.all(:membership_no => order.membership_no)[0]
+    order_list.shared_notes.should == [note2]
+  end
 end
