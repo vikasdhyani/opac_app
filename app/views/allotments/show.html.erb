@@ -1,10 +1,24 @@
-<div class="allotments">
-  <h3>Schedule for <%= Date.parse(@delivery_date).strftime("%d %b %Y") %></h3>
-  <h4><%= link_to "printable_version", delivery_schedule_printable_report_path(:delivery_date => @delivery_date) %></h4>
-
-  <% @delivery_schedules.each do |schedule| %>
-    <%= render :partial => "schedule", :locals => { :schedule => schedule } %>
-    <br/>
-    <hr/>
-  <% end %>
+<div class="span-4 colborder">
+  <%= render :partial => 'delivery_orders/delivery_links' %>
 </div>
+
+<div class="span-18">
+  <section class="round">
+    <% flash.each do |key, value| %>
+      <div class="flash <%= key %>"><%= value %></div>
+    <% end %>
+  </section>
+  <br/>
+  <hr/>
+  <div class="allotments">
+    <h3>Schedule for <%= Date.parse(@delivery_date).strftime("%d %b %Y") %></h3>
+    <h4><%= link_to "printable_version", delivery_schedule_printable_report_path(:delivery_date => @delivery_date), :target => '_blank'  %></h4>
+
+    <% @delivery_schedules.each do |schedule| %>
+      <%= render :partial => "schedule", :locals => {:schedule => schedule} %>
+      <br/>
+      <hr/>
+    <% end %>
+  </div>
+</div>
+
